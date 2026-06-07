@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAIM 영어 플랫폼 사용 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FAFBFF;
+  --blue: #2563EB;
+  --indigo: #4F46E5;
+  --green: #16A34A;
+  --emerald: #059669;
+  --yellow: #D97706;
+  --purple: #7C3AED;
+  --pink: #DB2777;
+  --dark: #0F172A;
+  --gray: #64748B;
+  --light: #F1F5F9;
+  --border: #E2E8F0;
+  --r: 1.25rem;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  line-height: 1.7;
+}
+
+/* ── Sticky Nav ── */
+.top-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+  box-shadow: 0 1px 12px rgba(0,0,0,.05);
+}
+.nav-logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem; color: var(--blue);
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+.nav-home {
+  font-size: .8rem; color: var(--gray);
+  text-decoration: none; font-weight: 700;
+  padding: 6px 14px; border-radius: 8px;
+  border: 1.5px solid var(--border);
+  transition: all .15s;
+}
+.nav-home:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 45%, #4F46E5 100%);
+  padding: 56px 24px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 99px; padding: 5px 18px;
+  font-size: .78rem; font-weight: 700;
+  color: rgba(255,255,255,.9);
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Gaegu', cursive;
+  font-size: clamp(2rem, 7vw, 3rem);
+  color: white; margin-bottom: 12px; line-height: 1.2;
+}
+.hero p { color: rgba(255,255,255,.75); font-size: .95rem; max-width: 480px; margin: 0 auto 24px; }
+.hero-chips {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+.hero-chip {
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+  border-radius: 99px; padding: 5px 14px;
+  font-size: .75rem; color: white; font-weight: 700;
+}
+
+/* ── Wrapper ── */
+.page { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+
+/* ── TOC ── */
+.toc {
+  background: white; border: 2px solid var(--border);
+  border-radius: var(--r); padding: 24px 28px; margin-bottom: 40px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.04);
+}
+.toc h2 {
+  font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+  color: var(--blue); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.toc-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px;
+}
+.toc-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 10px;
+  text-decoration: none; color: var(--dark);
+  font-size: .85rem; font-weight: 600;
+  transition: all .15s;
+  border: 1.5px solid transparent;
+}
+.toc-item:hover { background: var(--light); border-color: var(--border); }
+.toc-item .toc-num {
+  width: 22px; height: 22px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem; font-weight: 900; flex-shrink: 0;
+}
+
+/* ── Section ── */
+.section { margin-bottom: 48px; }
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+.section-num {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+  color: white; flex-shrink: 0;
+}
+.section-header h2 {
+  font-family: 'Gaegu', cursive; font-size: 1.5rem;
+  color: var(--dark); font-weight: 700;
+}
+.section-header .section-sub {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: .8rem; color: var(--gray); font-weight: 400;
+}
+
+/* ── Cards ── */
+.card {
+  background: white; border: 2px solid var(--border);
+  border-radius: var(--r); padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.card-title {
+  font-weight: 900; font-size: 1rem; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* ── Step Flow ── */
+.step-flow {
+  display: flex; flex-direction: column; gap: 0;
+}
+.step-item {
+  display: flex; gap: 16px; padding: 16px 0;
+  border-bottom: 1px dashed var(--border);
+  position: relative;
+}
+.step-item:last-child { border-bottom: none; }
+.step-item::before {
+  content: '';
+  position: absolute; left: 19px; top: 44px;
+  width: 2px; height: calc(100% - 28px);
+  background: var(--border);
+}
+.step-item:last-child::before { display: none; }
+.step-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0; z-index: 1;
+}
+.step-content h3 {
+  font-weight: 900; font-size: .95rem; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.step-content p { font-size: .85rem; color: var(--gray); line-height: 1.6; }
+.step-tag {
+  font-size: .65rem; padding: 2px 8px; border-radius: 99px;
+  font-weight: 700; letter-spacing: .04em;
+}
+
+/* ── Level Compare ── */
+.level-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.level-card {
+  border-radius: 16px; padding: 18px 14px; text-align: center;
+}
+.level-card .level-icon { font-size: 2rem; margin-bottom: 8px; }
+.level-card h3 { font-weight: 900; font-size: .9rem; margin-bottom: 6px; }
+.level-card p { font-size: .75rem; line-height: 1.6; }
+.level-card ul { text-align: left; font-size: .75rem; padding-left: 12px; }
+.level-card ul li { margin-bottom: 3px; color: var(--gray); }
+
+/* ── Game Cards ── */
+.game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 12px; }
+.game-card {
+  border-radius: 16px; padding: 20px 16px; text-align: center;
+}
+.game-card .game-emoji { font-size: 2.5rem; margin-bottom: 10px; }
+.game-card h3 { font-weight: 900; font-size: .9rem; margin-bottom: 6px; }
+.game-card p { font-size: .78rem; color: var(--gray); line-height: 1.5; }
+.game-card .points {
+  display: inline-block; margin-top: 8px;
+  font-size: .7rem; font-weight: 700; padding: 3px 10px; border-radius: 99px;
+}
+
+/* ── Badge Ladder ── */
+.badge-ladder {
+  display: flex; gap: 0; align-items: center; flex-wrap: wrap;
+}
+.badge-step {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; padding: 16px 12px; flex: 1; min-width: 80px;
+  text-align: center;
+}
+.badge-step .b-icon { font-size: 2.2rem; }
+.badge-step .b-name { font-weight: 900; font-size: .85rem; }
+.badge-step .b-pts { font-size: .72rem; color: var(--gray); }
+.badge-arrow {
+  font-size: 1.2rem; color: var(--border); padding: 0 4px;
+  align-self: center;
+}
+
+/* ── Teacher Section ── */
+.teacher-feature-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 10px;
+}
+.teacher-feature {
+  background: var(--light); border-radius: 14px;
+  padding: 16px; display: flex; flex-direction: column; gap: 6px;
+}
+.teacher-feature .tf-icon { font-size: 1.5rem; }
+.teacher-feature h4 { font-weight: 900; font-size: .85rem; }
+.teacher-feature p { font-size: .77rem; color: var(--gray); line-height: 1.5; }
+
+/* ── Tips ── */
+.tip-box {
+  border-radius: 14px; padding: 16px 20px;
+  display: flex; gap: 12px; align-items: flex-start;
+  margin-top: 14px;
+}
+.tip-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+.tip-text h4 { font-weight: 900; font-size: .88rem; margin-bottom: 4px; }
+.tip-text p { font-size: .82rem; color: inherit; line-height: 1.6; }
+
+/* ── Setup Steps ── */
+.setup-steps {
+  counter-reset: setup;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.setup-step {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--light); border-radius: 14px; padding: 16px 18px;
+}
+.setup-step::before {
+  counter-increment: setup;
+  content: counter(setup);
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--blue); color: white;
+  font-family: 'Fredoka One', cursive; font-size: .95rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.setup-step-content h4 { font-weight: 900; font-size: .9rem; margin-bottom: 4px; }
+.setup-step-content p { font-size: .82rem; color: var(--gray); line-height: 1.5; }
+.code-snippet {
+  background: var(--dark); color: #4ADE80;
+  border-radius: 8px; padding: 8px 14px;
+  font-family: 'Courier New', monospace; font-size: .8rem;
+  margin-top: 8px; word-break: break-all;
+}
+
+/* ── Q&A ── */
+.qa-item {
+  border-bottom: 1px solid var(--border); padding: 16px 0;
+}
+.qa-item:last-child { border-bottom: none; }
+.qa-q {
+  font-weight: 900; font-size: .92rem; margin-bottom: 8px;
+  display: flex; gap: 10px;
+}
+.qa-q::before { content: 'Q.'; color: var(--blue); flex-shrink: 0; }
+.qa-a {
+  font-size: .85rem; color: var(--gray); line-height: 1.7;
+  padding-left: 26px;
+}
+.qa-a::before { content: 'A. '; font-weight: 700; color: var(--emerald); }
+
+/* ── Colors ── */
+.bg-blue-soft { background: #EFF6FF; }
+.bg-green-soft { background: #F0FDF4; }
+.bg-yellow-soft { background: #FFFBEB; }
+.bg-purple-soft { background: #FAF5FF; }
+.bg-red-soft { background: #FFF1F2; }
+.bg-dark-soft { background: #F8FAFC; }
+
+.border-blue { border-color: #BFDBFE; }
+.border-green { border-color: #BBF7D0; }
+.border-yellow { border-color: #FDE68A; }
+.border-purple { border-color: #DDD6FE; }
+
+.text-blue { color: var(--blue); }
+.text-green { color: var(--green); }
+.text-yellow { color: var(--yellow); }
+.text-purple { color: var(--purple); }
+
+/* ── Divider ── */
+.divider {
+  text-align: center; color: var(--border);
+  font-size: .8rem; letter-spacing: .2em;
+  margin: 32px 0; user-select: none;
+}
+
+/* ── Print ── */
+@media print {
+  .top-nav, .hero { display: none; }
+  .page { padding: 0; }
+}
+
+@media (max-width: 520px) {
+  .level-grid { grid-template-columns: 1fr; }
+  .badge-ladder { justify-content: center; }
+  .toc-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="top-nav">
+  <div class="nav-logo">
+    <div class="dot"></div>
+    EAIM 영어 플랫폼 사용 가이드
+  </div>
+  <a href="index.html" class="nav-home">← 홈으로</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">📖 User Guide</div>
+  <h1>어떻게 사용하나요?</h1>
+  <p>선생님과 학생 모두를 위한 완전한 사용 설명서입니다.<br>처음이라도 걱정 마세요!</p>
+  <div class="hero-chips">
+    <span class="hero-chip">🏫 교사 설정 방법</span>
+    <span class="hero-chip">🌱 학생 사용 방법</span>
+    <span class="hero-chip">🎮 게임 공략</span>
+    <span class="hero-chip">🔑 Gemini API 설정</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>📋 목차</h2>
+    <div class="toc-grid">
+      <a href="#setup" class="toc-item">
+        <div class="toc-num" style="background:#DBEAFE;color:#1D4ED8">1</div> 시작 전 준비 (API 키)
+      </a>
+      <a href="#playground" class="toc-item">
+        <div class="toc-num" style="background:#DCFCE7;color:#15803D">2</div> 영어 놀이터 사용법
+      </a>
+      <a href="#levels" class="toc-item">
+        <div class="toc-num" style="background:#F3E8FF;color:#7E22CE">3</div> 레벨별 활동 안내
+      </a>
+      <a href="#gamezone" class="toc-item">
+        <div class="toc-num" style="background:#FEF9C3;color:#A16207">4</div> 영어 게임방 사용법
+      </a>
+      <a href="#badges" class="toc-item">
+        <div class="toc-num" style="background:#FFE4E6;color:#BE123C">5</div> 뱃지 & 랭킹 시스템
+      </a>
+      <a href="#teacher" class="toc-item">
+        <div class="toc-num" style="background:#F1F5F9;color:#334155">6</div> 교사 컨트롤 패널
+      </a>
+      <a href="#github" class="toc-item">
+        <div class="toc-num" style="background:#0F172A;color:#4ADE80">7</div> GitHub 배포 방법
+      </a>
+      <a href="#faq" class="toc-item">
+        <div class="toc-num" style="background:#FDF4FF;color:#7E22CE">8</div> 자주 묻는 질문
+      </a>
+      <a href="#pwa" class="toc-item">
+        <div class="toc-num" style="background:#DCFCE7;color:#15803D">9</div> 앱으로 설치하기 (PWA)
+      </a>
+    </div>
+  </div>
+
+  <!-- ══ 1. SETUP ══ -->
+  <div class="section" id="setup">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#2563EB,#4F46E5)">1</div>
+      <div>
+        <h2>시작 전 준비</h2>
+        <div class="section-sub">Gemini API 키 설정 · 최초 1회만 하면 됩니다</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔑 Gemini API 키가 필요한 이유</div>
+      <p style="font-size:.88rem;color:var(--gray);line-height:1.7;margin-bottom:14px">
+        EAIM 영어 플랫폼의 <strong>AI 단어 도우미</strong>, <strong>AI 첨삭</strong>, <strong>AI 회화</strong> 기능 모두 Google Gemini 2.5 Flash 모델을 사용합니다. API 키가 없어도 기본 게임과 문장 만들기는 사용 가능하지만, AI 기능은 키가 필요합니다.
+      </p>
+      <div class="tip-box bg-yellow-soft border-yellow" style="border:2px solid #FDE68A">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text" style="color:var(--yellow)">
+          <h4>무료로 사용 가능해요!</h4>
+          <p>Google AI Studio의 무료 티어로 수업에 충분히 활용할 수 있습니다. 별도 결제가 필요하지 않아요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 API 키 발급 방법</div>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>Google AI Studio 접속</h4>
+            <p>브라우저에서 아래 주소로 이동합니다. Google 계정으로 로그인하세요.</p>
+            <div class="code-snippet">https://aistudio.google.com</div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>"Get API key" 클릭</h4>
+            <p>왼쪽 사이드바 또는 상단 메뉴에서 <strong>Get API key</strong> → <strong>Create API key</strong>를 클릭합니다.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>키 복사</h4>
+            <p><code>AIzaSy...</code>로 시작하는 긴 문자열을 복사합니다. 이 키를 안전하게 보관하세요.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>플랫폼에 입력</h4>
+            <p>각 앱에서 <strong>선생님이신가요?</strong> → 교사 패널 → <strong>Gemini API 키</strong> 항목에 붙여넣기 후 저장합니다. 저장하면 브라우저에 기억되어 다음에 다시 입력하지 않아도 됩니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box bg-red-soft" style="border:2px solid #FECDD3;margin-top:14px">
+        <div class="tip-icon">⚠️</div>
+        <div class="tip-text" style="color:#BE123C">
+          <h4>API 키 주의사항</h4>
+          <p>API 키는 개인 정보입니다. 공개 게시물이나 SNS에 올리지 마세요. 학생용 기기에는 선생님이 직접 입력해 주세요.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · · · · · ·</div>
+
+  <!-- ══ 2. PLAYGROUND ══ -->
+  <div class="section" id="playground">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#2563EB,#06B6D4)">2</div>
+      <div>
+        <h2>영어 놀이터 사용법</h2>
+        <div class="section-sub">eaim-english-playground.html · Step 1~5 단계별 문장 만들기</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--blue)">🚀 시작하기</div>
+      <p style="font-size:.88rem;color:var(--gray);margin-bottom:16px">앱을 열면 이름 입력 화면이 나타납니다. 이름을 입력하고 <strong>"시작하기!"</strong>를 누르면 활동이 시작됩니다. 입력된 이름은 교사 컨트롤 패널의 학생 현황에 자동으로 나타납니다.</p>
+      <div class="step-flow">
+        <div class="step-item">
+          <div class="step-icon" style="background:#FEE2E2">❤️</div>
+          <div class="step-content">
+            <h3>감정 고르기 <span class="step-tag" style="background:#FEE2E2;color:#DC2626">공통</span></h3>
+            <p>오늘의 감정(Happy, Sad, Excited 등 10가지)을 선택하면 자동으로 <strong>I feel happy.</strong> 형태의 기본 문장이 완성됩니다.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-icon" style="background:#DBEAFE">📝</div>
+          <div class="step-content">
+            <h3>Step 1 — 뼈대 문장 <span class="step-tag" style="background:#DBEAFE;color:#1D4ED8">WHO + ACTION + WHAT</span></h3>
+            <p>주어(WHO), 동사(ACTION), 목적어/보어(WHAT)를 선택하거나 직접 입력해 기본 문장을 만듭니다. 시제(현재·과거·미래)를 선택하면 동사가 자동으로 변형됩니다.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-icon" style="background:#F3E8FF">🔗</div>
+          <div class="step-content">
+            <h3>Step 2 — 문장 이어붙이기 <span class="step-tag" style="background:#F3E8FF;color:#7C3AED">접속사</span></h3>
+            <p>because, when, but, and, so 중 접속사를 골라 두 번째 절을 연결합니다. 앞 문장이 자동으로 불러와집니다.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-icon" style="background:#DCFCE7">✨</div>
+          <div class="step-content">
+            <h3>Step 3 — 꾸미기 <span class="step-tag" style="background:#DCFCE7;color:#15803D">Where / How / When</span></h3>
+            <p>장소(at school), 방법(happily), 시간(yesterday)을 추가해 문장을 풍부하게 만듭니다. 완성된 문장은 저장 버튼으로 이야기에 추가할 수 있습니다.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-icon" style="background:#FDF4FF">🌳</div>
+          <div class="step-content">
+            <h3>Step 4 — 심화 레벨업 <span class="step-tag" style="background:#FDF4FF;color:#7C3AED">관계대명사</span></h3>
+            <p>who, which, that, to 버튼을 눌러 관계대명사절을 삽입합니다. 심화 레벨 학생 전용입니다.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-icon" style="background:#FEF9C3">🏆</div>
+          <div class="step-content">
+            <h3>Step 5 — 완성 & AI 첨삭 <span class="step-tag" style="background:#FEF9C3;color:#A16207">My Story</span></h3>
+            <p>저장된 문장들이 나열됩니다. <strong>AI 선생님의 첨삭!</strong> 버튼을 누르면 Gemini가 시제 검토, 교정, 격려 피드백을 해줍니다. 인쇄 및 텍스트 저장도 가능합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔊 TTS 듣기 기능</div>
+      <p style="font-size:.88rem;color:var(--gray);line-height:1.7">각 Step의 완성된 문장 아래 <strong>Listen!</strong> 버튼을 누르면 영어 TTS(Text-to-Speech)로 원어민 발음을 들을 수 있습니다. 브라우저 내장 기능으로 별도 설치가 필요 없습니다.</p>
+      <div class="tip-box bg-blue-soft border-blue" style="border:2px solid #BFDBFE;margin-top:12px">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text" style="color:var(--blue)">
+          <h4>크롬 브라우저 추천</h4>
+          <p>TTS 기능은 크롬(Chrome) 브라우저에서 가장 자연스럽게 작동합니다. iOS Safari도 지원합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · · · · · ·</div>
+
+  <!-- ══ 3. LEVELS ══ -->
+  <div class="section" id="levels">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#059669,#16A34A)">3</div>
+      <div>
+        <h2>레벨별 활동 안내</h2>
+        <div class="section-sub">학생 수준에 따라 선택 · 교사가 고정 설정도 가능</div>
+      </div>
+    </div>
+
+    <div class="level-grid">
+      <div class="level-card bg-green-soft" style="border:2px solid #BBF7D0">
+        <div class="level-icon">🌱</div>
+        <h3 style="color:var(--green)">기초</h3>
+        <p style="color:var(--gray);font-size:.78rem;margin-bottom:10px">단어 칩을 눌러서 선택하는 방식</p>
+        <ul style="color:var(--gray)">
+          <li>감정 칩 선택</li>
+          <li>동사 아이콘 클릭</li>
+          <li>What 칩 선택</li>
+          <li>직접 입력 숨김</li>
+          <li>Step 1~3만 사용</li>
+        </ul>
+      </div>
+      <div class="level-card bg-blue-soft" style="border:2px solid #BFDBFE">
+        <div class="level-icon">🌿</div>
+        <h3 style="color:var(--blue)">중급</h3>
+        <p style="color:var(--gray);font-size:.78rem;margin-bottom:10px">칩 + 직접 타이핑 병행</p>
+        <ul style="color:var(--gray)">
+          <li>모든 입력 필드 사용</li>
+          <li>접속사 선택</li>
+          <li>Where·How·When 추가</li>
+          <li>AI 단어 검색 활용</li>
+          <li>Step 1~3 사용</li>
+        </ul>
+      </div>
+      <div class="level-card bg-purple-soft" style="border:2px solid #DDD6FE">
+        <div class="level-icon">🌳</div>
+        <h3 style="color:var(--purple)">심화</h3>
+        <p style="color:var(--gray);font-size:.78rem;margin-bottom:10px">관계대명사까지 도전</p>
+        <ul style="color:var(--gray)">
+          <li>중급 전체 포함</li>
+          <li>Step 4 레벨업 접근</li>
+          <li>who / which / that 삽입</li>
+          <li>복합문 완성</li>
+          <li>Step 1~5 전체 사용</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-box bg-yellow-soft" style="border:2px solid #FDE68A;margin-top:16px">
+      <div class="tip-icon">👩‍🏫</div>
+      <div class="tip-text" style="color:var(--yellow)">
+        <h4>교사 팁 — 레벨 고정 기능</h4>
+        <p>교사 컨트롤 패널에서 레벨을 전체 고정하면 모든 학생이 같은 레벨로 수업할 수 있습니다. 활동지와 연계할 때 유용합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · · · · · ·</div>
+
+  <!-- ══ 4. GAME ZONE ══ -->
+  <div class="section" id="gamezone">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#0F172A,#1E293B)">4</div>
+      <div>
+        <h2>영어 게임방 사용법</h2>
+        <div class="section-sub">eaim-english-game.html · 3종 미니게임 + AI 회화</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎮 미니게임 3종 공략</div>
+      <div class="game-grid">
+        <div class="game-card bg-green-soft" style="border:2px solid #BBF7D0">
+          <div class="game-emoji">🌱</div>
+          <h3 style="color:var(--green)">단어·그림 매칭</h3>
+          <p>그림(이모지)과 한국어 뜻을 보고 알맞은 영어 단어를 4개 보기 중에 고릅니다.</p>
+          <span class="points" style="background:#DCFCE7;color:var(--green)">정답 +10점</span>
+          <p style="font-size:.72rem;color:var(--gray);margin-top:6px">⏱ 제한시간 20초</p>
+        </div>
+        <div class="game-card bg-blue-soft" style="border:2px solid #BFDBFE">
+          <div class="game-emoji">🌿</div>
+          <h3 style="color:var(--blue)">빠른 번역</h3>
+          <p>한국어→영어, 영어→한국어 번역을 직접 타이핑합니다. 빠를수록 유리!</p>
+          <span class="points" style="background:#DBEAFE;color:var(--blue)">정답 +15점</span>
+          <p style="font-size:.72rem;color:var(--gray);margin-top:6px">⏱ 제한시간 15초</p>
+        </div>
+        <div class="game-card bg-purple-soft" style="border:2px solid #DDD6FE">
+          <div class="game-emoji">🌳</div>
+          <h3 style="color:var(--purple)">어순 맞추기</h3>
+          <p>한국어 문장을 보고 흩어진 영어 단어 토큰을 올바른 순서로 클릭해 배열합니다.</p>
+          <span class="points" style="background:#F3E8FF;color:var(--purple)">정답 +20점</span>
+          <p style="font-size:.72rem;color:var(--gray);margin-top:6px">⏱ 제한시간 20초</p>
+        </div>
+      </div>
+      <div class="tip-box bg-yellow-soft" style="border:2px solid #FDE68A;margin-top:14px">
+        <div class="tip-icon">🏆</div>
+        <div class="tip-text" style="color:var(--yellow)">
+          <h4>점수 시스템</h4>
+          <p>게임 1판은 10문제. 각 게임마다 최고기록이 저장됩니다. 게임 점수는 총점에 누적되어 뱃지 획득에 활용됩니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🤖 AI 회화 연습</div>
+      <p style="font-size:.88rem;color:var(--gray);line-height:1.7;margin-bottom:16px">레벨을 선택한 후 AI 선생님과 자유롭게 대화할 수 있습니다. 레벨에 따라 한국어와 영어 사용 비율이 달라집니다.</p>
+      <div class="level-grid">
+        <div class="level-card" style="background:#F0FDF4;border:2px solid #BBF7D0">
+          <div class="level-icon">🌱</div>
+          <h3 style="color:var(--green);font-size:.85rem">기초 모드</h3>
+          <p style="font-size:.75rem;color:var(--gray)">한국어 80%<br>영어 단어 위주<br>즉시 번역 제공</p>
+        </div>
+        <div class="level-card" style="background:#EFF6FF;border:2px solid #BFDBFE">
+          <div class="level-icon">🌿</div>
+          <h3 style="color:var(--blue);font-size:.85rem">중급 모드</h3>
+          <p style="font-size:.75rem;color:var(--gray)">한국어 50%<br>영어 50%<br>자연스러운 전환</p>
+        </div>
+        <div class="level-card" style="background:#FAF5FF;border:2px solid #DDD6FE">
+          <div class="level-icon">🌳</div>
+          <h3 style="color:var(--purple);font-size:.85rem">심화 모드</h3>
+          <p style="font-size:.75rem;color:var(--gray)">영어 80%<br>어려운 단어만 한국어<br>문법 교정 포함</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · · · · · ·</div>
+
+  <!-- ══ 5. BADGES ══ -->
+  <div class="section" id="badges">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#D97706,#F59E0B)">5</div>
+      <div>
+        <h2>뱃지 & 랭킹 시스템</h2>
+        <div class="section-sub">게임방에서 점수를 쌓아 성장하는 재미!</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🥚 성장 뱃지 시스템</div>
+      <p style="font-size:.85rem;color:var(--gray);margin-bottom:18px">게임 점수 총합이 기준에 도달하면 자동으로 뱃지가 업그레이드됩니다. 새 뱃지 획득 시 팝업 애니메이션이 표시됩니다!</p>
+      <div class="badge-ladder">
+        <div class="badge-step">
+          <div class="b-icon">🥚</div>
+          <div class="b-name" style="color:#92400E">알</div>
+          <div class="b-pts">시작!</div>
+        </div>
+        <div class="badge-arrow">→</div>
+        <div class="badge-step">
+          <div class="b-icon">🐣</div>
+          <div class="b-name" style="color:#D97706">부화중</div>
+          <div class="b-pts">50점~</div>
+        </div>
+        <div class="badge-arrow">→</div>
+        <div class="badge-step">
+          <div class="b-icon">🐥</div>
+          <div class="b-name" style="color:var(--yellow)">병아리</div>
+          <div class="b-pts">150점~</div>
+        </div>
+        <div class="badge-arrow">→</div>
+        <div class="badge-step">
+          <div class="b-icon">🐔</div>
+          <div class="b-name" style="color:var(--green)">영어닭</div>
+          <div class="b-pts">300점~</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏆 반 전체 랭킹</div>
+      <p style="font-size:.88rem;color:var(--gray);line-height:1.7;margin-bottom:14px">게임방 하단 <strong>🏆 랭킹</strong> 탭에서 반 전체 순위를 볼 수 있습니다. 같은 기기·브라우저의 localStorage를 공유하므로, 학교 컴퓨터실처럼 각자 기기를 쓰는 환경에서 잘 작동합니다.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:var(--light);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:1.5rem">📊</div>
+          <div style="font-size:.8rem;font-weight:900;margin:4px 0">전체 랭킹</div>
+          <div style="font-size:.75rem;color:var(--gray)">총점 기준 순위</div>
+        </div>
+        <div style="background:var(--light);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:1.5rem">🎯</div>
+          <div style="font-size:.8rem;font-weight:900;margin:4px 0">게임별 랭킹</div>
+          <div style="font-size:.75rem;color:var(--gray)">매칭·번역·어순 각각</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · · · · · ·</div>
+
+  <!-- ══ 6. TEACHER ══ -->
+  <div class="section" id="teacher">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#0F172A,#334155)">6</div>
+      <div>
+        <h2>교사 컨트롤 패널</h2>
+        <div class="section-sub">두 앱 모두 동일한 방식 · 기본 비밀번호: 1234</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔐 교사 패널 접속 방법</div>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>이름 입력 화면에서</h4>
+            <p>학생 이름 입력 모달 하단의 <strong>"선생님이신가요?"</strong> 링크를 클릭합니다.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>비밀번호 입력</h4>
+            <p>기본 비밀번호 <strong>1234</strong>를 입력합니다. 패널 내에서 변경 가능합니다.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>교사 패널 사용</h4>
+            <p>API 키 설정, 수업 ON/OFF, 레벨 고정, 학생 현황 확인이 가능합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚙️ 교사 전용 기능 목록</div>
+      <div class="teacher-feature-grid">
+        <div class="teacher-feature">
+          <div class="tf-icon">🔑</div>
+          <h4>API 키 관리</h4>
+          <p>Gemini API 키 입력 및 저장. 한 번 저장하면 브라우저가 기억합니다.</p>
+        </div>
+        <div class="teacher-feature">
+          <div class="tf-icon">🟢</div>
+          <h4>수업 ON/OFF</h4>
+          <p>수업 종료 시 학생 화면에 잠금 메시지를 표시합니다. (놀이터 전용)</p>
+        </div>
+        <div class="teacher-feature">
+          <div class="tf-icon">🔒</div>
+          <h4>레벨 고정</h4>
+          <p>기초·중급·심화 중 하나로 전체 고정. 학생이 임의 변경 불가.</p>
+        </div>
+        <div class="teacher-feature">
+          <div class="tf-icon">👥</div>
+          <h4>학생 현황</h4>
+          <p>접속한 학생 이름, 현재 Step, 저장 문장 수, 최근 활동 시각 확인.</p>
+        </div>
+        <div class="teacher-feature">
+          <div class="tf-icon">📊</div>
+          <h4>데이터 내보내기</h4>
+          <p>전체 학생 점수·뱃지·최고기록을 CSV 파일로 저장. (게임방 전용)</p>
+        </div>
+        <div class="teacher-feature">
+          <div class="tf-icon">🗑️</div>
+          <h4>전체 초기화</h4>
+          <p>모든 학생 데이터를 지웁니다. 새 학기나 다음 반 수업 전 사용.</p>
+        </div>
+      </div>
+      <div class="tip-box bg-blue-soft" style="border:2px solid #BFDBFE;margin-top:14px">
+        <div class="tip-icon">🔗</div>
+        <div class="tip-text" style="color:var(--blue)">
+          <h4>두 앱이 데이터를 공유해요</h4>
+          <p>놀이터와 게임방은 동일한 localStorage 키(<code>eaim_english_</code>)를 사용합니다. API 키, 비밀번호, 레벨 설정이 두 앱에서 공유됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · · · · · ·</div>
+
+  <!-- ══ 7. GITHUB ══ -->
+  <div class="section" id="github">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#0F172A,#1E293B)">7</div>
+      <div>
+        <h2>GitHub Pages 배포</h2>
+        <div class="section-sub">무료로 인터넷에 공개 · QR코드로 학생 접속 가능</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📁 파일 구조</div>
+      <div class="code-snippet" style="font-size:.82rem;line-height:1.9">
+        📁 리포지토리 루트/<br>
+        ├── index.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← 메인 허브 페이지<br>
+        ├── eaim-english-playground.html &nbsp;← 영어 놀이터<br>
+        ├── eaim-english-game.html &nbsp;&nbsp;&nbsp;← 영어 게임방<br>
+        └── guide.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← 이 사용 가이드
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🚀 GitHub Pages 배포 순서</div>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>GitHub 계정 로그인</h4>
+            <p><a href="https://github.com" style="color:var(--blue)">github.com</a>에 접속하여 로그인합니다. 계정이 없으면 무료로 만드세요.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>New repository 생성</h4>
+            <p>오른쪽 상단 <strong>+</strong> → <strong>New repository</strong> 클릭. Repository name에 원하는 이름 입력 (예: eaim-english). <strong>Public</strong>으로 설정.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>파일 업로드</h4>
+            <p>리포지토리 페이지에서 <strong>Add file → Upload files</strong> 클릭 후 HTML 파일 4개를 드래그앤드롭하여 올립니다.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>GitHub Pages 활성화</h4>
+            <p>리포지토리 상단 <strong>Settings</strong> → 왼쪽 <strong>Pages</strong> → Source를 <strong>Deploy from a branch</strong>, Branch를 <strong>main / (root)</strong>로 설정 후 Save.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>URL 확인 & QR코드 생성</h4>
+            <p>약 1~2분 후 Settings → Pages에서 URL이 표시됩니다.</p>
+            <div class="code-snippet">https://[계정명].github.io/[리포지토리명]/</div>
+            <p style="margin-top:8px">이 URL을 <a href="https://qr.io" style="color:var(--blue)">qr.io</a> 등 무료 QR 생성 사이트에 넣으면 학생 배포용 QR코드 완성!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box bg-green-soft" style="border:2px solid #BBF7D0">
+      <div class="tip-icon">📱</div>
+      <div class="tip-text" style="color:var(--green)">
+        <h4>모바일 최적화 완료</h4>
+        <p>두 앱 모두 모바일(스마트폰·태블릿)에서 완벽하게 작동합니다. 학생들이 스마트폰으로 QR코드를 찍어 바로 접속할 수 있어요.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ 9. PWA ══ -->
+  <div class="section" id="pwa">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#059669,#16A34A)">9</div>
+      <div>
+        <h2>앱으로 설치하기 (PWA)</h2>
+        <div class="section-sub">설치 없이 앱처럼 — Android · iOS · PC 모두 가능</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📲 PWA란?</div>
+      <p style="font-size:.88rem;color:var(--gray);line-height:1.7;margin-bottom:14px">
+        <strong>Progressive Web App</strong>의 줄임말로, 웹사이트를 스마트폰 홈 화면에 아이콘으로 저장해서 일반 앱처럼 실행하는 기술입니다. App Store나 Play Store에서 다운받을 필요 없이, QR코드 한 번으로 접속한 뒤 설치하면 끝입니다.
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+        <div style="background:#F0FDF4;border:2px solid #BBF7D0;border-radius:14px;padding:14px;text-align:center">
+          <div style="font-size:1.6rem;margin-bottom:6px">⚡</div>
+          <div style="font-weight:900;font-size:.85rem;color:#15803D">빠른 실행</div>
+          <div style="font-size:.75rem;color:var(--gray);margin-top:4px">캐시 저장으로<br>두 번째부터 즉시 열림</div>
+        </div>
+        <div style="background:#EFF6FF;border:2px solid #BFDBFE;border-radius:14px;padding:14px;text-align:center">
+          <div style="font-size:1.6rem;margin-bottom:6px">📴</div>
+          <div style="font-weight:900;font-size:.85rem;color:#1D4ED8">오프라인</div>
+          <div style="font-size:.75rem;color:var(--gray);margin-top:4px">와이파이 없어도<br>기본 게임 작동</div>
+        </div>
+        <div style="background:#FAF5FF;border:2px solid #DDD6FE;border-radius:14px;padding:14px;text-align:center">
+          <div style="font-size:1.6rem;margin-bottom:6px">🖥️</div>
+          <div style="font-weight:900;font-size:.85rem;color:#7C3AED">전체화면</div>
+          <div style="font-size:.75rem;color:var(--gray);margin-top:4px">주소창 없이<br>앱처럼 실행</div>
+        </div>
+        <div style="background:#FFFBEB;border:2px solid #FDE68A;border-radius:14px;padding:14px;text-align:center">
+          <div style="font-size:1.6rem;margin-bottom:6px">🆓</div>
+          <div style="font-weight:900;font-size:.85rem;color:#D97706">무료 설치</div>
+          <div style="font-size:.75rem;color:var(--gray);margin-top:4px">스토어 불필요<br>용량 거의 없음</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#15803D">🤖 Android (크롬) 설치 방법</div>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>크롬으로 사이트 접속</h4>
+            <p>QR코드를 스캔하거나 GitHub Pages URL을 크롬 브라우저로 열어요.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>설치 배너 확인</h4>
+            <p>화면 하단에 파란색 <strong>"홈 화면에 설치하기"</strong> 배너가 자동으로 나타납니다. <strong>"설치"</strong> 버튼을 탭하세요.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>홈 화면 확인</h4>
+            <p>EAIM 영어 플랫폼 아이콘이 홈 화면에 생성됩니다. 다음부터는 아이콘을 탭하면 앱처럼 바로 실행돼요!</p>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box bg-green-soft" style="border:2px solid #BBF7D0;margin-top:12px">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text" style="color:var(--green)">
+          <h4>배너가 안 뜨면?</h4>
+          <p>크롬 주소창 오른쪽 <strong>⋮ 메뉴 → "홈 화면에 추가"</strong>를 선택해도 설치할 수 있어요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#1D4ED8">🍎 iOS (Safari) 설치 방법</div>
+      <p style="font-size:.82rem;color:var(--gray);margin-bottom:14px">iOS Safari는 자동 배너가 뜨지 않아요. 아래 방법으로 수동 설치하세요.</p>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>Safari로 사이트 접속</h4>
+            <p>반드시 <strong>Safari</strong> 브라우저를 사용해야 합니다. Chrome for iOS는 홈 화면 추가가 지원되지 않아요.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>공유 버튼 탭</h4>
+            <p>화면 하단 가운데 <strong>□↑ 공유 버튼</strong>을 탭합니다.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>"홈 화면에 추가" 선택</h4>
+            <p>공유 메뉴를 아래로 스크롤하면 <strong>"홈 화면에 추가"</strong> 항목이 있어요. 탭 후 오른쪽 위 <strong>"추가"</strong> 버튼을 누르세요.</p>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box bg-blue-soft border-blue" style="border:2px solid #BFDBFE;margin-top:12px">
+        <div class="tip-icon">👩‍🏫</div>
+        <div class="tip-text" style="color:var(--blue)">
+          <h4>수업 첫 날 5분 투자!</h4>
+          <p>첫 수업에서 학생들과 함께 설치하는 시간을 가지면, 이후 매 수업마다 QR 스캔 없이 아이콘 탭 하나로 접속할 수 있어요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💻 PC (크롬/엣지) 설치 방법</div>
+      <p style="font-size:.85rem;color:var(--gray);line-height:1.7;margin-bottom:14px">
+        컴퓨터실 수업에서도 PWA로 설치하면 바탕화면 아이콘으로 실행 가능합니다.
+      </p>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>크롬/엣지로 사이트 접속</h4>
+            <p>GitHub Pages URL을 크롬 또는 Edge 브라우저로 엽니다.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>주소창 설치 아이콘 클릭</h4>
+            <p>URL 입력창 오른쪽 끝에 <strong>⊕ 설치 아이콘</strong>이 나타납니다. 클릭 후 <strong>"설치"</strong>를 선택하세요.</p>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-step-content">
+            <h4>바탕화면 아이콘 확인</h4>
+            <p>바탕화면 또는 시작 메뉴에 EAIM 아이콘이 생깁니다. 이후 별도 브라우저 없이 앱처럼 실행돼요.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔄 업데이트 안내</div>
+      <p style="font-size:.85rem;color:var(--gray);line-height:1.7">
+        선생님이 GitHub에 파일을 수정·업로드하면, 학생 기기에 <span style="background:#DCFCE7;color:#15803D;padding:2px 8px;border-radius:6px;font-weight:700">🔄 새 버전이 있어요!</span> 초록 배너가 자동으로 표시됩니다. <strong>"업데이트"</strong> 버튼을 탭하면 최신 버전으로 갱신됩니다.
+      </p>
+      <div class="tip-box" style="background:#FFF1F2;border:2px solid #FECDD3;margin-top:12px">
+        <div class="tip-icon">⚠️</div>
+        <div class="tip-text" style="color:#BE123C">
+          <h4>파일 수정 후 캐시 갱신 방법</h4>
+          <p>sw.js 파일 상단의 <code style="background:#FEE2E2;padding:1px 6px;border-radius:4px">CACHE_VERSION = 'eaim-english-v1'</code> 을 <code style="background:#FEE2E2;padding:1px 6px;border-radius:4px">v2</code>, <code style="background:#FEE2E2;padding:1px 6px;border-radius:4px">v3</code>... 으로 올려주면 학생 기기에 자동 업데이트 알림이 뜹니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · · · · · ·</div>
+
+  <!-- ══ 8. FAQ ══ -->
+  <div class="section" id="faq">
+    <div class="section-header">
+      <div class="section-num" style="background:linear-gradient(135deg,#7C3AED,#DB2777)">8</div>
+      <div>
+        <h2>자주 묻는 질문</h2>
+        <div class="section-sub">FAQ</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="qa-item">
+        <div class="qa-q">AI 기능이 작동하지 않아요.</div>
+        <div class="qa-a">교사 패널에서 Gemini API 키가 올바르게 입력됐는지 확인하세요. 키가 <code>AIzaSy...</code>로 시작하는지 확인하고, 앞뒤 공백이 없는지도 체크해 주세요.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">학생이 다른 레벨로 바꿔버려요.</div>
+        <div class="qa-a">교사 컨트롤 패널 → 레벨 고정 기능을 사용하세요. 레벨을 고정하면 학생 화면에서 레벨 변경 버튼이 잠기고 "선생님이 설정함" 표시가 나타납니다.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">랭킹이 반 전체에 공유되지 않아요.</div>
+        <div class="qa-a">현재 버전은 localStorage 기반으로, 같은 기기·브라우저 내에서만 데이터가 공유됩니다. 학교 컴퓨터실처럼 각자 다른 기기를 사용하는 경우 각 기기에서 독립적으로 데이터가 저장됩니다. 교사는 CSV 내보내기로 전체 데이터를 통합 관리하세요.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">소리(TTS)가 나오지 않아요.</div>
+        <div class="qa-a">크롬(Chrome) 브라우저를 사용하고 있는지 확인하세요. 일부 기기에서는 사용자의 첫 번째 클릭 이후에만 소리가 활성화됩니다. 볼륨이 음소거 상태가 아닌지도 확인해 주세요.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">교사 비밀번호를 잊어버렸어요.</div>
+        <div class="qa-a">브라우저 개발자 도구(F12) → Application → LocalStorage에서 <code>eaim_teacher_pw</code> 항목을 삭제하면 기본값 1234로 초기화됩니다.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">GitHub에 올렸는데 페이지가 열리지 않아요.</div>
+        <div class="qa-a">GitHub Pages 활성화 후 최대 10분 정도 시간이 소요될 수 있습니다. Settings → Pages에서 녹색 체크 표시와 함께 URL이 표시될 때까지 기다려 주세요.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">Gemini API 비용이 발생하나요?</div>
+        <div class="qa-a">Google AI Studio의 무료 티어(Free tier)는 분당 15회 요청, 하루 1,500회 요청이 무료입니다. 일반적인 수업 활용 범위에서는 무료로 충분히 사용할 수 있습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center;padding:32px 0;border-top:2px solid var(--border)">
+    <div style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--blue);margin-bottom:8px">
+      EAIM 영어 플랫폼
+    </div>
+    <p style="font-size:.82rem;color:var(--gray);line-height:1.8">
+      Emotion · Artscape · Interactive · Musicalization<br>
+      <strong style="color:var(--dark)">박성애</strong> 선생님 제작 · Powered by Gemini AI
+    </p>
+    <a href="index.html" style="display:inline-block;margin-top:16px;padding:10px 24px;background:var(--blue);color:white;border-radius:12px;text-decoration:none;font-weight:700;font-size:.88rem">← 홈으로 돌아가기</a>
+  </div>
+
+</div>
+
+</body>
+</html>

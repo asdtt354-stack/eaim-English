@@ -1,0 +1,42 @@
+{
+  "name": "EAIM 영어 플랫폼",
+  "short_name": "EAIM영어",
+  "description": "감성·예술·상호작용·음악화 철학으로 만든 중학교 영어 학습 플랫폼",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EFF6FF",
+  "theme_color": "#2563EB",
+  "lang": "ko",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "영어 놀이터",
+      "short_name": "놀이터",
+      "url": "./eaim-english-playground.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "영어 게임방",
+      "short_name": "게임방",
+      "url": "./eaim-english-game.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "categories": ["education", "games"],
+  "screenshots": []
+}

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAIM 영어 플랫폼</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563EB">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="EAIM영어">
+<link rel="apple-touch-icon" href="icon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sky: #EFF6FF;
+    --blue: #2563EB;
+    --indigo: #4F46E5;
+    --green: #16A34A;
+    --yellow: #CA8A04;
+    --pink: #DB2777;
+    --card-radius: 2rem;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--sky);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Animated background ── */
+  .bg-scene {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    background: linear-gradient(160deg, #dbeafe 0%, #eff6ff 40%, #ecfdf5 100%);
+  }
+  .cloud {
+    position: absolute; border-radius: 99px;
+    background: rgba(255,255,255,.7); filter: blur(2px);
+    animation: drift linear infinite;
+  }
+  .cloud:nth-child(1) { width:180px;height:60px; top:8%; left:-200px; animation-duration:28s; }
+  .cloud:nth-child(2) { width:120px;height:44px; top:22%; left:-150px; animation-duration:38s; animation-delay:8s; }
+  .cloud:nth-child(3) { width:220px;height:70px; top:55%; left:-250px; animation-duration:45s; animation-delay:3s; }
+  .cloud:nth-child(4) { width:90px; height:36px; top:70%; left:-120px; animation-duration:32s; animation-delay:15s; }
+  @keyframes drift { from{transform:translateX(0)} to{transform:translateX(calc(100vw + 300px))} }
+
+  .floating-emoji {
+    position: absolute; font-size: 2rem; opacity: .25;
+    animation: floatUp 6s ease-in-out infinite;
+  }
+  @keyframes floatUp {
+    0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-20px) rotate(5deg)}
+  }
+
+  /* ── Layout ── */
+  .wrapper {
+    position: relative; z-index: 10;
+    max-width: 680px; margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ── Hero Header ── */
+  .hero {
+    text-align: center;
+    padding: 48px 0 32px;
+    animation: fadeDown .7s ease both;
+  }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-24px)} to{opacity:1;transform:translateY(0)} }
+
+  .hero-logo {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: white;
+    border: 3px solid #BFDBFE;
+    border-radius: 99px;
+    padding: 8px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(37,99,235,.1);
+  }
+  .hero-logo span {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: var(--blue);
+    letter-spacing: .05em;
+  }
+  .hero-badge {
+    font-size: .75rem; background: #DBEAFE;
+    color: var(--blue); padding: 3px 10px; border-radius: 99px;
+    font-weight: 700;
+  }
+
+  .hero h1 {
+    font-family: 'Gaegu', cursive;
+    font-size: clamp(2.2rem, 8vw, 3.2rem);
+    font-weight: 700;
+    color: #1E3A8A;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    color: #64748B; font-size: 1rem;
+    line-height: 1.7; max-width: 400px; margin: 0 auto;
+  }
+
+  /* ── EAIM tagline ── */
+  .eaim-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center; margin-top: 20px;
+  }
+  .eaim-tag {
+    padding: 6px 16px; border-radius: 99px; font-size: .8rem; font-weight: 700;
+    letter-spacing: .03em;
+  }
+  .eaim-tag:nth-child(1){background:#FEF9C3;color:#A16207;}
+  .eaim-tag:nth-child(2){background:#ECFDF5;color:#15803D;}
+  .eaim-tag:nth-child(3){background:#EFF6FF;color:#1D4ED8;}
+  .eaim-tag:nth-child(4){background:#FDF4FF;color:#7E22CE;}
+
+  /* ── Section Label ── */
+  .section-label {
+    text-align: center; margin: 36px 0 20px;
+    font-family: 'Gaegu', cursive; font-size: 1.3rem;
+    color: #374151; font-weight: 700;
+  }
+  .section-label::before, .section-label::after {
+    content: ' ✦ '; color: #CBD5E1;
+  }
+
+  /* ── App Cards ── */
+  .app-card {
+    display: block; text-decoration: none;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,.08);
+    transition: transform .25s, box-shadow .25s;
+    margin-bottom: 20px;
+    animation: cardIn .6s ease both;
+  }
+  .app-card:nth-child(1){animation-delay:.1s}
+  .app-card:nth-child(2){animation-delay:.22s}
+  @keyframes cardIn { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
+  .app-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 18px 48px rgba(0,0,0,.13);
+  }
+  .app-card:active { transform: scale(.98); }
+
+  /* Playground card */
+  .card-playground .card-header {
+    background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+    padding: 32px 28px 24px;
+    position: relative; overflow: hidden;
+  }
+  .card-playground .card-header::before {
+    content: ''; position: absolute;
+    right: -30px; top: -30px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,.08);
+    border-radius: 50%;
+  }
+  .card-playground .card-header::after {
+    content: ''; position: absolute;
+    right: 20px; bottom: -20px;
+    width: 100px; height: 100px;
+    background: rgba(255,255,255,.06);
+    border-radius: 50%;
+  }
+
+  /* Game card */
+  .card-game .card-header {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #0E3A2F 100%);
+    padding: 32px 28px 24px;
+    position: relative; overflow: hidden;
+  }
+  .card-game .card-header::before {
+    content: '🎮'; position: absolute;
+    right: 20px; top: 20px;
+    font-size: 5rem; opacity: .12;
+    transform: rotate(12deg);
+  }
+
+  .card-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,.2);
+    border-radius: 99px; padding: 4px 14px;
+    font-size: .72rem; font-weight: 700;
+    color: rgba(255,255,255,.9);
+    letter-spacing: .06em; text-transform: uppercase;
+    margin-bottom: 14px; backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,.15);
+  }
+  .card-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4ADE80; box-shadow: 0 0 6px #4ADE80;
+    animation: glow 1.5s ease-in-out infinite;
+  }
+  @keyframes glow { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  .card-header h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem; color: white;
+    line-height: 1.1; margin-bottom: 8px;
+  }
+  .card-header h2 small {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.1rem; font-weight: 400;
+    display: block; color: rgba(255,255,255,.7);
+    margin-top: 4px;
+  }
+  .card-header p {
+    font-size: .88rem; color: rgba(255,255,255,.72);
+    line-height: 1.6; max-width: 340px;
+  }
+
+  /* Feature pills inside header */
+  .feature-pills {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px;
+  }
+  .pill {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 99px; padding: 4px 12px;
+    font-size: .72rem; color: rgba(255,255,255,.85); font-weight: 700;
+  }
+
+  /* Card body */
+  .card-body {
+    background: white; padding: 20px 28px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .card-steps {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .step-dot {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .65rem; font-weight: 900;
+  }
+  .card-playground .step-dot:nth-child(1){background:#FEE2E2;color:#DC2626;}
+  .card-playground .step-dot:nth-child(2){background:#FEF9C3;color:#A16207;}
+  .card-playground .step-dot:nth-child(3){background:#DCFCE7;color:#15803D;}
+  .card-playground .step-dot:nth-child(4){background:#F3E8FF;color:#7E22CE;}
+  .card-playground .step-dot:nth-child(5){background:#FEF3C7;color:#D97706;}
+
+  .card-game .step-dot:nth-child(1){background:#DCFCE7;color:#15803D;}
+  .card-game .step-dot:nth-child(2){background:#DBEAFE;color:#1D4ED8;}
+  .card-game .step-dot:nth-child(3){background:#F3E8FF;color:#7E22CE;}
+  .card-game .step-dot:nth-child(4){background:#FEF9C3;color:#A16207;}
+
+  .enter-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    border-radius: 14px; padding: 10px 20px;
+    font-weight: 900; font-size: .9rem;
+    border: none; cursor: pointer; transition: all .2s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .card-playground .enter-btn {
+    background: linear-gradient(135deg, #2563EB, #4F46E5);
+    color: white; box-shadow: 0 4px 16px rgba(37,99,235,.3);
+  }
+  .card-playground .enter-btn:hover { box-shadow: 0 6px 24px rgba(37,99,235,.5); }
+  .card-game .enter-btn {
+    background: linear-gradient(135deg, #0F172A, #1E293B);
+    color: #4ADE80; box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  }
+  .card-game .enter-btn:hover { box-shadow: 0 6px 24px rgba(0,0,0,.35); }
+
+  /* ── Info strip ── */
+  .info-strip {
+    background: white;
+    border: 2px solid #BFDBFE;
+    border-radius: 1.5rem;
+    padding: 20px 24px;
+    display: flex; gap: 16px; flex-wrap: wrap;
+    align-items: center; justify-content: center;
+    margin-bottom: 28px;
+    animation: cardIn .6s .35s ease both;
+  }
+  .info-item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px; min-width: 80px; text-align: center;
+  }
+  .info-icon { font-size: 1.6rem; }
+  .info-label { font-size: .7rem; color: #94A3B8; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .info-val { font-family: 'Fredoka One', cursive; font-size: 1rem; color: #1E3A8A; }
+  .info-divider { width: 1px; height: 40px; background: #E2E8F0; }
+
+  /* ── Teacher Quick Access ── */
+  .teacher-strip {
+    background: linear-gradient(135deg, #1E293B, #0F172A);
+    border-radius: 1.5rem;
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-bottom: 28px;
+    animation: cardIn .6s .45s ease both;
+  }
+  .teacher-strip-text h3 {
+    font-family: 'Fredoka One', cursive;
+    color: white; font-size: 1rem; margin-bottom: 2px;
+  }
+  .teacher-strip-text p { font-size: .75rem; color: #94A3B8; }
+  .teacher-btns { display: flex; gap: 8px; }
+  .t-btn {
+    padding: 8px 16px; border-radius: 10px;
+    font-size: .78rem; font-weight: 700;
+    border: none; cursor: pointer; transition: all .15s;
+    text-decoration: none; display: inline-block;
+  }
+  .t-btn-playground {
+    background: #2563EB; color: white;
+  }
+  .t-btn-game {
+    background: #4ADE80; color: #14532D;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center; padding: 24px;
+    color: #94A3B8; font-size: .78rem; line-height: 1.8;
+    animation: cardIn .6s .5s ease both;
+  }
+  footer strong { color: #2563EB; }
+
+  /* ── Responsive ── */
+  @media (max-width: 480px) {
+    .card-header { padding: 24px 20px 20px; }
+    .card-body { padding: 16px 20px; flex-direction: column; align-items: flex-start; }
+    .enter-btn { width: 100%; justify-content: center; }
+    .teacher-strip { flex-direction: column; text-align: center; }
+    .teacher-btns { width: 100%; }
+    .t-btn { flex: 1; text-align: center; }
+    .info-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-scene">
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="floating-emoji" style="left:5%;top:30%;animation-delay:0s">📚</div>
+  <div class="floating-emoji" style="left:88%;top:15%;animation-delay:1.2s">🎮</div>
+  <div class="floating-emoji" style="left:15%;top:70%;animation-delay:2.5s">🌱</div>
+  <div class="floating-emoji" style="left:80%;top:65%;animation-delay:.8s">⭐</div>
+  <div class="floating-emoji" style="left:50%;top:85%;animation-delay:3s">🎵</div>
+</div>
+
+<div class="wrapper">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-logo">
+      <span>EAIM</span>
+      <div class="hero-badge">영어 플랫폼</div>
+    </div>
+    <h1>영어, 이제 <span class="accent">즐겁게</span> 배워요!</h1>
+    <p>감성·예술·상호작용·음악화 철학으로 만든<br>중학교 영어 학습 플랫폼입니다.</p>
+    <div class="eaim-tags">
+      <span class="eaim-tag">💛 Emotion</span>
+      <span class="eaim-tag">🌿 Artscape</span>
+      <span class="eaim-tag">💙 Interactive</span>
+      <span class="eaim-tag">💜 Musicalization</span>
+    </div>
+  </div>
+
+  <!-- Info Strip -->
+  <div class="info-strip">
+    <div class="info-item">
+      <div class="info-icon">🏫</div>
+      <div class="info-val">중학교</div>
+      <div class="info-label">대상</div>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-item">
+      <div class="info-icon">🤖</div>
+      <div class="info-val">Gemini AI</div>
+      <div class="info-label">AI 엔진</div>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-item">
+      <div class="info-icon">📱</div>
+      <div class="info-val">모바일OK</div>
+      <div class="info-label">기기</div>
+    </div>
+    <div class="info-divider"></div>
+    <div class="info-item">
+      <div class="info-icon">🆓</div>
+      <div class="info-val">무료</div>
+      <div class="info-label">이용료</div>
+    </div>
+  </div>
+
+  <!-- Section Label -->
+  <div class="section-label">앱 선택하기</div>
+
+  <!-- App Cards -->
+  <a href="eaim-english-playground.html" class="app-card card-playground">
+    <div class="card-header">
+      <div class="card-tag"><div class="dot"></div> 문장 만들기</div>
+      <h2>영어 놀이터
+        <small>Step-by-Step Sentence Builder</small>
+      </h2>
+      <p>단계별로 영어 문장을 조립하고, AI 선생님의 첨삭까지 받아요. 기초부터 심화 관계대명사까지!</p>
+      <div class="feature-pills">
+        <div class="pill">🌱 기초 단어칩</div>
+        <div class="pill">🌿 직접 입력</div>
+        <div class="pill">🌳 관계대명사</div>
+        <div class="pill">✨ AI 첨삭</div>
+        <div class="pill">🔊 TTS 듣기</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-steps">
+        <div class="step-dot">S1</div>
+        <div class="step-dot">S2</div>
+        <div class="step-dot">S3</div>
+        <div class="step-dot">S4</div>
+        <div class="step-dot">S5</div>
+      </div>
+      <span class="enter-btn">
+        입장하기 →
+      </span>
+    </div>
+  </a>
+
+  <a href="eaim-english-game.html" class="app-card card-game">
+    <div class="card-header">
+      <div class="card-tag"><div class="dot"></div> 미니게임 + AI 회화</div>
+      <h2>영어 게임방
+        <small>Mini Games &amp; AI Conversation</small>
+      </h2>
+      <p>단어 매칭, 빠른 번역, 어순 맞추기 3종 게임으로 실력을 올리고 AI와 실시간 회화도 즐겨요!</p>
+      <div class="feature-pills">
+        <div class="pill">🌱 단어·그림 매칭</div>
+        <div class="pill">🌿 빠른 번역</div>
+        <div class="pill">🌳 어순 맞추기</div>
+        <div class="pill">🤖 AI 회화</div>
+        <div class="pill">🏆 반 랭킹</div>
+        <div class="pill">🥚→🐔 뱃지</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-steps">
+        <div class="step-dot">🌱</div>
+        <div class="step-dot">🌿</div>
+        <div class="step-dot">🌳</div>
+        <div class="step-dot">💬</div>
+      </div>
+      <span class="enter-btn">
+        입장하기 →
+      </span>
+    </div>
+  </a>
+
+  <!-- Teacher Quick Access -->
+  <div class="teacher-strip">
+    <div class="teacher-strip-text">
+      <h3>👩‍🏫 선생님 전용 컨트롤</h3>
+      <p>각 앱에서 비밀번호 입력 후 교사 패널 접속 (기본: 1234)</p>
+    </div>
+    <div class="teacher-btns">
+      <a href="eaim-english-playground.html" class="t-btn t-btn-playground">놀이터</a>
+      <a href="eaim-english-game.html" class="t-btn t-btn-game">게임방</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <strong>EAIM 영어 플랫폼</strong> · 박성애 선생님 제작<br>
+    Emotion · Artscape · Interactive · Musicalization<br>
+    <span style="font-size:.72rem;opacity:.6">Powered by Gemini AI · GitHub Pages</span><br>
+    <a href="guide.html" style="display:inline-block;margin-top:12px;padding:8px 22px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:99px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.78rem;font-weight:700;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.15)'">📖 사용 가이드 보기</a>
+  </footer>
+</div>
+
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(reg => {
+        reg.addEventListener("updatefound", () => {
+          const nw = reg.installing;
+          nw.addEventListener("statechange", () => {
+            if (nw.state === "installed" && navigator.serviceWorker.controller) {
+              document.getElementById("update-banner").style.display = "flex";
+            }
+          });
+        });
+      });
+  });
+}
+let deferredPrompt = null;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault(); deferredPrompt = e;
+  const b = document.getElementById("install-banner");
+  if (b && !sessionStorage.getItem("eaim_banner_dismissed")) {
+    b.style.transform = "translateY(0)"; b.style.opacity = "1";
+  }
+});
+function installApp() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; dismissBanner(); });
+}
+function dismissBanner() {
+  const b = document.getElementById("install-banner");
+  if (b) b.style.transform = "translateY(120%)";
+  sessionStorage.setItem("eaim_banner_dismissed","1");
+}
+function reloadApp() {
+  if (navigator.serviceWorker.controller)
+    navigator.serviceWorker.controller.postMessage({type:"SKIP_WAITING"});
+  window.location.reload();
+}
+window.addEventListener("appinstalled", () => {
+  const b = document.getElementById("install-banner"); if(b) b.style.display="none";
+});
+</script>
+<div id="install-banner" style="position:fixed;bottom:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,#1E3A8A,#2563EB);color:white;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -4px 24px rgba(37,99,235,.4);transform:translateY(120%);opacity:0;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s">
+  <span style="font-size:1.8rem">📲</span>
+  <div style="flex:1">
+    <div style="font-family:'Fredoka One',cursive;font-size:1rem">홈 화면에 설치하기</div>
+    <div style="font-size:.75rem;opacity:.8">앱처럼 바로 열 수 있어요!</div>
+  </div>
+  <button onclick="installApp()" style="background:white;color:#2563EB;border:none;border-radius:10px;padding:8px 18px;font-weight:900;font-size:.85rem;cursor:pointer">설치</button>
+  <button onclick="dismissBanner()" style="background:rgba(255,255,255,.2);color:white;border:none;border-radius:8px;padding:8px 12px;font-size:.85rem;cursor:pointer">✕</button>
+</div>
+<div id="update-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:#059669;color:white;padding:10px 20px;align-items:center;gap:10px;box-shadow:0 2px 16px rgba(5,150,105,.4)">
+  <span style="font-size:1.2rem">🔄</span>
+  <div style="flex:1;font-size:.85rem;font-weight:700">새 버전이 있어요!</div>
+  <button onclick="reloadApp()" style="background:white;color:#059669;border:none;border-radius:8px;padding:6px 14px;font-weight:900;font-size:.8rem;cursor:pointer">업데이트</button>
+</div>
+
+</body>
+</html>

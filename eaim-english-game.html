@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎮 EAIM 영어 게임방</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;700&display=swap');
+
+  :root {
+    --bg: #0f1923;
+    --surface: #1a2535;
+    --surface2: #243042;
+    --accent1: #00e5a0;
+    --accent2: #ff6b6b;
+    --accent3: #ffd93d;
+    --accent4: #6bcbff;
+    --text: #e8f4ff;
+    --text2: #8faec8;
+    --seed: #4ade80;
+    --sprout: #38bdf8;
+    --tree: #a78bfa;
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── BG Stars ─── */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(0,229,160,.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 20%, rgba(107,203,255,.08) 0%, transparent 60%);
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: relative; z-index: 10;
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    background: rgba(15,25,35,.8);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    background: linear-gradient(90deg, var(--accent1), var(--accent4));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .logo span { color: var(--accent3); -webkit-text-fill-color: var(--accent3); }
+
+  /* Player Info Bar */
+  .player-bar {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface2);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 40px;
+    padding: 6px 16px 6px 8px;
+  }
+  .player-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent4));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; cursor: pointer;
+  }
+  .player-name { font-weight: 700; font-size: .9rem; }
+  .badge-display { font-size: 1.3rem; }
+
+  /* ─── MAIN LAYOUT ─── */
+  main {
+    position: relative; z-index: 5;
+    max-width: 1100px; margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  /* ─── SCREENS ─── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ─── LOGIN SCREEN ─── */
+  #loginScreen {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 80vh; gap: 24px;
+  }
+  #loginScreen h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem; text-align: center;
+    background: linear-gradient(135deg, var(--accent1), var(--accent4));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .login-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius);
+    padding: 32px; width: 100%; max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  }
+  .login-card label { display: block; margin-bottom: 6px; color: var(--text2); font-size: .85rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  .login-card input, .login-card select {
+    width: 100%; padding: 12px 16px;
+    background: var(--surface2); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px; color: var(--text); font-family: inherit; font-size: 1rem;
+    margin-bottom: 16px; outline: none; transition: border-color .2s;
+  }
+  .login-card input:focus, .login-card select:focus { border-color: var(--accent1); }
+  .login-card select option { background: var(--surface2); }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    padding: 12px 28px; border-radius: 12px; border: none;
+    font-family: 'Nunito', inherit; font-weight: 800; font-size: 1rem;
+    cursor: pointer; transition: transform .15s, box-shadow .15s;
+    letter-spacing: .03em;
+  }
+  .btn:active { transform: scale(.96); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent1), #00b47a);
+    color: #0a1a10; width: 100%;
+    box-shadow: 0 4px 20px rgba(0,229,160,.3);
+  }
+  .btn-primary:hover { box-shadow: 0 6px 28px rgba(0,229,160,.5); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--text2);
+    border: 1px solid rgba(255,255,255,.15);
+  }
+  .btn-ghost:hover { background: var(--surface2); color: var(--text); }
+  .btn-danger { background: var(--accent2); color: #fff; }
+  .btn-sm { padding: 8px 18px; font-size: .85rem; border-radius: 8px; }
+
+  /* ─── HOME SCREEN ─── */
+  .home-greeting {
+    text-align: center; margin-bottom: 32px;
+  }
+  .home-greeting h2 {
+    font-family: 'Fredoka One', cursive; font-size: 2rem;
+    margin-bottom: 4px;
+  }
+  .home-greeting p { color: var(--text2); }
+
+  /* Stats Row */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius);
+    padding: 16px; text-align: center;
+  }
+  .stat-card .val {
+    font-family: 'Fredoka One', cursive; font-size: 2rem;
+    line-height: 1;
+  }
+  .stat-card .lbl { font-size: .75rem; color: var(--text2); margin-top: 4px; }
+
+  /* Badge Row */
+  .badge-row {
+    display: flex; gap: 10px; justify-content: center; margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .badge-item {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px; padding: 10px 16px;
+    text-align: center; min-width: 80px;
+    transition: transform .2s;
+  }
+  .badge-item.earned {
+    border-color: var(--accent3);
+    background: linear-gradient(135deg, rgba(255,217,61,.1), rgba(255,217,61,.05));
+  }
+  .badge-item.earned:hover { transform: scale(1.05); }
+  .badge-item .badge-icon { font-size: 2rem; }
+  .badge-item .badge-name { font-size: .7rem; color: var(--text2); margin-top: 2px; }
+  .badge-item .badge-req { font-size: .65rem; color: var(--accent3); }
+  .badge-item.locked { opacity: .4; }
+
+  /* Game Cards */
+  .section-title {
+    font-weight: 800; font-size: 1rem; color: var(--text2);
+    text-transform: uppercase; letter-spacing: .08em;
+    margin-bottom: 14px;
+  }
+  .game-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px; margin-bottom: 28px;
+  }
+  .game-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius);
+    padding: 24px; cursor: pointer;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    position: relative; overflow: hidden;
+  }
+  .game-card::before {
+    content: ''; position: absolute; inset: 0;
+    opacity: 0; transition: opacity .3s;
+  }
+  .game-card.seed::before { background: linear-gradient(135deg, rgba(74,222,128,.08), transparent); }
+  .game-card.sprout::before { background: linear-gradient(135deg, rgba(56,189,248,.08), transparent); }
+  .game-card.tree::before { background: linear-gradient(135deg, rgba(167,139,250,.08), transparent); }
+  .game-card:hover::before { opacity: 1; }
+  .game-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.3); }
+  .game-card.seed:hover { border-color: var(--seed); }
+  .game-card.sprout:hover { border-color: var(--sprout); }
+  .game-card.tree:hover { border-color: var(--tree); }
+
+  .game-level {
+    font-size: .75rem; font-weight: 800; letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .game-level.seed { color: var(--seed); }
+  .game-level.sprout { color: var(--sprout); }
+  .game-level.tree { color: var(--tree); }
+
+  .level-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor;
+  }
+  .game-card h3 { font-family: 'Fredoka One', cursive; font-size: 1.4rem; margin-bottom: 6px; }
+  .game-card p { font-size: .85rem; color: var(--text2); line-height: 1.5; }
+  .game-card .best {
+    margin-top: 14px; padding: 8px 12px;
+    background: rgba(255,255,255,.05); border-radius: 8px;
+    font-size: .8rem; display: flex; justify-content: space-between;
+  }
+  .game-card .best span:last-child { color: var(--accent3); font-weight: 700; }
+
+  /* AI 채팅 버튼 */
+  .chat-banner {
+    background: linear-gradient(135deg, var(--surface), rgba(107,203,255,.08));
+    border: 1px solid rgba(107,203,255,.2);
+    border-radius: var(--radius); padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    cursor: pointer; transition: border-color .2s;
+  }
+  .chat-banner:hover { border-color: var(--accent4); }
+  .chat-banner-text h3 { font-family: 'Fredoka One', cursive; font-size: 1.2rem; }
+  .chat-banner-text p { font-size: .85rem; color: var(--text2); margin-top: 2px; }
+  .chat-icon { font-size: 2.5rem; }
+
+  /* ─── GAME SCREEN ─── */
+  .game-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+  }
+  .game-info { flex: 1; }
+  .game-info h2 { font-family: 'Fredoka One', cursive; font-size: 1.5rem; }
+  .game-meta { font-size: .8rem; color: var(--text2); }
+
+  .score-timer-bar {
+    display: flex; gap: 12px; margin-bottom: 20px;
+  }
+  .score-box, .timer-box {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px; padding: 10px 18px;
+    text-align: center; flex: 1;
+  }
+  .score-box .val, .timer-box .val {
+    font-family: 'Fredoka One', cursive; font-size: 1.8rem;
+    line-height: 1;
+  }
+  .score-box .lbl, .timer-box .lbl { font-size: .7rem; color: var(--text2); }
+  .timer-box .val { color: var(--accent2); }
+  .timer-box.warning .val { color: var(--accent2); animation: pulse .5s infinite; }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    background: var(--surface2); border-radius: 99px;
+    height: 8px; margin-bottom: 24px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent4));
+    transition: width .3s;
+  }
+
+  /* ─── GAME 1: 단어-그림 매칭 ─── */
+  .match-question {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius);
+    padding: 28px; text-align: center; margin-bottom: 20px;
+  }
+  .match-picture { font-size: 5rem; margin-bottom: 8px; }
+  .match-ko { font-size: 1.4rem; font-weight: 700; color: var(--accent3); }
+
+  .choices-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .choice-btn {
+    background: var(--surface);
+    border: 2px solid rgba(255,255,255,.12);
+    border-radius: 12px; padding: 16px;
+    color: var(--text); font-family: inherit; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+    text-align: center;
+  }
+  .choice-btn:hover { border-color: var(--accent4); background: var(--surface2); }
+  .choice-btn.correct { border-color: var(--accent1); background: rgba(0,229,160,.15); color: var(--accent1); }
+  .choice-btn.wrong { border-color: var(--accent2); background: rgba(255,107,107,.15); color: var(--accent2); }
+
+  /* ─── GAME 2: 빠른번역 ─── */
+  .translate-q {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius);
+    padding: 28px; text-align: center; margin-bottom: 20px;
+  }
+  .translate-q .direction { font-size: .8rem; color: var(--text2); margin-bottom: 8px; }
+  .translate-q .word { font-family: 'Fredoka One', cursive; font-size: 2.5rem; color: var(--accent3); }
+
+  .translate-input-row {
+    display: flex; gap: 10px; margin-bottom: 16px;
+  }
+  .translate-input-row input {
+    flex: 1; padding: 14px 18px;
+    background: var(--surface); border: 2px solid rgba(255,255,255,.12);
+    border-radius: 12px; color: var(--text); font-family: inherit;
+    font-size: 1.1rem; font-weight: 700; outline: none;
+    transition: border-color .2s;
+  }
+  .translate-input-row input:focus { border-color: var(--accent1); }
+  .translate-input-row input.correct { border-color: var(--accent1); background: rgba(0,229,160,.1); }
+  .translate-input-row input.wrong { border-color: var(--accent2); background: rgba(255,107,107,.1); }
+
+  /* ─── GAME 3: 어순맞추기 ─── */
+  .sentence-ko {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius);
+    padding: 20px; text-align: center;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--accent3); margin-bottom: 16px;
+  }
+  .word-slots {
+    min-height: 60px;
+    background: var(--surface2);
+    border: 2px dashed rgba(255,255,255,.15);
+    border-radius: 12px; padding: 12px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 14px; align-items: center;
+  }
+  .word-token {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px; padding: 8px 14px;
+    cursor: pointer; font-weight: 700; font-size: .95rem;
+    transition: all .15s; user-select: none;
+  }
+  .word-token:hover { border-color: var(--accent4); background: var(--surface2); }
+  .word-token.placed {
+    background: linear-gradient(135deg, rgba(56,189,248,.15), rgba(56,189,248,.05));
+    border-color: var(--sprout); color: var(--sprout);
+  }
+  .word-token.correct-placed { border-color: var(--accent1); color: var(--accent1); background: rgba(0,229,160,.1); }
+  .word-token.wrong-placed { border-color: var(--accent2); color: var(--accent2); background: rgba(255,107,107,.1); }
+
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  /* ─── RESULT OVERLAY ─── */
+  .result-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,.75); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .result-overlay.show { opacity: 1; pointer-events: all; }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 24px; padding: 40px 32px;
+    text-align: center; max-width: 400px; width: 90%;
+    transform: scale(.8); transition: transform .3s;
+  }
+  .result-overlay.show .result-card { transform: scale(1); }
+  .result-emoji { font-size: 4rem; margin-bottom: 12px; }
+  .result-title { font-family: 'Fredoka One', cursive; font-size: 2rem; margin-bottom: 8px; }
+  .result-score { font-size: 1.1rem; color: var(--text2); margin-bottom: 8px; }
+  .result-new-badge {
+    background: linear-gradient(135deg, var(--accent3), #ff9d00);
+    color: #1a0a00; border-radius: 12px;
+    padding: 10px 20px; font-weight: 800;
+    margin: 12px 0; display: none;
+  }
+  .result-new-badge.show { display: block; animation: pop .4s ease; }
+  @keyframes pop { 0% { transform: scale(0) rotate(-10deg); } 80% { transform: scale(1.1) rotate(2deg); } 100% { transform: scale(1) rotate(0); } }
+  .result-buttons { display: flex; gap: 10px; margin-top: 20px; }
+  .result-buttons .btn { flex: 1; }
+
+  /* ─── RANKING SCREEN ─── */
+  .ranking-tabs {
+    display: flex; gap: 8px; margin-bottom: 20px;
+  }
+  .tab-btn {
+    padding: 8px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,.1);
+    background: transparent; color: var(--text2); cursor: pointer;
+    font-family: inherit; font-weight: 700; transition: all .2s;
+  }
+  .tab-btn.active {
+    background: var(--accent1); color: #0a1a10;
+    border-color: var(--accent1);
+  }
+  .ranking-list { display: flex; flex-direction: column; gap: 8px; }
+  .rank-item {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px; padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px;
+    transition: border-color .2s;
+  }
+  .rank-item.me { border-color: var(--accent1); }
+  .rank-num {
+    font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+    width: 36px; text-align: center;
+  }
+  .rank-1 { color: var(--accent3); }
+  .rank-2 { color: #c0c0c0; }
+  .rank-3 { color: #cd7f32; }
+  .rank-info { flex: 1; }
+  .rank-name { font-weight: 700; }
+  .rank-class { font-size: .75rem; color: var(--text2); }
+  .rank-score {
+    font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--accent3);
+  }
+  .rank-badge { font-size: 1.3rem; }
+
+  /* ─── AI CHAT SCREEN ─── */
+  .chat-level-select {
+    display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .chat-level-btn {
+    flex: 1; min-width: 120px;
+    padding: 14px; border-radius: 12px;
+    border: 2px solid rgba(255,255,255,.1);
+    background: var(--surface); color: var(--text);
+    cursor: pointer; font-family: inherit; font-weight: 700;
+    text-align: center; transition: all .2s;
+  }
+  .chat-level-btn.active.seed { border-color: var(--seed); background: rgba(74,222,128,.1); }
+  .chat-level-btn.active.sprout { border-color: var(--sprout); background: rgba(56,189,248,.1); }
+  .chat-level-btn.active.tree { border-color: var(--tree); background: rgba(167,139,250,.1); }
+  .chat-level-btn small { display: block; color: var(--text2); font-size: .7rem; font-weight: 400; margin-top: 2px; }
+
+  .chat-messages {
+    height: 380px; overflow-y: auto;
+    background: var(--surface2);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius); padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+    margin-bottom: 14px;
+    scroll-behavior: smooth;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+  .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 99px; }
+
+  .msg {
+    max-width: 80%; padding: 10px 14px;
+    border-radius: 14px; line-height: 1.5; font-size: .9rem;
+    animation: slideIn .2s ease;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(8px); } }
+  .msg.ai {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.08);
+    align-self: flex-start; border-bottom-left-radius: 4px;
+  }
+  .msg.user {
+    background: linear-gradient(135deg, var(--accent1), #00b47a);
+    color: #0a1a10; font-weight: 700;
+    align-self: flex-end; border-bottom-right-radius: 4px;
+  }
+  .msg.ai .sender { font-size: .7rem; color: var(--accent4); font-weight: 700; margin-bottom: 4px; }
+  .typing-dots span {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--text2);
+    animation: blink 1.2s infinite;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: .2s; }
+  .typing-dots span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%,80%,100% { opacity: .2; } 40% { opacity: 1; } }
+
+  .chat-input-row {
+    display: flex; gap: 10px;
+  }
+  .chat-input-row input {
+    flex: 1; padding: 12px 16px;
+    background: var(--surface); border: 2px solid rgba(255,255,255,.12);
+    border-radius: 12px; color: var(--text); font-family: inherit; font-size: .95rem;
+    outline: none; transition: border-color .2s;
+  }
+  .chat-input-row input:focus { border-color: var(--accent4); }
+  .chat-input-row .btn { padding: 12px 20px; border-radius: 12px; background: var(--accent4); color: #0a1a10; border: none; font-weight: 800; cursor: pointer; }
+
+  /* ─── TEACHER PANEL ─── */
+  .teacher-panel {
+    background: linear-gradient(135deg, rgba(255,107,107,.05), rgba(255,217,61,.05));
+    border: 1px solid rgba(255,107,107,.2);
+    border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+  }
+  .teacher-panel h3 {
+    font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+    color: var(--accent2); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .teacher-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* ─── NAV ─── */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
+    background: rgba(15,25,35,.95); backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255,255,255,.07);
+    display: flex; padding: 8px;
+  }
+  .nav-btn {
+    flex: 1; padding: 8px 4px;
+    background: transparent; border: none; color: var(--text2);
+    cursor: pointer; border-radius: 10px;
+    transition: all .2s; font-family: inherit; font-size: .7rem;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .nav-btn .nav-icon { font-size: 1.3rem; }
+  .nav-btn.active { color: var(--accent1); background: rgba(0,229,160,.08); }
+
+  body { padding-bottom: 72px; }
+
+  /* ─── FEEDBACK FLASH ─── */
+  .feedback-flash {
+    position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+    padding: 12px 28px; border-radius: 40px;
+    font-weight: 800; font-size: 1.1rem;
+    z-index: 200; pointer-events: none;
+    opacity: 0; transition: opacity .2s;
+  }
+  .feedback-flash.correct-flash { background: rgba(0,229,160,.9); color: #0a1a10; }
+  .feedback-flash.wrong-flash { background: rgba(255,107,107,.9); color: #fff; }
+  .feedback-flash.show { opacity: 1; }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .game-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(3,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- Feedback Flash -->
+<div class="feedback-flash" id="feedbackFlash"></div>
+
+<!-- Header -->
+<header>
+  <div class="logo">EAIM <span>🎮</span> 영어게임방</div>
+  <div class="player-bar" id="playerBar" style="display:none">
+    <div class="player-avatar" id="playerAvatar">😊</div>
+    <div>
+      <div class="player-name" id="playerNameDisplay">-</div>
+    </div>
+    <div class="badge-display" id="headerBadge">🥚</div>
+  </div>
+</header>
+
+<main>
+  <!-- ══════════ LOGIN ══════════ -->
+  <div class="screen active" id="loginScreen">
+    <div style="font-size:4rem;text-align:center">🎮</div>
+    <h2>영어 게임방에 오신 것을 환영합니다!</h2>
+    <div class="login-card">
+      <label>이름</label>
+      <input type="text" id="loginName" placeholder="이름을 입력하세요" maxlength="10">
+      <label>반</label>
+      <select id="loginClass">
+        <option value="">반 선택</option>
+        <option>1반</option><option>2반</option><option>3반</option>
+        <option>4반</option><option>5반</option><option>6반</option>
+        <option>교사</option>
+      </select>
+      <button class="btn btn-primary" onclick="doLogin()">🚀 입장하기</button>
+    </div>
+  </div>
+
+  <!-- ══════════ HOME ══════════ -->
+  <div class="screen" id="homeScreen">
+    <div class="home-greeting">
+      <h2 id="greetingText">안녕하세요! 👋</h2>
+      <p>오늘도 열심히 영어를 배워봐요!</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="val" id="statTotal" style="color:var(--accent3)">0</div>
+        <div class="lbl">총 점수</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" id="statGames" style="color:var(--accent4)">0</div>
+        <div class="lbl">게임 수</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" id="statBadge" style="font-size:1.8rem">🥚</div>
+        <div class="lbl">현재 뱃지</div>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="section-title">🏅 뱃지 컬렉션</div>
+    <div class="badge-row">
+      <div class="badge-item" id="badge-egg">
+        <div class="badge-icon">🥚</div>
+        <div class="badge-name">알</div>
+        <div class="badge-req">시작!</div>
+      </div>
+      <div class="badge-item locked" id="badge-hatch">
+        <div class="badge-icon">🐣</div>
+        <div class="badge-name">부화중</div>
+        <div class="badge-req">50점~</div>
+      </div>
+      <div class="badge-item locked" id="badge-chick">
+        <div class="badge-icon">🐥</div>
+        <div class="badge-name">병아리</div>
+        <div class="badge-req">150점~</div>
+      </div>
+      <div class="badge-item locked" id="badge-chicken">
+        <div class="badge-icon">🐔</div>
+        <div class="badge-name">영어닭</div>
+        <div class="badge-req">300점~</div>
+      </div>
+    </div>
+
+    <!-- Game Cards -->
+    <div class="section-title">🎯 미니게임</div>
+    <div class="game-grid">
+      <div class="game-card seed" onclick="startGame('match')">
+        <div class="game-level seed"><div class="level-dot"></div>🌱 기초</div>
+        <h3>단어-그림 매칭</h3>
+        <p>그림을 보고 맞는 영어 단어를 골라요! 초보자도 쉽게 도전할 수 있어요.</p>
+        <div class="best"><span>🏆 최고기록</span><span id="best-match">-</span></div>
+      </div>
+      <div class="game-card sprout" onclick="startGame('translate')">
+        <div class="game-level sprout"><div class="level-dot"></div>🌿 중급</div>
+        <h3>빠른번역</h3>
+        <p>시간 내에 한국어↔영어 번역 도전! 타이핑 실력도 같이 늘어요.</p>
+        <div class="best"><span>🏆 최고기록</span><span id="best-translate">-</span></div>
+      </div>
+      <div class="game-card tree" onclick="startGame('order')">
+        <div class="game-level tree"><div class="level-dot"></div>🌳 심화</div>
+        <h3>어순 맞추기</h3>
+        <p>단어를 올바른 순서로 배열해 영어 문장을 완성하세요!</p>
+        <div class="best"><span>🏆 최고기록</span><span id="best-order">-</span></div>
+      </div>
+    </div>
+
+    <!-- AI Chat Banner -->
+    <div class="chat-banner" onclick="showScreen('chatScreen')">
+      <div class="chat-banner-text">
+        <h3>🤖 AI 영어 회화 연습</h3>
+        <p>레벨에 맞게 한국어/영어 비율을 조절해서 AI와 대화해요!</p>
+      </div>
+      <div class="chat-icon">💬</div>
+    </div>
+  </div>
+
+  <!-- ══════════ GAME SCREEN ══════════ -->
+  <div class="screen" id="gameScreen">
+    <div class="game-header">
+      <button class="btn btn-ghost btn-sm" onclick="exitGame()">← 나가기</button>
+      <div class="game-info">
+        <h2 id="gameTitle">게임</h2>
+        <div class="game-meta" id="gameMeta"></div>
+      </div>
+    </div>
+
+    <div class="score-timer-bar">
+      <div class="score-box">
+        <div class="val" id="currentScore">0</div>
+        <div class="lbl">점수</div>
+      </div>
+      <div class="score-box">
+        <div class="val" id="currentQ" style="color:var(--accent4)">1/10</div>
+        <div class="lbl">문제</div>
+      </div>
+      <div class="timer-box" id="timerBox">
+        <div class="val" id="timerVal">30</div>
+        <div class="lbl">초</div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <!-- Game 1: Match -->
+    <div id="game-match" style="display:none">
+      <div class="match-question">
+        <div class="match-picture" id="matchPicture">🍎</div>
+        <div class="match-ko" id="matchKo"></div>
+      </div>
+      <div class="choices-grid" id="matchChoices"></div>
+    </div>
+
+    <!-- Game 2: Translate -->
+    <div id="game-translate" style="display:none">
+      <div class="translate-q">
+        <div class="direction" id="translateDir">한국어 → 영어</div>
+        <div class="word" id="translateWord">사과</div>
+      </div>
+      <div class="translate-input-row">
+        <input type="text" id="translateInput" placeholder="영어로 입력하세요..." autocomplete="off" autocapitalize="off">
+        <button class="btn btn-primary btn-sm" onclick="checkTranslate()">확인</button>
+      </div>
+      <div style="color:var(--text2);font-size:.8rem;text-align:center">Enter 키로도 제출할 수 있어요</div>
+    </div>
+
+    <!-- Game 3: Order -->
+    <div id="game-order" style="display:none">
+      <div class="sentence-ko" id="orderKo">문장이 여기에 표시됩니다</div>
+      <div style="font-size:.8rem;color:var(--text2);margin-bottom:8px">아래 단어를 클릭해서 순서대로 배열하세요</div>
+      <div class="word-slots" id="wordSlots">
+        <span style="color:var(--text2);font-size:.85rem">단어를 클릭해서 여기에 배열하세요</span>
+      </div>
+      <div class="word-bank" id="wordBank"></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost btn-sm" onclick="clearOrder()" style="flex:1">🔄 초기화</button>
+        <button class="btn btn-primary btn-sm" onclick="checkOrder()" style="flex:2">✅ 확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ RANKING ══════════ -->
+  <div class="screen" id="rankingScreen">
+    <div class="home-greeting">
+      <h2>🏆 랭킹</h2>
+      <p>우리 반 친구들과 경쟁해봐요!</p>
+    </div>
+    <div class="ranking-tabs" id="rankingTabs">
+      <button class="tab-btn active" onclick="showRanking('all')">전체</button>
+      <button class="tab-btn" onclick="showRanking('match')">🌱 매칭</button>
+      <button class="tab-btn" onclick="showRanking('translate')">🌿 번역</button>
+      <button class="tab-btn" onclick="showRanking('order')">🌳 어순</button>
+    </div>
+    <div class="ranking-list" id="rankingList"></div>
+  </div>
+
+  <!-- ══════════ AI CHAT ══════════ -->
+  <div class="screen" id="chatScreen">
+    <div class="home-greeting">
+      <h2>🤖 AI 영어 회화</h2>
+      <p>레벨을 선택하고 AI 선생님과 대화해봐요!</p>
+    </div>
+
+    <div class="chat-level-select">
+      <button class="chat-level-btn seed" id="chatLv1" onclick="setChatLevel('seed')">
+        🌱 기초
+        <small>한국어 위주</small>
+      </button>
+      <button class="chat-level-btn sprout active" id="chatLv2" onclick="setChatLevel('sprout')">
+        🌿 중급
+        <small>50:50</small>
+      </button>
+      <button class="chat-level-btn tree" id="chatLv3" onclick="setChatLevel('tree')">
+        🌳 심화
+        <small>영어 위주</small>
+      </button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages"></div>
+
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="메시지를 입력하세요..." maxlength="200"
+        onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="btn" onclick="sendChat()" style="background:var(--accent4);color:#0a1a10;border:none;font-weight:800;padding:12px 20px;border-radius:12px;cursor:pointer">전송</button>
+    </div>
+  </div>
+
+  <!-- ══════════ TEACHER ══════════ -->
+  <div class="screen" id="teacherScreen">
+    <div class="home-greeting">
+      <h2>👩‍🏫 교사 컨트롤</h2>
+      <p>학생 데이터 관리 및 게임 설정</p>
+    </div>
+
+    <div class="teacher-panel">
+      <h3>⚙️ 데이터 관리</h3>
+      <div class="teacher-controls">
+        <button class="btn btn-sm" onclick="exportData()" style="background:var(--accent4);color:#0a1a10;border:none">📊 데이터 내보내기</button>
+        <button class="btn btn-sm btn-ghost" onclick="refreshRanking()">🔄 랭킹 새로고침</button>
+        <button class="btn btn-sm btn-danger" onclick="resetAllData()" style="border:none">🗑️ 전체 초기화</button>
+      </div>
+    </div>
+
+    <div class="teacher-panel">
+      <h3>📋 현재 접속 현황</h3>
+      <div id="teacherStats" style="color:var(--text2);font-size:.9rem;line-height:1.8"></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <div class="section-title">전체 랭킹 (교사 뷰)</div>
+      <div class="ranking-list" id="teacherRankingList"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav" id="bottomNav" style="display:none">
+  <button class="nav-btn active" id="nav-home" onclick="showScreen('homeScreen','nav-home')">
+    <span class="nav-icon">🏠</span>홈
+  </button>
+  <button class="nav-btn" id="nav-rankingScreen" onclick="showScreen('rankingScreen','nav-rankingScreen')">
+    <span class="nav-icon">🏆</span>랭킹
+  </button>
+  <button class="nav-btn" id="nav-chatScreen" onclick="showScreen('chatScreen','nav-chatScreen')">
+    <span class="nav-icon">💬</span>AI회화
+  </button>
+  <button class="nav-btn" id="nav-teacherScreen" onclick="showScreen('teacherScreen','nav-teacherScreen')" style="display:none">
+    <span class="nav-icon">👩‍🏫</span>교사
+  </button>
+</nav>
+
+<!-- Result Overlay -->
+<div class="result-overlay" id="resultOverlay">
+  <div class="result-card">
+    <div class="result-emoji" id="resultEmoji">🎉</div>
+    <div class="result-title" id="resultTitle">게임 종료!</div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-new-badge" id="resultBadge">🎊 새 뱃지 획득!</div>
+    <div class="result-buttons">
+      <button class="btn btn-ghost" onclick="exitGame()">🏠 홈</button>
+      <button class="btn btn-primary" id="retryBtn" onclick="retryGame()">🔄 다시하기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CONSTANTS ───────────────────────────────────────────────────────────────
+const GEMINI_KEY = 'AIzaSyC5Ju-8bVR7T-yVKbdCJa1bS8m5i7tHXYY'; // replace or use shared key
+const LS_PREFIX = 'eaim_english_'; // same prefix as playground for teacher sync
+const BADGES = [
+  { id:'egg', icon:'🥚', name:'알', min:0 },
+  { id:'hatch', icon:'🐣', name:'부화중', min:50 },
+  { id:'chick', icon:'🐥', name:'병아리', min:150 },
+  { id:'chicken', icon:'🐔', name:'영어닭', min:300 }
+];
+
+// ─── WORD DATA ────────────────────────────────────────────────────────────────
+const WORDS = [
+  { emoji:'🍎', ko:'사과', en:'apple' },
+  { emoji:'🐶', ko:'강아지', en:'dog' },
+  { emoji:'🌙', ko:'달', en:'moon' },
+  { emoji:'🌊', ko:'바다', en:'sea' },
+  { emoji:'🍕', ko:'피자', en:'pizza' },
+  { emoji:'📚', ko:'책', en:'book' },
+  { emoji:'🌸', ko:'꽃', en:'flower' },
+  { emoji:'🐱', ko:'고양이', en:'cat' },
+  { emoji:'☀️', ko:'태양', en:'sun' },
+  { emoji:'🏠', ko:'집', en:'house' },
+  { emoji:'✈️', ko:'비행기', en:'airplane' },
+  { emoji:'🎵', ko:'음악', en:'music' },
+  { emoji:'⭐', ko:'별', en:'star' },
+  { emoji:'🌈', ko:'무지개', en:'rainbow' },
+  { emoji:'🦋', ko:'나비', en:'butterfly' },
+  { emoji:'🍦', ko:'아이스크림', en:'ice cream' },
+  { emoji:'🏔️', ko:'산', en:'mountain' },
+  { emoji:'🎸', ko:'기타', en:'guitar' },
+  { emoji:'🐘', ko:'코끼리', en:'elephant' },
+  { emoji:'🌍', ko:'지구', en:'earth' }
+];
+
+const SENTENCES = [
+  { ko:'나는 사과를 먹는다', en:['I', 'eat', 'an', 'apple'] },
+  { ko:'그녀는 학교에 간다', en:['She', 'goes', 'to', 'school'] },
+  { ko:'우리는 음악을 좋아한다', en:['We', 'like', 'music'] },
+  { ko:'나는 영어를 공부한다', en:['I', 'study', 'English'] },
+  { ko:'그는 빠르게 달린다', en:['He', 'runs', 'fast'] },
+  { ko:'고양이는 나무 위에 있다', en:['The', 'cat', 'is', 'on', 'the', 'tree'] },
+  { ko:'나는 친구들이 있다', en:['I', 'have', 'friends'] },
+  { ko:'그들은 행복하다', en:['They', 'are', 'happy'] },
+  { ko:'나는 음악을 듣는다', en:['I', 'listen', 'to', 'music'] },
+  { ko:'그녀는 책을 읽는다', en:['She', 'reads', 'a', 'book'] }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let player = null;
+let currentGame = null;
+let gameState = {};
+let gameTimer = null;
+let chatLevel = 'sprout';
+let chatHistory = [];
+let currentRankTab = 'all';
+let lastGameType = null;
+
+// ─── STORAGE HELPERS ─────────────────────────────────────────────────────────
+function lsGet(key) {
+  try { return JSON.parse(localStorage.getItem(LS_PREFIX + key)); } catch { return null; }
+}
+function lsSet(key, val) {
+  try { localStorage.setItem(LS_PREFIX + key, JSON.stringify(val)); } catch {}
+}
+
+function getPlayerData(name) {
+  return lsGet('player_' + name) || { name, totalScore:0, games:0, best:{match:0,translate:0,order:0} };
+}
+function savePlayerData(data) { lsSet('player_' + data.name, data); }
+
+function getAllPlayers() {
+  const keys = Object.keys(localStorage).filter(k => k.startsWith(LS_PREFIX + 'player_'));
+  return keys.map(k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }).filter(Boolean);
+}
+
+// ─── LOGIN ────────────────────────────────────────────────────────────────────
+function doLogin() {
+  const name = document.getElementById('loginName').value.trim();
+  const cls = document.getElementById('loginClass').value;
+  if (!name) { alert('이름을 입력해 주세요!'); return; }
+  if (!cls) { alert('반을 선택해 주세요!'); return; }
+
+  const pd = getPlayerData(name);
+  pd.class = cls;
+  savePlayerData(pd);
+  player = pd;
+
+  document.getElementById('playerNameDisplay').textContent = name;
+  document.getElementById('playerBar').style.display = 'flex';
+  document.getElementById('bottomNav').style.display = 'flex';
+
+  if (cls === '교사') {
+    document.getElementById('nav-teacherScreen').style.display = 'flex';
+  }
+
+  updateHomeStats();
+  showScreen('homeScreen', 'nav-home');
+}
+
+// ─── SCREEN NAV ──────────────────────────────────────────────────────────────
+function showScreen(id, navId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if (navId) {
+    const nb = document.getElementById(navId);
+    if (nb) nb.classList.add('active');
+  }
+  if (id === 'rankingScreen') { loadRanking(); }
+  if (id === 'teacherScreen') { loadTeacherView(); }
+  if (id === 'chatScreen') { if (chatHistory.length === 0) initChat(); }
+  if (id === 'homeScreen') { updateHomeStats(); }
+}
+
+// ─── HOME ─────────────────────────────────────────────────────────────────────
+function getBadge(score) {
+  let b = BADGES[0];
+  for (const badge of BADGES) { if (score >= badge.min) b = badge; }
+  return b;
+}
+
+function updateHomeStats() {
+  if (!player) return;
+  const pd = getPlayerData(player.name);
+  player = pd;
+
+  document.getElementById('statTotal').textContent = pd.totalScore || 0;
+  document.getElementById('statGames').textContent = pd.games || 0;
+  const badge = getBadge(pd.totalScore || 0);
+  document.getElementById('statBadge').textContent = badge.icon;
+  document.getElementById('headerBadge').textContent = badge.icon;
+  document.getElementById('greetingText').textContent = `${pd.name}님, 안녕하세요! 👋`;
+
+  // Best scores
+  document.getElementById('best-match').textContent = pd.best?.match ? pd.best.match + '점' : '-';
+  document.getElementById('best-translate').textContent = pd.best?.translate ? pd.best.translate + '점' : '-';
+  document.getElementById('best-order').textContent = pd.best?.order ? pd.best.order + '점' : '-';
+
+  // Badge items
+  BADGES.forEach(b => {
+    const el = document.getElementById('badge-' + b.id);
+    if (el) {
+      if ((pd.totalScore || 0) >= b.min) {
+        el.classList.remove('locked'); el.classList.add('earned');
+      } else {
+        el.classList.add('locked'); el.classList.remove('earned');
+      }
+    }
+  });
+}
+
+// ─── GAME ENGINE ─────────────────────────────────────────────────────────────
+function shuffle(arr) { return [...arr].sort(() => Math.random()-.5); }
+
+function startGame(type) {
+  lastGameType = type;
+  currentGame = type;
+  gameState = { score:0, q:0, total:10, wrong:0 };
+
+  document.getElementById('currentScore').textContent = '0';
+  document.getElementById('currentQ').textContent = '1/10';
+  document.getElementById('progressFill').style.width = '0%';
+
+  const titles = { match:'🌱 단어-그림 매칭', translate:'🌿 빠른 번역', order:'🌳 어순 맞추기' };
+  const metas = { match:'그림을 보고 맞는 단어를 선택하세요!', translate:'빠르게 번역하세요!', order:'단어를 올바른 순서로 배열하세요!' };
+  document.getElementById('gameTitle').textContent = titles[type];
+  document.getElementById('gameMeta').textContent = metas[type];
+
+  ['match','translate','order'].forEach(t => {
+    document.getElementById('game-'+t).style.display = t===type ? 'block' : 'none';
+  });
+
+  showScreen('gameScreen');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  gameState.questions = type === 'order' ? shuffle(SENTENCES).slice(0,10) : shuffle(WORDS).slice(0,10);
+  gameState.qIndex = 0;
+
+  loadQuestion();
+  startTimer(type === 'order' ? 20 : type === 'translate' ? 15 : 20);
+}
+
+function loadQuestion() {
+  if (gameState.qIndex >= 10) { endGame(); return; }
+  const n = gameState.qIndex + 1;
+  document.getElementById('currentQ').textContent = n + '/10';
+  document.getElementById('progressFill').style.width = (n/10*100) + '%';
+
+  const q = gameState.questions[gameState.qIndex];
+
+  if (currentGame === 'match') { loadMatchQ(q); }
+  else if (currentGame === 'translate') { loadTranslateQ(q); }
+  else { loadOrderQ(gameState.questions[gameState.qIndex]); }
+}
+
+// ─── GAME 1: MATCH ────────────────────────────────────────────────────────────
+function loadMatchQ(q) {
+  document.getElementById('matchPicture').textContent = q.emoji;
+  document.getElementById('matchKo').textContent = q.ko;
+  const wrong = shuffle(WORDS.filter(w => w.en !== q.en)).slice(0,3).map(w=>w.en);
+  const choices = shuffle([q.en, ...wrong]);
+  const grid = document.getElementById('matchChoices');
+  grid.innerHTML = '';
+  choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.onclick = () => checkMatch(btn, c, q.en);
+    grid.appendChild(btn);
+  });
+  resetTimer(20);
+}
+
+function checkMatch(btn, chosen, correct) {
+  document.querySelectorAll('.choice-btn').forEach(b => b.onclick = null);
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    addScore(10); flash(true);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.choice-btn').forEach(b => { if(b.textContent===correct) b.classList.add('correct'); });
+    flash(false);
+  }
+  setTimeout(nextQ, 900);
+}
+
+// ─── GAME 2: TRANSLATE ───────────────────────────────────────────────────────
+function loadTranslateQ(q) {
+  const dir = Math.random() > 0.5;
+  gameState.translateDir = dir;
+  gameState.translateCorrect = dir ? q.en : q.ko;
+  document.getElementById('translateDir').textContent = dir ? '한국어 → 영어' : '영어 → 한국어';
+  document.getElementById('translateWord').textContent = dir ? q.ko : q.en;
+  const inp = document.getElementById('translateInput');
+  inp.value = '';
+  inp.className = '';
+  inp.disabled = false;
+  inp.focus();
+  resetTimer(15);
+}
+
+function checkTranslate() {
+  const inp = document.getElementById('translateInput');
+  const val = inp.value.trim().toLowerCase();
+  const correct = gameState.translateCorrect.toLowerCase();
+  inp.disabled = true;
+  if (val === correct) {
+    inp.classList.add('correct'); addScore(15); flash(true);
+  } else {
+    inp.classList.add('wrong');
+    flash(false, '정답: ' + gameState.translateCorrect);
+  }
+  setTimeout(nextQ, 900);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && currentGame === 'translate') { checkTranslate(); }
+});
+
+// ─── GAME 3: ORDER ───────────────────────────────────────────────────────────
+let orderPlaced = [];
+let orderRemaining = [];
+
+function loadOrderQ(q) {
+  orderPlaced = [];
+  orderRemaining = [...q.en];
+  const shuffled = shuffle(q.en);
+  document.getElementById('orderKo').textContent = q.ko;
+
+  const slots = document.getElementById('wordSlots');
+  slots.innerHTML = '<span style="color:var(--text2);font-size:.85rem">단어를 클릭해서 여기에 배열하세요</span>';
+
+  const bank = document.getElementById('wordBank');
+  bank.innerHTML = '';
+  shuffled.forEach((w, i) => {
+    const tok = document.createElement('div');
+    tok.className = 'word-token';
+    tok.textContent = w;
+    tok.dataset.word = w;
+    tok.dataset.idx = i;
+    tok.onclick = () => placeWord(tok, w);
+    bank.appendChild(tok);
+  });
+  resetTimer(20);
+}
+
+function placeWord(tok, w) {
+  if (tok.classList.contains('placed')) return;
+  tok.classList.add('placed');
+  orderPlaced.push(w);
+  updateSlots();
+}
+
+function updateSlots() {
+  const slots = document.getElementById('wordSlots');
+  if (orderPlaced.length === 0) {
+    slots.innerHTML = '<span style="color:var(--text2);font-size:.85rem">단어를 클릭해서 여기에 배열하세요</span>';
+    return;
+  }
+  slots.innerHTML = '';
+  orderPlaced.forEach((w, i) => {
+    const tok = document.createElement('div');
+    tok.className = 'word-token placed';
+    tok.textContent = w;
+    tok.onclick = () => removeWord(i);
+    slots.appendChild(tok);
+  });
+}
+
+function removeWord(i) {
+  const w = orderPlaced.splice(i, 1)[0];
+  updateSlots();
+  // Re-enable in bank
+  document.querySelectorAll('#wordBank .word-token').forEach(tok => {
+    if (tok.dataset.word === w && tok.classList.contains('placed')) {
+      tok.classList.remove('placed');
+    }
+  });
+}
+
+function clearOrder() {
+  orderPlaced = [];
+  updateSlots();
+  document.querySelectorAll('#wordBank .word-token').forEach(t => t.classList.remove('placed'));
+}
+
+function checkOrder() {
+  const q = gameState.questions[gameState.qIndex];
+  const correct = q.en.join(' ');
+  const given = orderPlaced.join(' ');
+  if (given === correct) {
+    document.querySelectorAll('#wordSlots .word-token').forEach(t => t.classList.add('correct-placed'));
+    addScore(20); flash(true);
+  } else {
+    document.querySelectorAll('#wordSlots .word-token').forEach(t => t.classList.add('wrong-placed'));
+    flash(false, '정답: ' + correct);
+  }
+  setTimeout(nextQ, 1000);
+}
+
+// ─── TIMER ───────────────────────────────────────────────────────────────────
+function startTimer(sec) {
+  gameState.timeLeft = sec;
+  document.getElementById('timerVal').textContent = sec;
+  clearInterval(gameTimer);
+  gameTimer = setInterval(() => {
+    gameState.timeLeft--;
+    document.getElementById('timerVal').textContent = gameState.timeLeft;
+    const tb = document.getElementById('timerBox');
+    if (gameState.timeLeft <= 5) tb.classList.add('warning'); else tb.classList.remove('warning');
+    if (gameState.timeLeft <= 0) {
+      clearInterval(gameTimer);
+      flash(false, '⏰ 시간 초과!');
+      setTimeout(nextQ, 800);
+    }
+  }, 1000);
+}
+function resetTimer(sec) { clearInterval(gameTimer); startTimer(sec); }
+
+function nextQ() {
+  clearInterval(gameTimer);
+  gameState.qIndex++;
+  if (gameState.qIndex >= 10) { endGame(); return; }
+  loadQuestion();
+}
+
+function addScore(pts) {
+  gameState.score += pts;
+  document.getElementById('currentScore').textContent = gameState.score;
+}
+
+// ─── END GAME ────────────────────────────────────────────────────────────────
+function endGame() {
+  clearInterval(gameTimer);
+  const score = gameState.score;
+  const type = currentGame;
+
+  // Update player data
+  const pd = getPlayerData(player.name);
+  const prevTotal = pd.totalScore || 0;
+  pd.totalScore = (pd.totalScore || 0) + score;
+  pd.games = (pd.games || 0) + 1;
+  if (!pd.best) pd.best = {match:0,translate:0,order:0};
+  const isNewBest = score > (pd.best[type] || 0);
+  if (isNewBest) pd.best[type] = score;
+  savePlayerData(pd);
+  player = pd;
+
+  // Badge check
+  const prevBadge = getBadge(prevTotal);
+  const newBadge = getBadge(pd.totalScore);
+  const gotNewBadge = newBadge.min > prevBadge.min;
+
+  // Show result
+  const overlay = document.getElementById('resultOverlay');
+  const emojis = { match:'🌱', translate:'🌿', order:'🌳' };
+  document.getElementById('resultEmoji').textContent = score >= 80 ? '🏆' : score >= 50 ? '⭐' : '💪';
+  document.getElementById('resultTitle').textContent = score >= 80 ? '훌륭해요!' : score >= 50 ? '잘했어요!' : '다시 도전!';
+  document.getElementById('resultScore').textContent = `점수: ${score}점 ${isNewBest?'🆕 최고기록!':''}`;
+
+  const nb = document.getElementById('resultBadge');
+  if (gotNewBadge) {
+    nb.textContent = `${newBadge.icon} 새 뱃지 획득! "${newBadge.name}"`;
+    nb.classList.add('show');
+  } else { nb.classList.remove('show'); }
+
+  overlay.classList.add('show');
+}
+
+function exitGame() {
+  clearInterval(gameTimer);
+  document.getElementById('resultOverlay').classList.remove('show');
+  currentGame = null;
+  showScreen('homeScreen','nav-home');
+}
+
+function retryGame() {
+  document.getElementById('resultOverlay').classList.remove('show');
+  if (lastGameType) startGame(lastGameType);
+}
+
+// ─── FLASH FEEDBACK ──────────────────────────────────────────────────────────
+function flash(ok, msg) {
+  const el = document.getElementById('feedbackFlash');
+  el.textContent = ok ? '✅ 정답!' : (msg || '❌ 오답!');
+  el.className = 'feedback-flash ' + (ok ? 'correct-flash' : 'wrong-flash') + ' show';
+  setTimeout(() => el.classList.remove('show'), 1200);
+}
+
+// ─── RANKING ─────────────────────────────────────────────────────────────────
+function loadRanking() {
+  showRanking(currentRankTab);
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', i===0 && currentRankTab==='all' ||
+      b.getAttribute('onclick').includes(currentRankTab));
+  });
+}
+
+function showRanking(type) {
+  currentRankTab = type;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick').includes("'"+type+"'"));
+  });
+  const players = getAllPlayers();
+  let sorted;
+  if (type === 'all') {
+    sorted = players.sort((a,b) => (b.totalScore||0)-(a.totalScore||0));
+  } else {
+    sorted = players.sort((a,b) => ((b.best||{})[type]||0)-((a.best||{})[type]||0));
+  }
+  renderRankingList(document.getElementById('rankingList'), sorted, type);
+}
+
+function renderRankingList(el, sorted, type) {
+  if (!sorted.length) {
+    el.innerHTML = '<div style="color:var(--text2);text-align:center;padding:24px">아직 기록이 없어요!</div>';
+    return;
+  }
+  el.innerHTML = '';
+  sorted.forEach((p, i) => {
+    const score = type === 'all' ? (p.totalScore||0) : ((p.best||{})[type]||0);
+    if (score === 0 && type !== 'all') return;
+    const badge = getBadge(p.totalScore||0);
+    const item = document.createElement('div');
+    item.className = 'rank-item' + (p.name===player?.name ? ' me' : '');
+    const numClass = i<3 ? `rank-${i+1}` : '';
+    const medals = ['🥇','🥈','🥉'];
+    item.innerHTML = `
+      <div class="rank-num ${numClass}">${i<3?medals[i]:i+1}</div>
+      <div class="rank-info">
+        <div class="rank-name">${p.name} ${p.name===player?.name?'<span style="color:var(--accent1);font-size:.7rem">(나)</span>':''}</div>
+        <div class="rank-class">${p.class||''}</div>
+      </div>
+      <div class="rank-badge">${badge.icon}</div>
+      <div class="rank-score">${score}점</div>
+    `;
+    el.appendChild(item);
+  });
+}
+
+function refreshRanking() { loadRanking(); }
+
+// ─── AI CHAT ─────────────────────────────────────────────────────────────────
+const CHAT_PROMPTS = {
+  seed: `You are a friendly English teacher for Korean middle school students. Speak MOSTLY in Korean (80%) with some English words. Always explain English words in Korean. Keep sentences short and encouraging. When teaching, give Korean translations immediately. Start by introducing yourself warmly.`,
+  sprout: `You are a friendly English teacher for Korean middle school students. Use a MIX of Korean and English (50/50). Switch naturally between languages. Encourage students to try speaking English. Gently correct mistakes. Start by greeting them in both languages.`,
+  tree: `You are a friendly English teacher for Korean middle school students. Speak MOSTLY in English (80%) with occasional Korean explanations only for difficult words. Encourage full English conversation. Correct grammar gently. Start by greeting in English and asking about their day.`
+};
+
+function setChatLevel(level) {
+  chatLevel = level;
+  document.querySelectorAll('.chat-level-btn').forEach(b => {
+    b.classList.remove('active');
+  });
+  document.getElementById('chatLv' + {seed:1,sprout:2,tree:3}[level]).classList.add('active');
+  chatHistory = [];
+  document.getElementById('chatMessages').innerHTML = '';
+  initChat();
+}
+
+async function initChat() {
+  const labels = { seed:'🌱 기초 (한국어 위주)', sprout:'🌿 중급 (50:50)', tree:'🌳 심화 (영어 위주)' };
+  addChatMsg('system', `레벨: ${labels[chatLevel]}`);
+  addChatMsg('ai', '...typing');
+  const msgs = document.getElementById('chatMessages');
+  const typing = msgs.lastElementChild;
+  typing.innerHTML = '<div class="sender">AI 선생님 🤖</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+
+  try {
+    const res = await callGemini([{ role:'user', parts:[{text:'안녕하세요, 시작해요!'}] }], CHAT_PROMPTS[chatLevel]);
+    typing.innerHTML = `<div class="sender">AI 선생님 🤖</div>${res}`;
+    chatHistory.push({ role:'model', parts:[{text:res}] });
+  } catch {
+    typing.innerHTML = '<div class="sender">AI 선생님 🤖</div>안녕하세요! AI 선생님이에요. Gemini API 키를 설정하면 대화할 수 있어요!';
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+async function sendChat() {
+  const inp = document.getElementById('chatInput');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+
+  addChatMsg('user', text);
+  chatHistory.push({ role:'user', parts:[{text}] });
+
+  const msgs = document.getElementById('chatMessages');
+  const loading = document.createElement('div');
+  loading.className = 'msg ai';
+  loading.innerHTML = '<div class="sender">AI 선생님 🤖</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+  msgs.appendChild(loading);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const reply = await callGemini(chatHistory, CHAT_PROMPTS[chatLevel]);
+    loading.innerHTML = `<div class="sender">AI 선생님 🤖</div>${reply}`;
+    chatHistory.push({ role:'model', parts:[{text:reply}] });
+  } catch(e) {
+    loading.innerHTML = '<div class="sender">AI 선생님 🤖</div>죄송해요, 잠시 후 다시 시도해 주세요.';
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addChatMsg(who, text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + (who==='user' ? 'user' : 'ai');
+  if (who === 'ai') div.innerHTML = `<div class="sender">AI 선생님 🤖</div>${text}`;
+  else if (who === 'system') {
+    div.style.cssText = 'align-self:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--text2);font-size:.75rem;padding:6px 14px;border-radius:20px';
+    div.className = '';
+    div.textContent = text;
+  } else div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+async function callGemini(history, systemPrompt) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`;
+  const body = {
+    system_instruction: { parts: [{ text: systemPrompt }] },
+    contents: history,
+    generationConfig: { maxOutputTokens: 300, temperature: 0.8 }
+  };
+  const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '응답을 받지 못했어요.';
+}
+
+// ─── TEACHER VIEW ─────────────────────────────────────────────────────────────
+function loadTeacherView() {
+  const players = getAllPlayers();
+  const sorted = players.sort((a,b) => (b.totalScore||0)-(a.totalScore||0));
+
+  document.getElementById('teacherStats').innerHTML = `
+    총 학생 수: <strong>${players.length}명</strong><br>
+    총 게임 수: <strong>${players.reduce((s,p)=>s+(p.games||0),0)}회</strong><br>
+    평균 점수: <strong>${players.length ? Math.round(players.reduce((s,p)=>s+(p.totalScore||0),0)/players.length) : 0}점</strong>
+  `;
+
+  renderRankingList(document.getElementById('teacherRankingList'), sorted, 'all');
+}
+
+function exportData() {
+  const players = getAllPlayers();
+  const csv = ['이름,반,총점수,게임수,매칭최고,번역최고,어순최고,뱃지']
+    .concat(players.map(p => [
+      p.name, p.class||'', p.totalScore||0, p.games||0,
+      (p.best?.match||0), (p.best?.translate||0), (p.best?.order||0),
+      getBadge(p.totalScore||0).name
+    ].join(',')))
+    .join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download = 'eaim_english_game_ranking.csv';
+  a.click();
+}
+
+function resetAllData() {
+  if (!confirm('⚠️ 모든 학생 데이터를 초기화하겠습니까? 이 작업은 되돌릴 수 없습니다.')) return;
+  Object.keys(localStorage).filter(k=>k.startsWith(LS_PREFIX)).forEach(k=>localStorage.removeItem(k));
+  alert('초기화 완료!');
+  loadTeacherView();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // Check for saved session
+  const saved = lsGet('last_player');
+  if (saved) {
+    document.getElementById('loginName').value = saved;
+  }
+});
+</script>
+</body>
+</html>
