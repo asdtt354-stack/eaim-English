@@ -11,7 +11,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="EAIM영어">
 <link rel="apple-touch-icon" href="icon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -81,7 +82,7 @@
     box-shadow: 0 4px 16px rgba(37,99,235,.1);
   }
   .hero-logo span {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif; font-weight: 900;
     font-size: 1.1rem;
     color: var(--blue);
     letter-spacing: .05em;
@@ -93,7 +94,7 @@
   }
 
   .hero h1 {
-    font-family: 'Gaegu', cursive;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
     font-size: clamp(2.2rem, 8vw, 3.2rem);
     font-weight: 700;
     color: #1E3A8A;
@@ -126,7 +127,7 @@
   /* ── Section Label ── */
   .section-label {
     text-align: center; margin: 36px 0 20px;
-    font-family: 'Gaegu', cursive; font-size: 1.3rem;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif; font-size: 1.3rem;
     color: #374151; font-weight: 700;
   }
   .section-label::before, .section-label::after {
@@ -204,8 +205,8 @@
   @keyframes glow { 0%,100%{opacity:1} 50%{opacity:.4} }
 
   .card-header h2 {
-    font-family: 'Fredoka One', cursive;
-    font-size: 2rem; color: white;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    font-size: 2rem; color: white; font-weight: 900;
     line-height: 1.1; margin-bottom: 8px;
   }
   .card-header h2 small {
@@ -290,7 +291,7 @@
   }
   .info-icon { font-size: 1.6rem; }
   .info-label { font-size: .7rem; color: #94A3B8; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
-  .info-val { font-family: 'Fredoka One', cursive; font-size: 1rem; color: #1E3A8A; }
+  .info-val { font-family: 'Pretendard', 'Noto Sans KR', sans-serif; font-weight: 900; font-size: 1rem; color: #1E3A8A; }
   .info-divider { width: 1px; height: 40px; background: #E2E8F0; }
 
   /* ── Teacher Quick Access ── */
@@ -303,7 +304,7 @@
     animation: cardIn .6s .45s ease both;
   }
   .teacher-strip-text h3 {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif; font-weight: 900;
     color: white; font-size: 1rem; margin-bottom: 2px;
   }
   .teacher-strip-text p { font-size: .75rem; color: #94A3B8; }
@@ -531,7 +532,7 @@ window.addEventListener("appinstalled", () => {
 <div id="install-banner" style="position:fixed;bottom:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,#1E3A8A,#2563EB);color:white;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -4px 24px rgba(37,99,235,.4);transform:translateY(120%);opacity:0;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s">
   <span style="font-size:1.8rem">📲</span>
   <div style="flex:1">
-    <div style="font-family:'Fredoka One',cursive;font-size:1rem">홈 화면에 설치하기</div>
+    <div style="font-family:'Pretendard','Noto Sans KR',sans-serif;font-weight:900;font-size:1rem">홈 화면에 설치하기</div>
     <div style="font-size:.75rem;opacity:.8">앱처럼 바로 열 수 있어요!</div>
   </div>
   <button onclick="installApp()" style="background:white;color:#2563EB;border:none;border-radius:10px;padding:8px 18px;font-weight:900;font-size:.85rem;cursor:pointer">설치</button>
