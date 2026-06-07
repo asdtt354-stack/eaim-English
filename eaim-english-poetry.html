@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAIM 영시 창작</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{
+  --mint:#00BF8A;--mint-d:#008F66;--mint-l:#E0FBF2;
+  --coral:#FF6B5B;--coral-l:#FFF0EE;
+  --amber:#FFA94D;--amber-l:#FFF5E6;
+  --violet:#7B6CF6;--violet-l:#F0EEFF;
+  --sky:#38BDF8;--sky-l:#E0F5FF;
+  --gold:#F59E0B;--gold-l:#FFFBEB;
+  --ink:#1E1E30;--ink2:#52526E;--ink3:#9898B0;
+  --bg:#F6F8FF;--white:#FFF;--r:1.3rem;
+  --s:0 3px 16px rgba(30,30,48,.08);--sl:0 8px 36px rgba(30,30,48,.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:100px}
+body::before{content:'';position:fixed;inset:0;z-index:-1;
+  background:radial-gradient(ellipse 60% 50% at 10% 0%,rgba(0,191,138,.07) 0%,transparent 55%),
+             radial-gradient(ellipse 50% 60% at 95% 100%,rgba(245,158,11,.08) 0%,transparent 55%)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#C8CDE8;border-radius:99px}
+
+/* ── 모달 ── */
+.ov{position:fixed;inset:0;background:rgba(10,10,28,.55);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;padding:18px}
+.mb{background:#fff;border-radius:2rem;padding:1.8rem;width:100%;max-width:400px;box-shadow:0 28px 56px rgba(0,0,0,.28)}
+
+/* ── 헤더 ── */
+header{background:linear-gradient(135deg,#1E1E30 0%,#14143A 55%,#1A0A30 100%);
+  padding:14px 18px;border-bottom:3px solid var(--gold);
+  position:sticky;top:0;z-index:100;box-shadow:0 3px 18px rgba(0,0,0,.28)}
+.hi{max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:900;color:#fff;display:flex;align-items:center;gap:7px}
+.la{color:var(--gold)}
+.ls{font-size:.68rem;color:rgba(255,255,255,.4);margin-top:1px}
+.nb{background:rgba(245,158,11,.18);border:1.5px solid rgba(245,158,11,.35);border-radius:99px;padding:4px 11px;font-size:.75rem;color:var(--gold);font-weight:700}
+.rb{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:9px;padding:4px 10px;font-size:.7rem;color:rgba(255,255,255,.65);cursor:pointer;font-family:inherit;transition:all .2s}
+.rb:hover{background:rgba(255,255,255,.2);color:#fff}
+
+/* ── 스텝 네비 ── */
+.sn{background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border-bottom:2px solid rgba(245,158,11,.18);
+  padding:8px 13px;display:flex;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  position:sticky;top:62px;z-index:90;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.sn::-webkit-scrollbar{display:none}
+.sb{flex-shrink:0;padding:6px 11px;border-radius:11px;border:2px solid #D4DBEE;background:#fff;color:var(--ink2);
+  font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap;line-height:1.3;text-align:center}
+.sb.on{background:var(--gold);border-color:#D97706;color:#fff;box-shadow:0 4px 14px rgba(245,158,11,.35);transform:translateY(-1px)}
+.sb.dn{background:var(--gold-l);border-color:rgba(245,158,11,.28);color:#B45309}
+.sb.dn::after{content:' ✓'}
+
+/* ── 메인 ── */
+main{max-width:680px;margin:0 auto;padding:16px 14px}
+.tc{display:none;animation:fu .3s ease}
+.tc.on{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+
+/* ── 카드 ── */
+.cd{background:#fff;border:2px solid rgba(0,0,0,.055);border-radius:var(--r);padding:17px;margin-bottom:13px;box-shadow:var(--s)}
+.ct{font-weight:900;font-size:.85rem;color:var(--ink2);margin-bottom:11px;display:flex;align-items:center;gap:6px;padding-bottom:9px;border-bottom:2px dashed rgba(0,0,0,.055)}
+
+/* ── 레벨 ── */
+.lg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.lb{padding:12px 7px;border-radius:13px;border:3px solid #DDE2F4;background:#fff;cursor:pointer;text-align:center;font-family:inherit;transition:all .2s;line-height:1.3}
+.lb:hover{transform:translateY(-2px);box-shadow:var(--s)}
+.lb.ab{border-color:var(--mint);background:var(--mint-l);box-shadow:0 0 0 3px rgba(0,191,138,.18)}
+.lb.am{border-color:var(--sky);background:var(--sky-l);box-shadow:0 0 0 3px rgba(56,189,248,.18)}
+.lb.aa{border-color:var(--violet);background:var(--violet-l);box-shadow:0 0 0 3px rgba(123,108,246,.18)}
+
+/* ── 감정 ── */
+.eg{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.eb{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 10px;border-radius:13px;border:2.5px solid transparent;background:#fff;cursor:pointer;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:58px}
+.eb:hover{transform:scale(1.07) translateY(-2px)}
+.eb.sel{transform:scale(1.08);box-shadow:0 4px 16px rgba(0,0,0,.14)}
+
+/* ── 버튼 ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 17px;border-radius:11px;border:none;font-family:'Nunito',inherit;font-weight:800;font-size:.86rem;cursor:pointer;transition:all .15s}
+.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.bm{background:linear-gradient(135deg,var(--mint),var(--mint-d));color:#fff;box-shadow:0 4px 16px rgba(0,191,138,.28)}
+.bm:hover:not(:disabled){box-shadow:0 6px 22px rgba(0,191,138,.42);transform:translateY(-1px)}
+.bg{background:#fff;color:var(--ink2);border:2px solid #D4DBEE}
+.bg:hover{border-color:var(--mint);color:var(--mint-d)}
+.ba{background:linear-gradient(135deg,var(--amber),#D07800);color:#fff;box-shadow:0 4px 16px rgba(255,169,77,.28)}
+.bv{background:linear-gradient(135deg,var(--violet),#5840D0);color:#fff;box-shadow:0 4px 16px rgba(123,108,246,.28)}
+.bgo{background:linear-gradient(135deg,var(--gold),#D97706);color:#fff;box-shadow:0 4px 16px rgba(245,158,11,.28)}
+.bgo:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 22px rgba(245,158,11,.4)}
+.bfl{width:100%}
+.bsm{padding:7px 13px;font-size:.76rem;border-radius:9px}
+
+/* ── 힌트 박스 ── */
+.hb{background:linear-gradient(135deg,#E8F8FF,#D8F0F8);border:2px solid rgba(56,189,248,.28);border-radius:11px;padding:9px 13px;font-size:.79rem;color:#1260A0;line-height:1.6}
+
+/* ── 시 카드 (AI 추천) ── */
+.poem-card{background:#fff;border:2px solid #E8E4F8;border-radius:var(--r);padding:16px;cursor:pointer;transition:all .2s;margin-bottom:10px}
+.poem-card:hover{transform:translateY(-2px);box-shadow:var(--sl);border-color:var(--violet)}
+.poem-card.sel{border-color:var(--gold);background:var(--gold-l);box-shadow:0 0 0 3px rgba(245,158,11,.18)}
+.poem-title{font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;color:var(--ink);margin-bottom:2px}
+.poem-author{font-size:.75rem;color:var(--ink3);margin-bottom:8px}
+.poem-mood{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.mood-tag{background:var(--violet-l);color:var(--violet);border-radius:99px;padding:3px 10px;font-size:.7rem;font-weight:700}
+.poem-preview{font-family:'Gaegu',cursive;font-size:.95rem;color:var(--ink2);line-height:1.8;font-style:italic;border-left:3px solid var(--gold);padding-left:10px}
+.poem-link{font-size:.72rem;color:var(--sky);margin-top:7px;display:inline-block}
+
+/* ── 감정 탭 ── */
+.feel-grid{display:flex;flex-wrap:wrap;gap:6px}
+.feel-chip{padding:7px 13px;border-radius:99px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .15s;border:2px solid #E0E4F4;background:#fff;color:var(--ink2)}
+.feel-chip:hover{transform:scale(1.05)}
+.feel-chip.on{border-color:var(--gold);background:var(--gold-l);color:#B45309;box-shadow:0 2px 8px rgba(245,158,11,.2)}
+
+/* ── 텍스트에리어 ── */
+.ta{width:100%;padding:13px;border-radius:12px;border:2.5px solid #DDE2F4;font-family:'Gaegu',cursive;font-size:1rem;font-weight:700;color:var(--ink);resize:vertical;outline:none;transition:border-color .2s;line-height:1.8;min-height:120px}
+.ta:focus{border-color:var(--gold)}
+.ta.eng{font-family:'Gaegu',cursive;font-size:1.05rem;line-height:2}
+.ni{width:100%;padding:9px 12px;background:#F4F6FF;border:2px solid #DDE2F4;border-radius:11px;color:var(--ink);font-family:inherit;font-size:.92rem;font-weight:700;outline:none;transition:border-color .2s}
+.ni:focus{border-color:var(--gold);background:#fff}
+
+/* ── 단어 검색 팝업 ── */
+.wsearch{background:linear-gradient(135deg,#0F0F28,#1A1A3A);border-radius:var(--r);padding:16px;border:2px solid rgba(245,158,11,.22);box-shadow:0 7px 28px rgba(0,0,0,.18);margin-bottom:13px}
+.wsearch-row{display:flex;gap:7px}
+.wsearch-input{flex:1;padding:9px 13px;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.14);border-radius:11px;color:#fff;font-family:'Gaegu',inherit;font-size:.92rem;font-weight:700;outline:none;transition:border-color .2s}
+.wsearch-input::placeholder{color:rgba(255,255,255,.32)}
+.wsearch-input:focus{border-color:var(--gold)}
+.wsearch-result{margin-top:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);border-radius:11px;padding:11px 13px;font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.75;white-space:pre-line;display:none}
+
+/* ── 시어 칩 ── */
+.word-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.wchip{padding:6px 12px;border-radius:99px;font-size:.78rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .15s;background:#F0EEFF;color:var(--violet);border-color:rgba(123,108,246,.3)}
+.wchip:hover{transform:scale(1.07);box-shadow:0 3px 10px rgba(0,0,0,.1)}
+.wchip.gold{background:var(--gold-l);color:#B45309;border-color:rgba(245,158,11,.35)}
+.wchip.mint{background:var(--mint-l);color:var(--mint-d);border-color:rgba(0,191,138,.3)}
+.wchip.coral{background:var(--coral-l);color:var(--coral);border-color:rgba(255,107,91,.3)}
+
+/* ── AI 결과 박스 ── */
+.ai-box{background:var(--gold-l);border:2px solid rgba(245,158,11,.3);border-radius:13px;padding:14px;margin-top:10px;display:none}
+.ai-box-v{background:var(--violet-l);border:2px solid rgba(123,108,246,.25);border-radius:13px;padding:14px;margin-top:10px;display:none}
+
+/* ── 수노 프롬프트 ── */
+.suno-box{background:linear-gradient(135deg,#1A0A30,#0A1A30);border-radius:var(--r);padding:20px;border:2px solid rgba(245,158,11,.3);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.suno-title{font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:900;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.suno-result{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px;font-family:'Gaegu',cursive;font-size:.9rem;color:rgba(255,255,255,.92);line-height:1.9;white-space:pre-line;min-height:80px}
+.suno-section{margin-bottom:10px}
+.suno-label{font-size:.7rem;font-weight:900;color:rgba(245,158,11,.8);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.copy-btn{background:rgba(245,158,11,.2);border:1.5px solid rgba(245,158,11,.4);border-radius:9px;padding:7px 14px;color:var(--gold);font-size:.78rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .15s;margin-top:10px}
+.copy-btn:hover{background:rgba(245,158,11,.35)}
+
+/* ── 완성 일지 ── */
+.journal{background:#fff;border:2px solid #E8E4F8;border-radius:var(--r);padding:18px}
+.journal-section{margin-bottom:16px;padding-bottom:14px;border-bottom:1.5px dashed rgba(0,0,0,.06)}
+.journal-section:last-child{border-bottom:none;margin-bottom:0}
+.j-label{font-size:.72rem;font-weight:900;color:var(--ink3);letter-spacing:.05em;margin-bottom:7px}
+.j-content{font-family:'Gaegu',cursive;font-size:1rem;color:var(--ink);line-height:1.9}
+
+/* ── 음악 ── */
+.yt-wrap{border-radius:12px;overflow:hidden;margin-top:10px}
+.yt-wrap iframe{width:100%;height:200px;border:none;display:block}
+
+/* ── 교사 패널 ── */
+.tp{position:fixed;inset:0;background:rgba(10,10,28,.65);backdrop-filter:blur(8px);z-index:300;display:none;align-items:flex-start;justify-content:center;padding:18px;overflow-y:auto}
+.tb2{background:#fff;border-radius:2rem;width:100%;max-width:460px;box-shadow:0 28px 56px rgba(0,0,0,.36);overflow:hidden}
+.tph{background:linear-gradient(135deg,#1E1E30,#1A0A30);padding:15px 17px;color:#fff;display:flex;align-items:center;justify-content:space-between}
+.tpb{padding:15px;max-height:84vh;overflow-y:auto;display:flex;flex-direction:column;gap:11px}
+.tps{background:#F4F6FF;border:2px solid #DDE4F4;border-radius:13px;padding:12px}
+.tps h3{font-size:.81rem;font-weight:900;color:var(--ink2);margin-bottom:8px}
+
+@media print{header,.sn,#ct,.no-print{display:none!important}body{background:#fff}.tc{display:block!important}}
+</style>
+</head>
+<body>
+
+<!-- 이름 입력 -->
+<div id="nm" class="ov">
+  <div class="mb" style="text-align:center">
+    <div style="font-size:2.8rem;margin-bottom:11px">✍️</div>
+    <h2 style="font-size:1.4rem;font-weight:900;font-family:'Nunito',sans-serif;margin-bottom:5px">EAIM 영시 창작</h2>
+    <p style="color:var(--ink3);font-size:.84rem;margin-bottom:17px">이름을 입력하고 나만의 영시를 써봐요!</p>
+    <input type="text" id="sni" placeholder="이름을 입력하세요"
+      style="width:100%;text-align:center;font-size:1.1rem;font-family:'Gaegu',cursive;font-weight:700;border:3px solid #D8E4FF;border-radius:.9rem;padding:10px;outline:none;margin-bottom:12px;transition:border-color .2s"
+      onfocus="this.style.borderColor='#F59E0B'" onblur="this.style.borderColor='#D8E4FF'"
+      onkeydown="if(event.key==='Enter')sN()">
+    <button onclick="sN()" class="btn bgo bfl" style="font-size:.98rem;padding:12px">🚀 시작하기!</button>
+    <button onclick="sTL()" style="margin-top:9px;background:none;border:none;font-size:.7rem;color:var(--ink3);cursor:pointer;font-family:inherit">선생님이신가요?</button>
+  </div>
+</div>
+
+<!-- 교사 로그인 -->
+<div id="tlm" class="ov" style="display:none">
+  <div class="mb">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px">
+      <h2 style="font-size:1rem;font-weight:900">👩‍🏫 선생님 로그인</h2>
+      <button onclick="hTL()" style="background:none;border:none;font-size:1.1rem;color:var(--ink3);cursor:pointer">✕</button>
+    </div>
+    <input type="password" id="tpi" placeholder="비밀번호 (기본: 1234)" class="ni" style="margin-bottom:11px">
+    <button onclick="tL()" class="btn bgo bfl">로그인</button>
+  </div>
+</div>
+
+<!-- 교사 패널 -->
+<div id="tpn" class="tp">
+  <div class="tb2">
+    <div class="tph">
+      <h2 style="font-size:1rem;font-weight:900">🎛️ 교사 컨트롤</h2>
+      <button onclick="cTP()" class="btn bsm" style="background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.18)">✕ 닫기</button>
+    </div>
+    <div class="tpb">
+      <div class="tps" style="background:#FFFBEE;border-color:#FFE070">
+        <h3 style="color:#A06000">🔑 Gemini API 키</h3>
+        <input type="text" id="aki" placeholder="AIzaSy..." class="ni" style="margin-bottom:7px;font-size:.8rem">
+        <button onclick="sAK()" class="btn ba bfl bsm">💾 저장</button>
+        <p id="aks" style="font-size:.68rem;text-align:center;margin-top:5px;color:var(--mint-d)"></p>
+      </div>
+      <div class="tps">
+        <h3>👥 학생 현황</h3>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span id="sc" style="background:var(--sky-l);color:#1070A0;font-size:.7rem;font-weight:900;padding:2px 9px;border-radius:99px">0명</span>
+          <button onclick="rS()" style="background:none;border:none;cursor:pointer;color:var(--ink3)">↻</button>
+        </div>
+        <div id="sl" style="max-height:170px;overflow-y:auto">
+          <p style="text-align:center;color:var(--ink3);font-size:.78rem;padding:12px">아직 참여한 학생이 없어요</p>
+        </div>
+      </div>
+      <div class="tps" style="background:#F8F8F8;border-color:#E4E4E4">
+        <h3>🛡 비밀번호 변경</h3>
+        <div style="display:flex;gap:7px">
+          <input type="password" id="npi" placeholder="새 비밀번호" class="ni" style="font-size:.82rem">
+          <button onclick="cPW()" class="btn bg bsm">변경</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 헤더 -->
+<header>
+  <div class="hi">
+    <div>
+      <div class="logo">🌙 EAIM <span class="la">영시 창작</span></div>
+      <div class="ls">English Poetry & Song Creator</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span id="wn" class="nb" style="display:none"></span>
+      <button onclick="rA()" class="rb">↺</button>
+      <button onclick="oTP()" class="rb">👩‍🏫</button>
+    </div>
+  </div>
+</header>
+
+<!-- 스텝 네비 -->
+<div class="sn" id="sNav" style="display:none">
+  <button class="sb on" id="sB1" onclick="sT(1)">Step 1<br><span style="font-size:.6rem;opacity:.8">감정</span></button>
+  <button class="sb" id="sB2" onclick="sT(2)">Step 2<br><span style="font-size:.6rem;opacity:.8">시 추천</span></button>
+  <button class="sb" id="sB3" onclick="sT(3)">Step 3<br><span style="font-size:.6rem;opacity:.8">감상</span></button>
+  <button class="sb" id="sB4" onclick="sT(4)">Step 4<br><span style="font-size:.6rem;opacity:.8">감상문</span></button>
+  <button class="sb" id="sB5" onclick="sT(5)">Step 5<br><span style="font-size:.6rem;opacity:.8">영시 창작</span></button>
+  <button class="sb" id="sB6" onclick="sT(6)">Step 6<br><span style="font-size:.6rem;opacity:.8">완성</span></button>
+  <button class="sb" id="sB7" onclick="sT(7)">Step 7<br><span style="font-size:.6rem;opacity:.8">음악·낭독</span></button>
+  <button class="sb" id="sB8" onclick="sT(8)">Step 8<br><span style="font-size:.6rem;opacity:.8">🎸수노</span></button>
+</div>
+
+<main>
+
+<!-- ══ STEP 1 — 감정 & 레벨 ══ -->
+<div id="tab-1" class="tc on" style="margin-top:14px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--gold-l);color:#B45309;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 1</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">오늘의 감정과 레벨을 선택해요</h3>
+  </div>
+
+  <!-- 레벨 -->
+  <div class="cd">
+    <div class="ct">🌱 나의 레벨</div>
+    <div class="lg">
+      <button onclick="sLv('basic')" id="lv-basic" class="lb">
+        <div style="font-size:1.4rem;margin-bottom:3px">🌱</div>
+        <div style="font-size:.8rem;font-weight:900">기초</div>
+        <div style="font-size:.63rem;color:var(--ink3);margin-top:2px">짧고 쉬운 시</div>
+      </button>
+      <button onclick="sLv('middle')" id="lv-middle" class="lb">
+        <div style="font-size:1.4rem;margin-bottom:3px">🌿</div>
+        <div style="font-size:.8rem;font-weight:900">중급</div>
+        <div style="font-size:.63rem;color:var(--ink3);margin-top:2px">교과서 수준</div>
+      </button>
+      <button onclick="sLv('advanced')" id="lv-advanced" class="lb">
+        <div style="font-size:1.4rem;margin-bottom:3px">🌳</div>
+        <div style="font-size:.8rem;font-weight:900">심화</div>
+        <div style="font-size:.63rem;color:var(--ink3);margin-top:2px">고급 표현</div>
+      </button>
+    </div>
+    <div id="lv-guide" class="hb" style="margin-top:10px">🌱 <strong>기초</strong>: Shel Silverstein, Robert Frost 같은 쉽고 재미있는 시를 추천해요!</div>
+  </div>
+
+  <!-- 감정 -->
+  <div class="cd">
+    <div class="ct">😊 오늘의 감정을 골라요!</div>
+    <div class="eg" id="el"></div>
+    <div id="ed" style="display:none;background:var(--gold-l);border:2px solid rgba(245,158,11,.4);border-radius:12px;padding:9px 13px;text-align:center;margin-top:10px">
+      <div style="font-size:.68rem;color:var(--ink3);font-weight:700;margin-bottom:2px">선택 완료!</div>
+      <div id="et" style="font-size:1rem;font-weight:900;color:#B45309;font-family:'Nunito',sans-serif"></div>
+    </div>
+  </div>
+
+  <!-- 주제 입력 -->
+  <div class="cd">
+    <div class="ct">💭 시 주제 (선택)</div>
+    <input type="text" id="topic" class="ni" placeholder="예: 봄날, 친구, 나의 방, 비오는 날...">
+    <div class="hb" style="margin-top:8px">💡 주제를 입력하면 더 딱 맞는 시를 추천받을 수 있어요!</div>
+  </div>
+
+  <button onclick="goStep2()" id="step1-btn" class="btn bgo bfl" style="font-size:.95rem;padding:13px" disabled>
+    🤖 AI 영시 추천받기 →
+  </button>
+</div>
+
+<!-- ══ STEP 2 — AI 영시 추천 ══ -->
+<div id="tab-2" class="tc" style="margin-top:14px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--gold-l);color:#B45309;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 2</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">AI가 추천하는 영시예요</h3>
+  </div>
+  <div id="poem-loading" class="cd" style="text-align:center;padding:30px">
+    <div style="font-size:2rem;margin-bottom:10px;animation:spin 1s linear infinite">⭐</div>
+    <p style="color:var(--ink3);font-size:.88rem">AI가 딱 맞는 시를 찾고 있어요...</p>
+  </div>
+  <div id="poem-list" style="display:none"></div>
+  <button onclick="sT(3)" id="step2-btn" class="btn bgo bfl" style="font-size:.95rem;padding:13px;display:none;margin-top:4px">
+    선택한 시 감상하기 →
+  </button>
+  @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+</div>
+
+<!-- ══ STEP 3 — 감상 탭 ══ -->
+<div id="tab-3" class="tc" style="margin-top:14px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--gold-l);color:#B45309;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 3</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">시를 읽으며 느낌을 골라요</h3>
+  </div>
+  <!-- 선택된 시 표시 -->
+  <div id="selected-poem-display" class="cd" style="border-color:rgba(245,158,11,.3);background:var(--gold-l)">
+    <div id="spd-title" style="font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;margin-bottom:3px"></div>
+    <div id="spd-author" style="font-size:.75rem;color:var(--ink3);margin-bottom:10px"></div>
+    <div id="spd-preview" style="font-family:'Gaegu',cursive;font-size:.95rem;color:var(--ink2);line-height:1.9;border-left:3px solid var(--gold);padding-left:10px"></div>
+    <a id="spd-link" href="#" target="_blank" style="font-size:.72rem;color:var(--sky);margin-top:8px;display:inline-block">📖 전체 시 읽기 →</a>
+  </div>
+  <!-- 감정 탭 -->
+  <div class="cd">
+    <div class="ct">🎨 어떤 감정이 느껴지나요? (여러 개 선택 OK)</div>
+    <div class="feel-grid" id="feel-grid"></div>
+  </div>
+  <button onclick="sT(4)" class="btn bgo bfl" style="font-size:.95rem;padding:13px">
+    감상문 쓰러 가기 →
+  </button>
+</div>
+
+<!-- ══ STEP 4 — 감상문 ══ -->
+<div id="tab-4" class="tc" style="margin-top:14px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--gold-l);color:#B45309;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 4</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">감상문을 써봐요</h3>
+  </div>
+  <div class="cd">
+    <div class="ct">✏️ 이 시를 읽고 어떤 느낌이 들었나요?</div>
+    <div class="hb" style="margin-bottom:10px">💡 한국어로 써도 괜찮아요! AI가 영어 표현을 도와줄게요.</div>
+    <textarea id="review-text" class="ta" placeholder="이 시를 읽고...
+어떤 구절이 마음에 남았나요?
+어떤 느낌이 들었나요?"></textarea>
+    <div style="display:flex;gap:7px;margin-top:10px">
+      <button onclick="aiReview()" class="btn bv bfl">🤖 AI 첨삭 받기</button>
+      <button onclick="sT(5)" class="btn bgo" style="flex:1">다음 →</button>
+    </div>
+    <div id="review-ai-result" class="ai-box-v"></div>
+  </div>
+</div>
+
+<!-- ══ STEP 5 — 영시 창작 ══ -->
+<div id="tab-5" class="tc" style="margin-top:14px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--gold-l);color:#B45309;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 5</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">나만의 영시를 써봐요! ✍️</h3>
+  </div>
+
+  <!-- 단어 검색 -->
+  <div class="wsearch">
+    <div style="font-size:.73rem;font-weight:900;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px">🔍 단어 검색 — 한국어로 찾아요</div>
+    <div class="wsearch-row">
+      <input type="text" id="ws-input" class="wsearch-input" placeholder="예: 외로운, 빛나다, 바람..." onkeydown="if(event.key==='Enter')wsSearch()">
+      <button onclick="wsSearch()" class="btn bgo bsm" style="padding:9px 13px">🤖 검색</button>
+    </div>
+    <div id="ws-result" class="wsearch-result"></div>
+  </div>
+
+  <!-- 시어 추천 칩 -->
+  <div class="cd">
+    <div class="ct">💎 시어 추천 <span style="font-size:.68rem;color:var(--ink3);font-weight:400">— 클릭하면 시에 추가돼요!</span></div>
+    <div id="word-chips-container" class="word-chips"></div>
+    <button onclick="loadMoreChips()" class="btn bg bsm" style="margin-top:4px;font-size:.72rem">🔄 다른 시어 보기</button>
+  </div>
+
+  <!-- 영시 입력 -->
+  <div class="cd" style="border-color:rgba(245,158,11,.3)">
+    <div class="ct">🌙 나만의 영시</div>
+    <div class="hb" style="margin-bottom:10px">💡 각 줄에 하나씩 써봐요. 짧아도 OK! 느낌이 중요해요 🌟</div>
+    <textarea id="my-poem" class="ta eng" placeholder="예:
+The rain falls softly...
+Like my quiet heart...
+I wait for sunshine..." oninput="updatePoemPreview()"></textarea>
+    <div style="text-align:right;font-size:.7rem;color:var(--ink3);margin-top:4px" id="poem-lines">0줄</div>
+  </div>
+
+  <!-- AI 도구 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px">
+    <button onclick="aiPoetryHelp()" class="btn bv">💡 영감받기</button>
+    <button onclick="aiPolish()" class="btn bgo">✨ AI 다듬기</button>
+  </div>
+  <div id="polish-result" class="ai-box" style="margin-bottom:13px">
+    <div style="font-size:.75rem;font-weight:900;color:#B45309;margin-bottom:8px">✨ AI가 다듬어줬어요</div>
+    <div id="polish-text" style="font-family:'Gaegu',cursive;font-size:.95rem;color:var(--ink);line-height:1.9;white-space:pre-line"></div>
+    <div style="display:flex;gap:7px;margin-top:10px">
+      <button onclick="applyPolish()" class="btn bm bsm">✅ 적용하기</button>
+      <button onclick="cancelPolish()" class="btn bg bsm">✕ 취소</button>
+    </div>
+  </div>
+  <div id="help-result" class="ai-box-v" style="margin-bottom:13px">
+    <div style="font-size:.75rem;font-weight:900;color:var(--violet);margin-bottom:8px">💡 AI 영감</div>
+    <div id="help-text" style="font-size:.85rem;color:var(--ink2);line-height:1.8;white-space:pre-line"></div>
+  </div>
+
+  <button onclick="sT(6)" class="btn bgo bfl" style="font-size:.95rem;padding:13px">
+    완성! 일지 보기 →
+  </button>
+</div>
+
+<!-- ══ STEP 6 — 완성 일지 ══ -->
+<div id="tab-6" class="tc" style="margin-top:14px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--gold-l);color:#B45309;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 6</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">나의 영시 창작 일지 📖</h3>
+  </div>
+  <div class="journal" id="journal-content">
+    <div class="journal-section">
+      <div class="j-label">🎨 오늘의 감정</div>
+      <div class="j-content" id="j-emotion"></div>
+    </div>
+    <div class="journal-section">
+      <div class="j-label">📚 감상한 시</div>
+      <div class="j-content" id="j-poem"></div>
+    </div>
+    <div class="journal-section">
+      <div class="j-label">💬 느낀 감정 탭</div>
+      <div class="j-content" id="j-feels"></div>
+    </div>
+    <div class="journal-section">
+      <div class="j-label">✏️ 나의 감상문</div>
+      <div class="j-content" id="j-review"></div>
+    </div>
+    <div class="journal-section" style="background:var(--gold-l);border-radius:12px;padding:14px;border:2px solid rgba(245,158,11,.25)">
+      <div class="j-label" style="color:#B45309">🌙 나만의 영시</div>
+      <div class="j-content" id="j-mypoem" style="font-size:1.05rem;line-height:2.1"></div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px" class="no-print">
+    <button onclick="window.print()" class="btn bg">🖨️ 인쇄</button>
+    <button onclick="downloadJournal()" class="btn bs">💾 저장</button>
+  </div>
+  <button onclick="sT(7)" class="btn bgo bfl" style="margin-top:10px;font-size:.95rem;padding:13px">
+    🎵 음악 & 낭독하기 →
+  </button>
+</div>
+
+<!-- ══ STEP 7 — 음악 & 낭독 ══ -->
+<div id="tab-7" class="tc" style="margin-top:14px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--gold-l);color:#B45309;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 7</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">🎵 음악과 함께 낭독해요</h3>
+  </div>
+  <!-- 음악 -->
+  <div class="cd">
+    <div class="ct">🎶 배경음악</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:12px">
+      <button onclick="setMusicTab('youtube')" id="mt-yt" class="btn bgo bsm">🎬 유튜브</button>
+      <button onclick="setMusicTab('file')" id="mt-file" class="btn bg bsm">📁 파일</button>
+      <button onclick="aiMusicRec()" class="btn bv bsm">🤖 AI 추천</button>
+    </div>
+    <div id="music-yt" style="display:block">
+      <input type="text" id="yt-url" class="ni" placeholder="유튜브 URL 붙여넣기" style="margin-bottom:7px">
+      <button onclick="loadYT()" class="btn bgo bfl bsm">▶ 재생</button>
+      <div id="yt-frame" class="yt-wrap" style="display:none"></div>
+    </div>
+    <div id="music-file" style="display:none">
+      <input type="file" id="audio-file" accept="audio/*" onchange="loadAudio(this)" style="font-size:.82rem;margin-bottom:7px">
+      <audio id="audio-player" controls style="width:100%;border-radius:9px;display:none"></audio>
+    </div>
+    <div id="music-ai-result" class="ai-box-v" style="margin-top:7px"></div>
+  </div>
+  <!-- TTS -->
+  <div class="cd">
+    <div class="ct">🗣️ TTS 낭독</div>
+    <div style="display:flex;gap:7px;align-items:center;margin-bottom:10px">
+      <span style="font-size:.78rem;color:var(--ink3);font-weight:700">속도</span>
+      <input type="range" id="tts-rate" min="0.5" max="1.2" step="0.1" value="0.8" style="flex:1">
+      <span id="tts-rate-val" style="font-size:.78rem;font-weight:700;color:var(--ink2);min-width:28px">0.8x</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+      <button onclick="ttsRead('recommended')" class="btn bg bsm">📖 추천 시 낭독</button>
+      <button onclick="ttsRead('mine')" class="btn bgo bsm">🌙 내 시 낭독</button>
+    </div>
+  </div>
+  <button onclick="sT(8)" class="btn bgo bfl" style="font-size:.95rem;padding:13px;margin-top:4px">
+    🎸 수노 프롬프트 만들기 →
+  </button>
+</div>
+
+<!-- ══ STEP 8 — 수노 프롬프트 ══ -->
+<div id="tab-8" class="tc" style="margin-top:14px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--gold-l);color:#B45309;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 8</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">🎸 내 시로 노래 만들기!</h3>
+    <p style="font-size:.84rem;color:var(--ink3);margin-top:5px">AI가 내 영시를 분석해서 수노 프롬프트를 만들어줘요</p>
+  </div>
+
+  <!-- 내 시 미리보기 -->
+  <div class="cd" style="border-color:rgba(245,158,11,.3);background:var(--gold-l)">
+    <div class="ct" style="color:#B45309">🌙 내가 쓴 영시</div>
+    <div id="suno-poem-preview" style="font-family:'Gaegu',cursive;font-size:1rem;color:var(--ink);line-height:2;white-space:pre-line;padding:4px 0"></div>
+  </div>
+
+  <!-- 장르 선택 -->
+  <div class="cd">
+    <div class="ct">🎵 원하는 음악 스타일 (선택)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px">
+      <button onclick="toggleGenre(this,'soft pop')" class="genre-btn wchip">Soft Pop</button>
+      <button onclick="toggleGenre(this,'acoustic')" class="genre-btn wchip">Acoustic</button>
+      <button onclick="toggleGenre(this,'indie')" class="genre-btn wchip">Indie</button>
+      <button onclick="toggleGenre(this,'ballad')" class="genre-btn wchip gold">Ballad</button>
+      <button onclick="toggleGenre(this,'folk')" class="genre-btn wchip">Folk</button>
+      <button onclick="toggleGenre(this,'k-pop')" class="genre-btn wchip mint">K-Pop</button>
+      <button onclick="toggleGenre(this,'jazz')" class="genre-btn wchip">Jazz</button>
+      <button onclick="toggleGenre(this,'cinematic')" class="genre-btn wchip coral">Cinematic</button>
+    </div>
+  </div>
+
+  <!-- 생성 버튼 -->
+  <button onclick="genSunoPrompt()" id="suno-gen-btn" class="btn bgo bfl" style="font-size:.95rem;padding:14px;margin-bottom:14px">
+    🤖 수노 프롬프트 자동 생성!
+  </button>
+
+  <!-- 수노 프롬프트 결과 -->
+  <div id="suno-result-box" style="display:none">
+    <div class="suno-box">
+      <div class="suno-title">🎸 수노 프롬프트 완성!</div>
+
+      <div class="suno-section">
+        <div class="suno-label">Style & Genre</div>
+        <div class="suno-result" id="suno-style" style="min-height:auto;padding:10px 13px;font-size:.85rem"></div>
+      </div>
+      <div class="suno-section">
+        <div class="suno-label">Lyrics</div>
+        <div class="suno-result" id="suno-lyrics"></div>
+      </div>
+      <div class="suno-section">
+        <div class="suno-label">Full Prompt (복사해서 수노에 붙여넣기!)</div>
+        <div class="suno-result" id="suno-full"></div>
+      </div>
+
+      <button onclick="copySuno()" class="copy-btn bfl" style="width:100%">📋 전체 프롬프트 복사!</button>
+      <div style="margin-top:10px;background:rgba(255,255,255,.06);border-radius:10px;padding:11px 13px">
+        <div style="font-size:.72rem;color:rgba(255,255,255,.5);margin-bottom:6px;font-weight:700">🚀 수노 사용법</div>
+        <div style="font-size:.78rem;color:rgba(255,255,255,.75);line-height:1.75">
+          1. <a href="https://suno.com" target="_blank" style="color:var(--gold)">suno.com</a> 접속<br>
+          2. Create 클릭<br>
+          3. Custom mode 켜기<br>
+          4. Lyrics 칸에 붙여넣기<br>
+          5. Style 칸에 스타일 입력<br>
+          6. Generate! 🎵
+        </div>
+      </div>
+    </div>
+
+    <!-- 다시 만들기 -->
+    <button onclick="genSunoPrompt()" class="btn bg bfl" style="margin-top:10px">🔄 다시 만들기</button>
+  </div>
+</div>
+
+</main>
+
+<div style="text-align:center;padding:13px;color:var(--ink3);font-size:.68rem;font-family:'Nunito',sans-serif" class="no-print">Designed by Park Seong-ae · EAIM English Poetry v1</div>
+
+<script>
+// ══ 데이터 ══
+const EMOT=[
+  {c:'#FFD93D',n:'Happy',k:'행복한',e:'😊'},{c:'#FF6B6B',n:'Sad',k:'슬픈',e:'😢'},
+  {c:'#4D96FF',n:'Lonely',k:'외로운',e:'🌙'},{c:'#6BCB77',n:'Calm',k:'차분한',e:'😌'},
+  {c:'#FFAD60',n:'Excited',k:'신나는',e:'✨'},{c:'#9D84B7',n:'Nostalgic',k:'그리운',e:'🍂'},
+  {c:'#F472B6',n:'Lovely',k:'사랑스러운',e:'💕'},{c:'#87CEEB',n:'Free',k:'자유로운',e:'🕊️'},
+  {c:'#FF6B6B',n:'Angry',k:'화난',e:'🔥'},{c:'#6B7280',n:'Tired',k:'피곤한',e:'😫'},
+  {c:'#34D399',n:'Hopeful',k:'희망찬',e:'🌱'},{c:'#A78BFA',n:'Dreamy',k:'몽환적',e:'🌌'}
+];
+
+const FEEL_CHIPS=['joyful 기쁨','melancholic 쓸쓸함','peaceful 평화로움','nostalgic 그리움',
+  'hopeful 희망','lonely 외로움','excited 설렘','dreamy 몽환적','bittersweet 달콤쌉쌀',
+  'mysterious 신비로운','warm 따뜻함','sad 슬픔','free 자유로움','touched 감동'];
+
+// 감정별 시어 데이터
+const POEM_WORDS = {
+  Happy:['sunshine','bloom','dance','bright','soar','laugh','golden','sparkle','warm','joy'],
+  Sad:['rain','shadow','fade','alone','still','gray','hollow','silent','cold','lost'],
+  Lonely:['empty','silence','drift','hollow','night','waiting','distance','quiet','alone','dark'],
+  Calm:['gentle','soft','breeze','still','peace','whisper','flow','rest','slow','serene'],
+  Excited:['spark','rush','fire','beat','alive','glow','rise','burst','shine','electric'],
+  Nostalgic:['remember','past','faded','old','memory','return','yellow','autumn','distant','once'],
+  Lovely:['heart','sweet','tender','soft','dear','cherish','hold','close','beautiful','dream'],
+  Free:['fly','sky','open','wide','wild','soar','light','wind','vast','boundless'],
+  Angry:['storm','burn','break','shout','thunder','shake','fierce','dark','rage','clash'],
+  Tired:['heavy','slow','sleep','weight','dim','still','breathe','quiet','rest','deep'],
+  Hopeful:['light','dawn','rise','new','grow','believe','dream','spring','begin','forward'],
+  Dreamy:['float','stars','mist','wonder','drift','silver','veil','glow','soft','ethereal'],
+};
+
+// 레벨별 시인
+const POETS = {
+  basic: ['Shel Silverstein','Robert Frost','A.A. Milne','Christina Rossetti','William Blake'],
+  middle: ['Emily Dickinson','Langston Hughes','Carl Sandburg','Walt Whitman','Maya Angelou'],
+  advanced: ['William Shakespeare','John Keats','Percy Shelley','William Wordsworth','T.S. Eliot'],
+};
+
+// ══ 상태 ══
+let stuName='', apiKey=localStorage.getItem('eaim_gemini_key')||'';
+let teacherPw=localStorage.getItem('eaim_teacher_pw')||'1234';
+let selEmotion=null, selLevel='basic', selPoem=null;
+let selectedFeelings=[], polishBuffer='', selectedGenres=[];
+let voices=[], engVoice=null;
+
+// ══ 초기화 ══
+window.onload=function(){
+  if(apiKey)document.getElementById('aki').value=apiKey;
+  renderEmotions(); renderFeelChips(); renderWordChips();
+  loadVoices();
+  if(window.speechSynthesis.onvoiceschanged!==undefined)window.speechSynthesis.onvoiceschanged=loadVoices;
+  sLv('basic');
+  document.getElementById('tts-rate').oninput=function(){
+    document.getElementById('tts-rate-val').textContent=this.value+'x';
+  };
+};
+function loadVoices(){voices=window.speechSynthesis.getVoices();engVoice=voices.find(v=>v.lang.includes('en-US'))||voices.find(v=>v.lang.includes('en'))||null;}
+
+// ── 이름 / 교사 ──
+function sN(){
+  const n=document.getElementById('sni').value.trim();
+  if(!n){alert('이름을 입력해주세요!');return;}
+  stuName=n;
+  const nb=document.getElementById('wn');nb.textContent=n+' 님 😊';nb.style.display='';
+  document.getElementById('nm').style.display='none';
+  document.getElementById('sNav').style.display='flex';
+}
+function sTL(){document.getElementById('nm').style.display='none';document.getElementById('tlm').style.display='flex';}
+function hTL(){document.getElementById('tlm').style.display='none';document.getElementById('nm').style.display='flex';}
+function tL(){
+  if(document.getElementById('tpi').value===teacherPw){
+    document.getElementById('tlm').style.display='none';
+    document.getElementById('tpn').style.display='flex';
+    if(apiKey)document.getElementById('aki').value=apiKey;
+    rS();
+  }else alert('비밀번호가 틀렸어요!');
+}
+function oTP(){if(apiKey)document.getElementById('aki').value=apiKey;rS();document.getElementById('tpn').style.display='flex';}
+function cTP(){document.getElementById('tpn').style.display='none';}
+function sAK(){const k=document.getElementById('aki').value.trim();if(!k)return;apiKey=k;localStorage.setItem('eaim_gemini_key',k);const s=document.getElementById('aks');s.textContent='✅ 저장됐어요!';setTimeout(()=>s.textContent='',2000);}
+function rS(){
+  const all=JSON.parse(localStorage.getItem('eaim_poetry_students')||'{}');
+  const list=document.getElementById('sl'),cnt=document.getElementById('sc');
+  const st=Object.values(all);cnt.textContent=st.length+'명';
+  if(!st.length){list.innerHTML='<p style="text-align:center;color:var(--ink3);font-size:.78rem;padding:12px">아직 참여한 학생이 없어요</p>';return;}
+  list.innerHTML=st.map(s=>`<div style="background:#fff;border:2px solid #EEF2F8;border-radius:11px;padding:8px 11px;margin-bottom:5px"><div style="display:flex;justify-content:space-between"><span style="font-weight:700;font-size:.8rem">${s.name}</span><span style="font-size:.68rem;color:var(--ink3)">S${s.step}</span></div></div>`).join('');
+}
+function cPW(){const pw=document.getElementById('npi').value.trim();if(!pw)return;teacherPw=pw;localStorage.setItem('eaim_teacher_pw',pw);alert('변경됐어요!');}
+function svSt(step){
+  if(!stuName)return;
+  const d={name:stuName,step,updatedAt:new Date().toLocaleTimeString('ko-KR')};
+  const all=JSON.parse(localStorage.getItem('eaim_poetry_students')||'{}');
+  all[stuName]=d;localStorage.setItem('eaim_poetry_students',JSON.stringify(all));
+}
+
+// ── 레벨 ──
+function sLv(lv){
+  selLevel=lv;
+  ['basic','middle','advanced'].forEach(l=>{
+    const b=document.getElementById('lv-'+l);if(!b)return;
+    b.className='lb'+(l===lv?(' '+(l==='basic'?'ab':l==='middle'?'am':'aa')):'');
+  });
+  const gs={
+    basic:'🌱 <strong>기초</strong>: Shel Silverstein, Robert Frost 같은 쉽고 재미있는 시를 추천해요!',
+    middle:'🌿 <strong>중급</strong>: Emily Dickinson, Langston Hughes 등 교과서 수준의 시를 만나봐요!',
+    advanced:'🌳 <strong>심화</strong>: Shakespeare, Keats 등 고급 영시에 도전해봐요!'
+  };
+  document.getElementById('lv-guide').innerHTML=gs[lv];
+}
+
+// ── 감정 ──
+function renderEmotions(){
+  const list=document.getElementById('el');list.innerHTML='';
+  EMOT.forEach(emo=>{
+    const btn=document.createElement('button');btn.className='eb';btn.style.borderColor=emo.c;
+    btn.innerHTML=`<span style="font-size:1.4rem">${emo.e}</span><span style="font-size:.68rem;font-weight:700;color:var(--ink2)">${emo.n}</span>`;
+    btn.onclick=()=>{
+      selEmotion=emo;
+      document.querySelectorAll('.eb').forEach(b=>b.classList.remove('sel'));
+      btn.classList.add('sel');
+      document.getElementById('ed').style.display='block';
+      document.getElementById('et').textContent=`${emo.e} ${emo.n} (${emo.k})`;
+      document.getElementById('step1-btn').disabled=false;
+      renderWordChips();
+    };
+    list.appendChild(btn);
+  });
+}
+
+// ── 감정 탭 ──
+function renderFeelChips(){
+  const g=document.getElementById('feel-grid');g.innerHTML='';
+  FEEL_CHIPS.forEach(f=>{
+    const btn=document.createElement('button');btn.className='feel-chip';
+    btn.textContent=f;
+    btn.onclick=()=>{
+      btn.classList.toggle('on');
+      if(btn.classList.contains('on'))selectedFeelings.push(f);
+      else selectedFeelings=selectedFeelings.filter(x=>x!==f);
+    };
+    g.appendChild(btn);
+  });
+}
+
+// ── 시어 칩 ──
+function renderWordChips(){
+  const container=document.getElementById('word-chips-container');
+  if(!container)return;
+  container.innerHTML='';
+  const words=selEmotion?POEM_WORDS[selEmotion.n]||POEM_WORDS.Calm:POEM_WORDS.Calm;
+  const colors=['','gold','mint','coral','','gold','mint','','coral',''];
+  words.forEach((w,i)=>{
+    const btn=document.createElement('button');
+    btn.className='wchip '+(colors[i]||'');
+    btn.textContent=w;
+    btn.onclick=()=>{
+      const ta=document.getElementById('my-poem');
+      ta.value+=(ta.value&&!ta.value.endsWith('\n')?'\n':'')+w+' ';
+      updatePoemPreview(); ta.focus();
+    };
+    container.appendChild(btn);
+  });
+}
+function loadMoreChips(){
+  const keys=Object.keys(POEM_WORDS);
+  const rnd=keys[Math.floor(Math.random()*keys.length)];
+  const container=document.getElementById('word-chips-container');
+  container.innerHTML='';
+  const words=POEM_WORDS[rnd];
+  const colors=['','gold','mint','coral','','gold','mint','','coral',''];
+  words.forEach((w,i)=>{
+    const btn=document.createElement('button');
+    btn.className='wchip '+(colors[i]||'');
+    btn.textContent=w;
+    btn.onclick=()=>{
+      const ta=document.getElementById('my-poem');
+      ta.value+=(ta.value&&!ta.value.endsWith('\n')?'\n':'')+w+' ';
+      updatePoemPreview(); ta.focus();
+    };
+    container.appendChild(btn);
+  });
+}
+function updatePoemPreview(){
+  const text=document.getElementById('my-poem').value;
+  const lines=text.split('\n').filter(l=>l.trim()).length;
+  document.getElementById('poem-lines').textContent=lines+'줄';
+}
+
+// ── STEP 1 → 2 ──
+async function goStep2(){
+  if(!selEmotion){alert('감정을 먼저 선택해주세요!');return;}
+  sT(2);
+  document.getElementById('poem-loading').style.display='block';
+  document.getElementById('poem-list').style.display='none';
+  document.getElementById('step2-btn').style.display='none';
+  svSt(2);
+
+  const topic=document.getElementById('topic').value.trim();
+  const poets=POETS[selLevel].join(', ');
+  const prompt=`You are an English literature teacher for Korean middle school students.
+Recommend 3 English poems based on:
+- Emotion: ${selEmotion.n} (${selEmotion.k})
+- Level: ${selLevel} (poets like: ${poets})
+${topic?'- Topic: '+topic:''}
+
+For each poem, respond in this EXACT JSON format (no markdown, no backticks):
+[
+  {
+    "title": "Poem Title",
+    "author": "Author Name",
+    "year": "Year",
+    "mood": ["mood1","mood2"],
+    "preview": "First 2-3 lines of the poem (actual lines)",
+    "theme": "One sentence about the theme in Korean",
+    "why": "Why this matches the emotion in Korean (1 sentence)",
+    "searchUrl": "https://www.poetryfoundation.org/search#query=title+author"
+  }
+]
+Only use poems that are in the public domain (before 1928). Return ONLY the JSON array.`;
+
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){
+    document.getElementById('poem-loading').style.display='none';
+    document.getElementById('poem-list').style.display='block';
+    document.getElementById('poem-list').innerHTML='<div class="cd" style="text-align:center"><p style="color:var(--coral)">⚠️ API 키가 없어요. 선생님께 문의하세요!</p></div>';
+    return;
+  }
+
+  try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:1200,temperature:0.7}})
+    });
+    const d=await r.json();
+    const raw=d.candidates?.[0]?.content?.parts?.[0]?.text||'[]';
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const poems=JSON.parse(clean);
+
+    document.getElementById('poem-loading').style.display='none';
+    document.getElementById('poem-list').style.display='block';
+    const listEl=document.getElementById('poem-list');
+    listEl.innerHTML='';
+
+    poems.forEach((p,i)=>{
+      const card=document.createElement('div');
+      card.className='poem-card';
+      card.innerHTML=`
+        <div class="poem-title">📜 ${p.title}</div>
+        <div class="poem-author">— ${p.author} (${p.year||''})</div>
+        <div class="poem-mood">${(p.mood||[]).map(m=>`<span class="mood-tag">${m}</span>`).join('')}</div>
+        <div class="poem-preview">${p.preview}</div>
+        <div style="margin-top:8px;font-size:.78rem;color:var(--ink3);line-height:1.6">
+          <strong>주제:</strong> ${p.theme}<br>
+          <strong>추천 이유:</strong> ${p.why}
+        </div>
+        <a href="${p.searchUrl}" target="_blank" class="poem-link">📖 전체 시 읽기 →</a>
+      `;
+      card.onclick=()=>{
+        document.querySelectorAll('.poem-card').forEach(c=>c.classList.remove('sel'));
+        card.classList.add('sel');
+        selPoem=p;
+        document.getElementById('step2-btn').style.display='block';
+        // 선택된 시 정보 업데이트
+        document.getElementById('spd-title').textContent='📜 '+p.title;
+        document.getElementById('spd-author').textContent='— '+p.author+(p.year?' ('+p.year+')':'');
+        document.getElementById('spd-preview').textContent=p.preview;
+        document.getElementById('spd-link').href=p.searchUrl;
+      };
+      listEl.appendChild(card);
+    });
+  }catch(e){
+    document.getElementById('poem-loading').style.display='none';
+    document.getElementById('poem-list').style.display='block';
+    document.getElementById('poem-list').innerHTML='<div class="cd" style="text-align:center"><p style="color:var(--coral)">⚠️ 오류가 발생했어요. 다시 시도해주세요.</p></div>';
+  }
+}
+
+// ── 단어 검색 ──
+async function wsSearch(){
+  const term=document.getElementById('ws-input').value.trim();
+  if(!term)return;
+  const res=document.getElementById('ws-result');
+  res.style.display='block';res.textContent='🤔 찾는 중...';
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){res.textContent='⚠️ API 키가 없어요.';return;}
+  const prompt=`Korean middle school student needs English words/expressions for a poem.
+Korean input: "${term}"
+Provide poetic English words in this format:
+🔤 영어 표현: [3-4 poetic English words or phrases, comma separated]
+📢 발음: [Korean pronunciation for the best one]
+✍️ 시에서 쓰는 법: [One example line in English using one of these words]
+💡 시어 팁: [One short tip in Korean about using this word poetically]`;
+  try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:200}})
+    });
+    const d=await r.json();
+    res.textContent=d.candidates?.[0]?.content?.parts?.[0]?.text||'결과 없음';
+  }catch(e){res.textContent='연결 오류.';}
+}
+
+// ── AI 감상문 첨삭 ──
+async function aiReview(){
+  const text=document.getElementById('review-text').value.trim();
+  if(!text){alert('감상문을 먼저 써주세요!');return;}
+  const res=document.getElementById('review-ai-result');
+  res.style.display='block';res.innerHTML='<p style="color:var(--violet);font-size:.84rem">🤔 AI가 생각 중...</p>';
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){res.innerHTML='<p style="color:var(--coral)">⚠️ API 키가 없어요.</p>';return;}
+  const poem=selPoem?selPoem.title+' by '+selPoem.author:'the poem';
+  const prompt=`A Korean middle school student wrote a response to "${poem}":
+"${text}"
+
+Give warm feedback in Korean:
+✅ 잘한 점: [what they did well]
+💡 표현 제안: [suggest one better English expression if they used any]
+⭐ 한마디: [one encouraging sentence]
+Keep it very short and warm!`;
+  try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:300}})
+    });
+    const d=await r.json();
+    res.innerHTML='<div style="font-size:.84rem;color:var(--ink2);line-height:1.8;white-space:pre-line">'+
+      (d.candidates?.[0]?.content?.parts?.[0]?.text||'응답 없음')+'</div>';
+  }catch(e){res.innerHTML='<p style="color:var(--coral)">연결 오류.</p>';}
+}
+
+// ── AI 영감 받기 ──
+async function aiPoetryHelp(){
+  const current=document.getElementById('my-poem').value.trim();
+  const res=document.getElementById('help-result');
+  const txt=document.getElementById('help-text');
+  res.style.display='block';txt.textContent='💡 AI가 영감을 주고 있어요...';
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){txt.textContent='⚠️ API 키가 없어요.';return;}
+  const emo=selEmotion?selEmotion.n:'any';
+  const prompt=`Help a Korean middle school student write an English poem.
+Emotion: ${emo}
+${current?'Current poem so far:\n'+current:'(just starting)'}
+
+Provide in Korean/English mixed:
+🌟 첫 행 예시: [2-3 example first lines in English]
+💎 써볼 만한 시어: [5-6 poetic English words related to ${emo}]
+🎨 이미지 제안: [one vivid image to write about, described in Korean]
+Keep it simple and encouraging for a middle school student!`;
+  try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:300}})
+    });
+    const d=await r.json();
+    txt.textContent=d.candidates?.[0]?.content?.parts?.[0]?.text||'응답 없음';
+  }catch(e){txt.textContent='연결 오류.';}
+}
+
+// ── AI 다듬기 ──
+async function aiPolish(){
+  const poem=document.getElementById('my-poem').value.trim();
+  if(!poem){alert('시를 먼저 써주세요!');return;}
+  const res=document.getElementById('polish-result');
+  const txt=document.getElementById('polish-text');
+  res.style.display='block';txt.textContent='✨ 다듬는 중...';
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){txt.textContent='⚠️ API 키가 없어요.';return;}
+  const prompt=`Polish this English poem written by a Korean middle school student.
+Keep the student's original ideas and voice.
+Only fix grammar and make it more poetic.
+Return ONLY the polished poem, nothing else.
+
+Original poem:
+${poem}`;
+  try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:400}})
+    });
+    const d=await r.json();
+    polishBuffer=d.candidates?.[0]?.content?.parts?.[0]?.text||poem;
+    txt.textContent=polishBuffer;
+  }catch(e){txt.textContent='연결 오류.';}
+}
+function applyPolish(){
+  if(polishBuffer)document.getElementById('my-poem').value=polishBuffer;
+  document.getElementById('polish-result').style.display='none';
+  updatePoemPreview();
+}
+function cancelPolish(){document.getElementById('polish-result').style.display='none';}
+
+// ── 완성 일지 업데이트 ──
+function updateJournal(){
+  const emo=selEmotion?`${selEmotion.e} ${selEmotion.n} (${selEmotion.k})`:'—';
+  const poem=selPoem?`📜 ${selPoem.title} — ${selPoem.author}`:'—';
+  const feels=selectedFeelings.length?selectedFeelings.join('  ·  '):'—';
+  const review=document.getElementById('review-text').value||'—';
+  const myPoem=document.getElementById('my-poem').value||'(아직 작성 중)';
+  document.getElementById('j-emotion').textContent=emo;
+  document.getElementById('j-poem').textContent=poem;
+  document.getElementById('j-feels').textContent=feels;
+  document.getElementById('j-review').textContent=review;
+  document.getElementById('j-mypoem').textContent=myPoem;
+  // 수노 미리보기
+  document.getElementById('suno-poem-preview').textContent=myPoem;
+}
+
+// ── 음악 ──
+function setMusicTab(tab){
+  document.getElementById('music-yt').style.display=tab==='youtube'?'block':'none';
+  document.getElementById('music-file').style.display=tab==='file'?'block':'none';
+  ['yt','file'].forEach(t=>document.getElementById('mt-'+t).className='btn '+(t===tab?'bgo':'bg')+' bsm');
+}
+function loadYT(){
+  const url=document.getElementById('yt-url').value.trim();
+  if(!url)return;
+  const id=url.match(/(?:youtu\.be\/|v=|\/embed\/)([a-zA-Z0-9_-]{11})/)?.[1];
+  if(!id){alert('올바른 유튜브 URL을 입력해주세요.');return;}
+  const frame=document.getElementById('yt-frame');
+  frame.style.display='block';
+  frame.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
+}
+function loadAudio(input){
+  const file=input.files[0];if(!file)return;
+  const player=document.getElementById('audio-player');
+  player.src=URL.createObjectURL(file);player.style.display='block';player.play();
+}
+async function aiMusicRec(){
+  const res=document.getElementById('music-ai-result');
+  res.style.display='block';res.innerHTML='<p style="color:var(--violet);font-size:.84rem">🎵 AI가 음악을 추천하고 있어요...</p>';
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){res.innerHTML='<p style="color:var(--coral)">⚠️ API 키가 없어요.</p>';return;}
+  const emo=selEmotion?selEmotion.n:'calm';
+  const poem=document.getElementById('my-poem').value.trim();
+  const prompt=`Recommend 3 background music pieces for reciting an English poem.
+Poem emotion: ${emo}
+${poem?'Poem excerpt: '+poem.substring(0,100):''}
+Format:
+🎵 [Title] - [Artist/Composer]
+분위기: [mood in Korean]
+유튜브 검색어: [search term]
+(Recommend royalty-free or classical music)`;
+  try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:300}})
+    });
+    const d=await r.json();
+    res.innerHTML='<div style="font-size:.82rem;color:var(--ink2);line-height:1.8;white-space:pre-line">'+
+      (d.candidates?.[0]?.content?.parts?.[0]?.text||'응답 없음')+'</div>';
+  }catch(e){res.innerHTML='<p style="color:var(--coral)">연결 오류.</p>';}
+}
+
+// ── TTS ──
+function ttsRead(which){
+  let text='';
+  if(which==='recommended'&&selPoem) text=selPoem.preview;
+  else if(which==='mine') text=document.getElementById('my-poem').value;
+  if(!text){alert('내용이 없어요!');return;}
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const msg=new SpeechSynthesisUtterance(text);
+  msg.lang='en-US';msg.rate=parseFloat(document.getElementById('tts-rate').value)||0.8;
+  if(engVoice)msg.voice=engVoice;
+  window.speechSynthesis.speak(msg);
+}
+
+// ── 수노 프롬프트 생성 ──
+function toggleGenre(btn,genre){
+  btn.classList.toggle('gold');
+  if(btn.classList.contains('gold'))selectedGenres.push(genre);
+  else selectedGenres=selectedGenres.filter(g=>g!==genre);
+}
+
+async function genSunoPrompt(){
+  const poem=document.getElementById('my-poem').value.trim();
+  if(!poem){alert('먼저 영시를 써주세요! (Step 5)');sT(5);return;}
+  const btn=document.getElementById('suno-gen-btn');
+  btn.disabled=true;btn.textContent='🤖 프롬프트 생성 중...';
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  const emo=selEmotion?selEmotion.n:'emotional';
+  const genres=selectedGenres.length?selectedGenres.join(', '):'acoustic, soft pop';
+
+  if(!key){
+    // API 없으면 기본 프롬프트 생성
+    const style=`${genres}, ${emo.toLowerCase()}, gentle`;
+    document.getElementById('suno-style').textContent=style;
+    document.getElementById('suno-lyrics').textContent=poem;
+    const full=`[Style: ${style}]\n[Mood: ${emo.toLowerCase()}, heartfelt]\n[Tempo: slow to mid]\n\n[Lyrics]\n${poem}`;
+    document.getElementById('suno-full').textContent=full;
+    document.getElementById('suno-result-box').style.display='block';
+    btn.disabled=false;btn.textContent='🤖 수노 프롬프트 자동 생성!';
+    return;
+  }
+
+  const prompt=`A Korean middle school student wrote this English poem:
+"${poem}"
+
+Emotion: ${emo}
+Preferred genres: ${genres}
+
+Create a Suno AI music prompt. Return ONLY valid JSON (no markdown):
+{
+  "style": "genre and style tags for Suno, comma separated, max 120 chars",
+  "mood": "mood descriptors for Suno, comma separated",
+  "tempo": "tempo description",
+  "vocal": "vocal style suggestion",
+  "lyrics": "the poem formatted as song lyrics with [Verse] [Chorus] etc if appropriate",
+  "fullPrompt": "complete ready-to-paste Suno prompt combining all elements"
+}`;
+
+  try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:600,temperature:0.7}})
+    });
+    const d=await r.json();
+    const raw=d.candidates?.[0]?.content?.parts?.[0]?.text||'{}';
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const result=JSON.parse(clean);
+
+    document.getElementById('suno-style').textContent=
+      `${result.style||genres}\nMood: ${result.mood||emo}\nTempo: ${result.tempo||'slow'}\nVocal: ${result.vocal||'gentle'}`;
+    document.getElementById('suno-lyrics').textContent=result.lyrics||poem;
+    document.getElementById('suno-full').textContent=result.fullPrompt||`[Style: ${genres}]\n\n[Lyrics]\n${poem}`;
+    document.getElementById('suno-result-box').style.display='block';
+  }catch(e){
+    // 파싱 실패시 기본 생성
+    const style=`${genres}, ${emo.toLowerCase()}, gentle, emotional`;
+    document.getElementById('suno-style').textContent=style;
+    document.getElementById('suno-lyrics').textContent=poem;
+    const full=`[Style: ${style}]\n[Mood: ${emo.toLowerCase()}, heartfelt]\n\n[Lyrics]\n${poem}`;
+    document.getElementById('suno-full').textContent=full;
+    document.getElementById('suno-result-box').style.display='block';
+  }
+  btn.disabled=false;btn.textContent='🤖 수노 프롬프트 자동 생성!';
+}
+
+function copySuno(){
+  const text=document.getElementById('suno-full').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    alert('📋 복사됐어요! 수노에 붙여넣기 해보세요~ 🎵');
+  });
+}
+
+// ── 저장 ──
+function downloadJournal(){
+  const emo=selEmotion?selEmotion.n:'unknown';
+  const myPoem=document.getElementById('my-poem').value||'';
+  const review=document.getElementById('review-text').value||'';
+  const poem=selPoem?`${selPoem.title} by ${selPoem.author}`:'';
+  const content=`EAIM 영시 창작 일지
+===================================
+이름: ${stuName}
+날짜: ${new Date().toLocaleDateString('ko-KR')}
+감정: ${emo}
+
+[감상한 시]
+${poem}
+
+[느낀 감정]
+${selectedFeelings.join(', ')}
+
+[나의 감상문]
+${review}
+
+[나만의 영시]
+${myPoem}
+===================================
+Designed by Park Seong-ae · EAIM`;
+  const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.download=`영시창작일지_${stuName}.txt`;
+  a.href=URL.createObjectURL(blob);a.click();
+}
+
+// ── 탭 전환 ──
+function sT(n){
+  if(n===6)updateJournal();
+  if(n===8){
+    const p=document.getElementById('my-poem').value;
+    document.getElementById('suno-poem-preview').textContent=p||(selPoem?selPoem.preview:'');
+  }
+  for(let i=1;i<=8;i++){
+    const btn=document.getElementById('sB'+i),cont=document.getElementById('tab-'+i);
+    if(i===n){btn.classList.add('on');btn.classList.remove('dn');cont.classList.add('on');}
+    else{btn.classList.remove('on');if(i<n)btn.classList.add('dn');else btn.classList.remove('dn');cont.classList.remove('on');}
+  }
+  svSt(n);window.scrollTo(0,0);
+}
+
+function rA(){if(confirm('모든 내용을 초기화할까요?'))location.reload();}
+
+// ── 유틸 ──
+function setMusicTab(tab){
+  document.getElementById('music-yt').style.display=tab==='youtube'?'block':'none';
+  document.getElementById('music-file').style.display=tab==='file'?'block':'none';
+  document.getElementById('mt-yt').className='btn '+(tab==='youtube'?'bgo':'bg')+' bsm';
+  document.getElementById('mt-file').className='btn '+(tab==='file'?'bgo':'bg')+' bsm';
+}
+</script>
+</body>
+</html>

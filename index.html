@@ -274,6 +274,30 @@
   }
   .card-game .enter-btn:hover { box-shadow: 0 6px 24px rgba(0,0,0,.35); }
 
+  /* 영시 창작 카드 */
+  .card-poetry .card-header {
+    background: linear-gradient(135deg, #1A0A30 0%, #2D1A4A 50%, #0A1A30 100%);
+    padding: 28px 24px 22px; position: relative; overflow: hidden;
+  }
+  .card-poetry .card-header::before {
+    content: '🌙'; position: absolute; right: 16px; top: 50%;
+    transform: translateY(-50%); font-size: 5.5rem; opacity: .12;
+  }
+  .card-poetry .enter-btn {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white; box-shadow: 0 4px 16px rgba(245,158,11,.35);
+  }
+  .card-poetry .enter-btn:hover { box-shadow: 0 6px 24px rgba(245,158,11,.5); }
+  .card-poetry .step-dot:nth-child(1){background:#FEF3C7;color:#D97706;}
+  .card-poetry .step-dot:nth-child(2){background:#F3E8FF;color:#7E22CE;}
+  .card-poetry .step-dot:nth-child(3){background:#FEE2E2;color:#DC2626;}
+  .card-poetry .step-dot:nth-child(4){background:#DCFCE7;color:#15803D;}
+  .card-poetry .step-dot:nth-child(5){background:#FEF9C3;color:#A16207;}
+  .card-poetry .step-dot:nth-child(6){background:#E0E7FF;color:#4338CA;}
+  .card-poetry .step-dot:nth-child(7){background:#FCE7F3;color:#9D174D;}
+  .card-poetry .step-dot:nth-child(8){background:#FFF7ED;color:#C2410C;}
+  .t-btn-poetry { background: #F59E0B; color: white; }
+
   /* ── Info strip ── */
   .info-strip {
     background: white;
@@ -464,6 +488,37 @@
     </div>
   </a>
 
+  <!-- 영시 창작 카드 -->
+  <a href="eaim-english-poetry.html" class="app-card card-poetry">
+    <div class="card-header">
+      <div class="card-tag"><div class="live-dot" style="background:#F59E0B;box-shadow:0 0 6px #F59E0B"></div> 영시 창작 · Song Creator</div>
+      <h2>🌙 영시 창작 & 노래 만들기
+        <small>English Poetry & Suno Song Creator</small>
+      </h2>
+      <p>감정을 골라 AI 영시를 감상하고, 나만의 시를 써요. 완성된 시로 수노 노래까지!</p>
+      <div class="feature-row">
+        <span class="feat-pill">📜 AI 영시 추천</span>
+        <span class="feat-pill">🔍 단어 검색</span>
+        <span class="feat-pill">✨ AI 다듬기</span>
+        <span class="feat-pill">🔊 TTS 낭독</span>
+        <span class="feat-pill">🎸 수노 프롬프트</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-steps">
+        <div class="step-dot">S1</div>
+        <div class="step-dot">S2</div>
+        <div class="step-dot">S3</div>
+        <div class="step-dot">S4</div>
+        <div class="step-dot">S5</div>
+        <div class="step-dot">S6</div>
+        <div class="step-dot">S7</div>
+        <div class="step-dot">S8</div>
+      </div>
+      <span class="enter-btn">입장하기 →</span>
+    </div>
+  </a>
+
   <!-- Teacher Quick Access -->
   <div class="teacher-strip">
     <div class="teacher-strip-text">
@@ -473,6 +528,7 @@
     <div class="teacher-btns">
       <a href="eaim-english-playground.html" class="t-btn t-btn-playground">놀이터</a>
       <a href="eaim-english-game.html" class="t-btn t-btn-game">게임방</a>
+      <a href="eaim-english-poetry.html" class="t-btn t-btn-poetry">영시 창작</a>
     </div>
   </div>
 
