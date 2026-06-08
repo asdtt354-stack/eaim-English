@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAIM 영어 작문</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mint:#00BF8A;--mint-d:#008F66;--mint-l:#E0FBF2;
+  --coral:#FF6B5B;--coral-l:#FFF0EE;
+  --amber:#F59E0B;--amber-l:#FFFBEB;
+  --violet:#7B6CF6;--violet-l:#F0EEFF;
+  --sky:#38BDF8;--sky-l:#E0F5FF;
+  --navy:#0A1628;--navy2:#1E3A5F;
+  --ink:#1E1E30;--ink2:#52526E;--ink3:#9898B0;
+  --bg:#F6F8FF;--white:#FFF;--r:1.2rem;
+  --s:0 3px 16px rgba(30,30,48,.08);--sl:0 8px 36px rgba(30,30,48,.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:80px}
+body::before{content:'';position:fixed;inset:0;z-index:-1;
+  background:radial-gradient(ellipse 60% 50% at 10% 0%,rgba(0,191,138,.07) 0%,transparent 55%),
+             radial-gradient(ellipse 50% 60% at 95% 100%,rgba(123,108,246,.08) 0%,transparent 55%)}
+
+/* ── 모달 ── */
+.ov{position:fixed;inset:0;background:rgba(10,10,28,.6);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;padding:18px}
+.mb{background:#fff;border-radius:2rem;padding:1.8rem;width:100%;max-width:400px;box-shadow:0 28px 56px rgba(0,0,0,.28);text-align:center}
+
+/* ── 헤더 ── */
+header{background:linear-gradient(135deg,var(--navy) 0%,#142240 55%,var(--navy2) 100%);
+  padding:14px 18px;border-bottom:3px solid var(--mint);
+  position:sticky;top:0;z-index:100;box-shadow:0 3px 18px rgba(0,0,0,.28)}
+.hi{max-width:720px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:900;color:#fff;display:flex;align-items:center;gap:7px}
+.la{color:var(--mint)}
+.ls{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:1px}
+.nb{background:rgba(0,191,138,.18);border:1.5px solid rgba(0,191,138,.35);border-radius:99px;padding:4px 12px;font-size:.75rem;color:var(--mint);font-weight:700;display:none}
+.rb{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:9px;padding:4px 10px;font-size:.7rem;color:rgba(255,255,255,.65);cursor:pointer;font-family:inherit}
+
+/* ── 스텝 네비 ── */
+.sn{background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border-bottom:2px solid rgba(0,191,138,.15);
+  padding:8px 13px;display:none;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  position:sticky;top:62px;z-index:90;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.sn::-webkit-scrollbar{display:none}
+.sb{flex-shrink:0;padding:6px 12px;border-radius:11px;border:2px solid #D4DBEE;background:#fff;color:var(--ink2);
+  font-family:'Nunito',inherit;font-size:.72rem;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap;line-height:1.3;text-align:center}
+.sb.on{background:var(--mint);border-color:var(--mint-d);color:#fff;box-shadow:0 4px 14px rgba(0,191,138,.35);transform:translateY(-1px)}
+.sb.dn{background:var(--mint-l);border-color:rgba(0,191,138,.28);color:var(--mint-d)}
+.sb.dn::after{content:' ✓'}
+
+/* ── 메인 ── */
+main{max-width:720px;margin:0 auto;padding:18px 14px}
+.tc{display:none;animation:fu .35s ease}
+.tc.on{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── 카드 ── */
+.cd{background:#fff;border:2px solid rgba(0,0,0,.055);border-radius:var(--r);padding:18px;margin-bottom:13px;box-shadow:var(--s)}
+.ct{font-weight:900;font-size:.88rem;color:var(--ink2);margin-bottom:12px;display:flex;align-items:center;gap:7px;padding-bottom:9px;border-bottom:2px dashed rgba(0,0,0,.055)}
+
+/* ── 레벨 선택 ── */
+.lv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lv-btn{padding:13px 7px;border-radius:13px;border:3px solid #DDE2F4;background:#fff;cursor:pointer;text-align:center;font-family:inherit;transition:all .2s;line-height:1.3}
+.lv-btn:hover{transform:translateY(-2px);box-shadow:var(--s)}
+.lv-btn.sel-b{border-color:var(--mint);background:var(--mint-l);box-shadow:0 0 0 3px rgba(0,191,138,.18)}
+.lv-btn.sel-m{border-color:var(--sky);background:var(--sky-l);box-shadow:0 0 0 3px rgba(56,189,248,.18)}
+.lv-btn.sel-a{border-color:var(--violet);background:var(--violet-l);box-shadow:0 0 0 3px rgba(123,108,246,.18)}
+
+/* ── 장르 선택 ── */
+.genre-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.genre-btn{padding:11px 6px;border-radius:12px;border:2.5px solid #DDE2F4;background:#fff;cursor:pointer;text-align:center;font-family:inherit;transition:all .15s;line-height:1.3;font-size:.8rem;font-weight:700}
+.genre-btn:hover{transform:scale(1.04)}
+.genre-btn.sel{border-color:var(--mint);background:var(--mint-l);box-shadow:0 0 0 3px rgba(0,191,138,.18)}
+
+/* ── 입력 ── */
+.ni{width:100%;padding:10px 13px;background:var(--bg);border:2px solid #DDE2F4;border-radius:10px;color:var(--ink);font-family:inherit;font-size:.95rem;font-weight:700;outline:none;transition:border-color .2s}
+.ni:focus{border-color:var(--mint);background:#fff}
+.ta{width:100%;padding:12px;border-radius:12px;border:2.5px solid #DDE2F4;font-family:'Gaegu',cursive;font-size:1rem;color:var(--ink);resize:vertical;outline:none;transition:border-color .2s;line-height:2;min-height:160px;background:var(--bg)}
+.ta:focus{border-color:var(--mint);background:#fff}
+.ta.eng{font-size:1.05rem;line-height:2.1}
+
+/* ── 버튼 ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 17px;border-radius:11px;border:none;font-family:'Nunito',inherit;font-weight:800;font-size:.86rem;cursor:pointer;transition:all .15s}
+.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.bm{background:linear-gradient(135deg,var(--mint),var(--mint-d));color:#fff;box-shadow:0 4px 14px rgba(0,191,138,.28)}
+.bm:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,191,138,.42)}
+.bg2{background:#fff;color:var(--ink2);border:2px solid #D4DBEE}
+.bg2:hover{border-color:var(--mint);color:var(--mint-d)}
+.bv{background:linear-gradient(135deg,var(--violet),#5840D0);color:#fff;box-shadow:0 4px 14px rgba(123,108,246,.28)}
+.ba{background:linear-gradient(135deg,var(--amber),#D07800);color:#fff;box-shadow:0 4px 14px rgba(245,158,11,.28)}
+.bsky{background:linear-gradient(135deg,var(--sky),#1A90C0);color:#fff;box-shadow:0 4px 14px rgba(56,189,248,.28)}
+.bcoral{background:linear-gradient(135deg,var(--coral),#D04030);color:#fff;box-shadow:0 4px 14px rgba(255,107,91,.28)}
+.bfl{width:100%}
+.bsm{padding:7px 13px;font-size:.76rem;border-radius:9px}
+
+/* ── 힌트 ── */
+.hint{background:rgba(0,191,138,.08);border:1.5px solid rgba(0,191,138,.22);border-radius:9px;padding:10px 13px;font-size:.78rem;color:var(--ink2);line-height:1.7;margin-top:9px}
+
+/* ── 단어 도우미 ── */
+.word-helper{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:16px;border:2px solid rgba(0,191,138,.22);margin-bottom:13px}
+.wh-row{display:flex;gap:7px}
+.wh-input{flex:1;padding:9px 13px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-family:'Gaegu',inherit;font-size:.92rem;font-weight:700;outline:none;transition:border-color .2s}
+.wh-input::placeholder{color:rgba(255,255,255,.32)}
+.wh-input:focus{border-color:var(--mint)}
+.wh-result{margin-top:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);border-radius:10px;padding:11px 13px;font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.75;white-space:pre-line;display:none}
+
+/* ── AI 결과 박스 ── */
+.ai-box{background:var(--mint-l);border:2px solid rgba(0,191,138,.28);border-radius:13px;padding:14px;margin-top:10px;display:none}
+.ai-box-v{background:var(--violet-l);border:2px solid rgba(123,108,246,.25);border-radius:13px;padding:14px;margin-top:10px;display:none}
+.ai-box-a{background:var(--amber-l);border:2px solid rgba(245,158,11,.25);border-radius:13px;padding:14px;margin-top:10px;display:none}
+.ai-label{font-size:.72rem;font-weight:900;color:var(--mint-d);margin-bottom:7px}
+.ai-label-v{font-size:.72rem;font-weight:900;color:var(--violet);margin-bottom:7px}
+.ai-label-a{font-size:.72rem;font-weight:900;color:#B07000;margin-bottom:7px}
+.ai-text{font-size:.86rem;color:var(--ink2);line-height:1.85;white-space:pre-line}
+
+/* ── 글감 카드 ── */
+.topic-card{background:#fff;border:2.5px solid #DDE2F4;border-radius:13px;padding:14px;cursor:pointer;transition:all .2s;margin-bottom:9px}
+.topic-card:hover{transform:translateX(4px);border-color:var(--mint)}
+.topic-card.sel{border-color:var(--mint);background:var(--mint-l);box-shadow:0 0 0 3px rgba(0,191,138,.15)}
+.topic-title{font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;color:var(--ink);margin-bottom:3px}
+.topic-desc{font-size:.78rem;color:var(--ink3);line-height:1.6}
+
+/* ── 개요 ── */
+.outline-item{background:var(--bg);border:2px solid #DDE2F4;border-radius:10px;padding:11px 13px;margin-bottom:8px}
+.outline-label{font-size:.7rem;font-weight:900;color:var(--mint-d);margin-bottom:5px;letter-spacing:.05em}
+.outline-input{width:100%;background:transparent;border:none;font-family:inherit;font-size:.88rem;color:var(--ink);outline:none;font-weight:700;line-height:1.6}
+
+/* ── 완성 글 ── */
+.final-paper{
+  background:linear-gradient(160deg,#FFFEF9,#F8F8FF);
+  border:2px solid #DDE2F4;border-radius:var(--r);
+  padding:28px;box-shadow:var(--sl);
+}
+.final-title-en{font-family:'Gaegu',cursive;font-size:1.5rem;font-weight:700;color:var(--ink);text-align:center;margin-bottom:4px}
+.final-meta{text-align:center;font-size:.75rem;color:var(--ink3);margin-bottom:20px}
+.final-body{font-family:'Gaegu',cursive;font-size:1rem;color:var(--ink);line-height:2.2;white-space:pre-line}
+
+/* ── 수노 박스 ── */
+.suno-box{background:linear-gradient(135deg,#1A0A30,#0A1A30);border-radius:var(--r);padding:20px;border:2px solid rgba(245,158,11,.25);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.suno-label{font-size:.65rem;font-weight:700;color:rgba(245,158,11,.7);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.suno-content{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:11px 13px;font-family:'Gaegu',cursive;font-size:.88rem;color:rgba(255,255,255,.9);line-height:1.9;white-space:pre-line;min-height:44px;margin-bottom:10px}
+.suno-copy-btn{width:100%;padding:12px;border-radius:9px;border:none;background:linear-gradient(135deg,#F59E0B,#D07800);color:#1C0A00;font-family:inherit;font-weight:900;font-size:.9rem;cursor:pointer;transition:all .2s}
+
+/* ── 액션 버튼 ── */
+.act-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.act-btn{flex:1;min-width:90px;padding:10px;border-radius:9px;border:none;font-family:inherit;font-weight:700;font-size:.8rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px}
+.ab-copy{background:var(--bg);color:var(--ink2);border:2px solid #D4DBEE}
+.ab-copy:hover{border-color:var(--mint)}
+.ab-dl{background:linear-gradient(135deg,var(--amber),#D07800);color:#fff}
+.ab-print{background:linear-gradient(135deg,#2A2A2A,#1A1A1A);color:#fff}
+
+/* ── 로딩 ── */
+.ld{display:flex;align-items:center;gap:5px;color:var(--ink3);font-size:.8rem;justify-content:center;padding:14px}
+.ld span{width:6px;height:6px;border-radius:50%;background:var(--mint);animation:bl 1.2s infinite}
+.ld span:nth-child(2){animation-delay:.2s}.ld span:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+
+/* ── 단어 칩 ── */
+.word-chip{padding:6px 12px;border-radius:99px;font-size:.76rem;font-weight:700;cursor:pointer;border:2px solid rgba(0,191,138,.3);background:var(--mint-l);color:var(--mint-d);transition:all .15s;display:inline-block;margin:3px}
+.word-chip:hover{background:var(--mint);color:#fff;transform:scale(1.05)}
+
+@media print{header,.sn,.no-print{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<!-- 이름 입력 -->
+<div id="nm" class="ov">
+  <div class="mb">
+    <div style="font-size:2.8rem;margin-bottom:11px">✍️</div>
+    <h2 style="font-family:'Nunito',sans-serif;font-size:1.4rem;color:var(--navy);margin-bottom:6px">EAIM 영어 작문</h2>
+    <p style="font-size:.84rem;color:var(--ink3);margin-bottom:18px">AI와 함께 나만의 영어 글을 써봐요!</p>
+    <input type="text" id="sni" placeholder="이름을 입력하세요"
+      style="width:100%;text-align:center;font-size:1.05rem;font-family:inherit;font-weight:700;border:2px solid #D4DBEE;border-radius:.9rem;padding:10px;outline:none;margin-bottom:10px;background:#fff;transition:border-color .2s"
+      onfocus="this.style.borderColor='#00BF8A'" onblur="this.style.borderColor='#D4DBEE'"
+      onkeydown="if(event.key==='Enter')sN()">
+    <select id="sclass" style="width:100%;padding:9px;border:2px solid #D4DBEE;border-radius:.9rem;font-family:inherit;font-weight:700;background:#fff;outline:none;margin-bottom:14px">
+      <option value="">반 선택</option>
+      <option>1반</option><option>2반</option><option>3반</option>
+      <option>4반</option><option>5반</option><option>6반</option>
+    </select>
+    <button onclick="sN()" class="btn bm bfl" style="font-size:.95rem;padding:12px">✍️ 작문 시작!</button>
+    <button onclick="showTL()" style="margin-top:9px;background:none;border:none;font-size:.7rem;color:var(--ink3);cursor:pointer;font-family:inherit">선생님이신가요?</button>
+  </div>
+</div>
+
+<!-- 헤더 -->
+<header>
+  <div class="hi">
+    <div>
+      <div class="logo">✍️ EAIM <span class="la">영어 작문</span></div>
+      <div class="ls">English Writing with AI</div>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <span id="wn" class="nb"></span>
+      <button onclick="location.reload()" class="rb">↺</button>
+      <button onclick="oTP()" class="rb">👩‍🏫</button>
+    </div>
+  </div>
+</header>
+
+<!-- 스텝 네비 -->
+<div class="sn" id="sNav">
+  <button class="sb on" id="sB1" onclick="sT(1)">Step 1<br><span style="font-size:.6rem;opacity:.8">장르·레벨</span></button>
+  <button class="sb" id="sB2" onclick="sT(2)">Step 2<br><span style="font-size:.6rem;opacity:.8">글감추천</span></button>
+  <button class="sb" id="sB3" onclick="sT(3)">Step 3<br><span style="font-size:.6rem;opacity:.8">개요짜기</span></button>
+  <button class="sb" id="sB4" onclick="sT(4)">Step 4<br><span style="font-size:.6rem;opacity:.8">본문쓰기</span></button>
+  <button class="sb" id="sB5" onclick="sT(5)">Step 5<br><span style="font-size:.6rem;opacity:.8">AI다듬기</span></button>
+  <button class="sb" id="sB6" onclick="sT(6)">Step 6<br><span style="font-size:.6rem;opacity:.8">완성</span></button>
+  <button class="sb" id="sB7" onclick="sT(7)">Step 7<br><span style="font-size:.6rem;opacity:.8">🎸수노</span></button>
+</div>
+
+<main>
+
+<!-- ══ STEP 1: 장르 & 레벨 ══ -->
+<div id="tab-1" class="tc on" style="margin-top:16px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--mint-l);color:var(--mint-d);padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 1</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">장르와 레벨을 선택해요</h3>
+  </div>
+
+  <!-- 레벨 -->
+  <div class="cd">
+    <div class="ct">🌱 나의 레벨</div>
+    <div class="lv-grid">
+      <button onclick="selLv('basic',this)" id="lv-basic" class="lv-btn">
+        <div style="font-size:1.4rem;margin-bottom:3px">🌱</div>
+        <div style="font-size:.82rem;font-weight:900">기초</div>
+        <div style="font-size:.63rem;color:var(--ink3);margin-top:2px">짧고 쉬운 문장</div>
+      </button>
+      <button onclick="selLv('middle',this)" id="lv-middle" class="lv-btn">
+        <div style="font-size:1.4rem;margin-bottom:3px">🌿</div>
+        <div style="font-size:.82rem;font-weight:900">중급</div>
+        <div style="font-size:.63rem;color:var(--ink3);margin-top:2px">다양한 문장 구조</div>
+      </button>
+      <button onclick="selLv('advanced',this)" id="lv-advanced" class="lv-btn">
+        <div style="font-size:1.4rem;margin-bottom:3px">🌳</div>
+        <div style="font-size:.82rem;font-weight:900">심화</div>
+        <div style="font-size:.63rem;color:var(--ink3);margin-top:2px">고급 표현·문법</div>
+      </button>
+    </div>
+    <div id="lv-hint" class="hint">🌱 <strong>기초</strong>: 짧고 쉬운 문장으로 시작해요. AI가 단어와 표현을 많이 도와줘요!</div>
+  </div>
+
+  <!-- 장르 -->
+  <div class="cd">
+    <div class="ct">📝 작문 장르 선택</div>
+    <div class="genre-grid">
+      <button onclick="selGenre('diary',this)" class="genre-btn">
+        <div style="font-size:1.2rem">📔</div>
+        <div>일기</div>
+        <div style="font-size:.62rem;color:var(--ink3)">My Diary</div>
+      </button>
+      <button onclick="selGenre('letter',this)" class="genre-btn">
+        <div style="font-size:1.2rem">✉️</div>
+        <div>편지</div>
+        <div style="font-size:.62rem;color:var(--ink3)">Letter</div>
+      </button>
+      <button onclick="selGenre('story',this)" class="genre-btn">
+        <div style="font-size:1.2rem">📖</div>
+        <div>이야기</div>
+        <div style="font-size:.62rem;color:var(--ink3)">Story</div>
+      </button>
+      <button onclick="selGenre('description',this)" class="genre-btn">
+        <div style="font-size:1.2rem">📋</div>
+        <div>설명문</div>
+        <div style="font-size:.62rem;color:var(--ink3)">Description</div>
+      </button>
+      <button onclick="selGenre('opinion',this)" class="genre-btn">
+        <div style="font-size:1.2rem">💬</div>
+        <div>주장문</div>
+        <div style="font-size:.62rem;color:var(--ink3)">Opinion</div>
+      </button>
+      <button onclick="selGenre('intro',this)" class="genre-btn">
+        <div style="font-size:1.2rem">👋</div>
+        <div>자기소개</div>
+        <div style="font-size:.62rem;color:var(--ink3)">Introduction</div>
+      </button>
+      <button onclick="selGenre('thankyou',this)" class="genre-btn">
+        <div style="font-size:1.2rem">💌</div>
+        <div>감사편지</div>
+        <div style="font-size:.62rem;color:var(--ink3)">Thank You</div>
+      </button>
+      <button onclick="selGenre('travel',this)" class="genre-btn">
+        <div style="font-size:1.2rem">✈️</div>
+        <div>여행기</div>
+        <div style="font-size:.62rem;color:var(--ink3)">Travel</div>
+      </button>
+      <button onclick="selGenre('news',this)" class="genre-btn">
+        <div style="font-size:1.2rem">📰</div>
+        <div>뉴스기사</div>
+        <div style="font-size:.62rem;color:var(--ink3)">News</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- 주제 -->
+  <div class="cd">
+    <div class="ct">💭 주제 입력 (선택)</div>
+    <input type="text" id="topic-input" class="ni" placeholder="예: my summer vacation, my pet, school life...">
+    <div class="hint">💡 주제를 입력하면 AI가 더 딱 맞는 글감을 추천해줘요!</div>
+  </div>
+
+  <button onclick="goStep2()" id="step1-btn" class="btn bm bfl" style="font-size:.95rem;padding:13px" disabled>
+    🤖 AI 글감 추천받기 →
+  </button>
+</div>
+
+<!-- ══ STEP 2: 글감 추천 ══ -->
+<div id="tab-2" class="tc" style="margin-top:16px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--mint-l);color:var(--mint-d);padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 2</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">AI 글감 추천</h3>
+  </div>
+
+  <div id="topic-loading" class="cd">
+    <div class="ld"><span></span><span></span><span></span><span style="margin-left:5px">AI가 글감을 추천하는 중...</span></div>
+  </div>
+  <div id="topic-list" style="display:none"></div>
+
+  <div style="display:flex;gap:8px;margin-top:4px">
+    <button onclick="sT(1)" class="btn bg2" style="flex:1">← 장르 다시 선택</button>
+    <button onclick="sT(3)" id="step2-btn" class="btn bm" style="flex:2;font-size:.92rem;padding:13px" disabled>개요 짜러 가기 →</button>
+  </div>
+</div>
+
+<!-- ══ STEP 3: 개요 ══ -->
+<div id="tab-3" class="tc" style="margin-top:16px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--mint-l);color:var(--mint-d);padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 3</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">개요 짜기</h3>
+  </div>
+
+  <div class="cd">
+    <div class="ct">📋 영어 제목</div>
+    <input type="text" id="title-en" class="ni" placeholder="English title..." style="font-family:'Gaegu',cursive;font-size:1rem">
+    <button onclick="aiTitleSuggest()" class="btn bg2 bsm" style="margin-top:8px">🤖 제목 추천</button>
+    <div id="title-ai" class="ai-box">
+      <div class="ai-label">💡 제목 추천</div>
+      <div class="ai-text" id="title-ai-text"></div>
+    </div>
+  </div>
+
+  <div class="cd" id="outline-card">
+    <div class="ct">📝 개요 작성</div>
+    <div id="outline-items"></div>
+    <button onclick="aiOutline()" class="btn bv bfl" style="margin-top:8px">🤖 AI 개요 자동 작성</button>
+    <div id="outline-ai" class="ai-box-v" style="margin-top:10px">
+      <div class="ai-label-v">🤖 AI 개요 제안</div>
+      <div class="ai-text" id="outline-ai-text"></div>
+      <button onclick="applyOutline()" class="btn bm bsm" style="margin-top:8px">✅ 적용하기</button>
+    </div>
+  </div>
+
+  <button onclick="sT(4)" class="btn bm bfl" style="font-size:.95rem;padding:13px">본문 쓰러 가기 →</button>
+</div>
+
+<!-- ══ STEP 4: 본문 쓰기 ══ -->
+<div id="tab-4" class="tc" style="margin-top:16px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--mint-l);color:var(--mint-d);padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 4</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">본문 쓰기 ✍️</h3>
+  </div>
+
+  <!-- 단어 도우미 -->
+  <div class="word-helper">
+    <div style="font-size:.72rem;font-weight:900;color:var(--mint);letter-spacing:.08em;margin-bottom:9px">🔍 단어 도우미 — 한국어로 검색!</div>
+    <div class="wh-row">
+      <input type="text" id="word-input" class="wh-input" placeholder="예: 신나다, 아름다운, 갑자기..." onkeydown="if(event.key==='Enter')wordSearch()">
+      <button onclick="wordSearch()" class="btn bm bsm" style="padding:9px 13px">🔍</button>
+    </div>
+    <div id="word-result" class="wh-result"></div>
+    <!-- 추천 단어 칩 -->
+    <div id="word-chips" style="margin-top:9px"></div>
+  </div>
+
+  <!-- 본문 입력 -->
+  <div class="cd" style="border-color:rgba(0,191,138,.25)">
+    <div class="ct">📝 나의 영어 글</div>
+    <div class="hint" style="margin-bottom:10px">💡 한국어로 써도 괜찮아요! AI가 영어로 바꿔드릴게요 😊</div>
+    <textarea id="body-text" class="ta eng" placeholder="Start writing here...
+또는 한국어로 써도 돼요!
+
+예: Today I went to the park with my friend.
+We played soccer and had so much fun!" oninput="updateCount()"></textarea>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+      <span id="word-count" style="font-size:.7rem;color:var(--ink3)">0 단어</span>
+      <span id="lv-badge" style="font-size:.7rem;font-weight:700;color:var(--mint-d)">🌱 기초 모드</span>
+    </div>
+  </div>
+
+  <!-- AI 도구 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px">
+    <button onclick="aiTranslate()" class="btn bsky bsm">🌐 한→영 번역</button>
+    <button onclick="aiGrammar()" class="btn bv bsm">✏️ 문법 첨삭</button>
+    <button onclick="aiPolish()" class="btn bm bsm">✨ 문장 다듬기</button>
+    <button onclick="aiContinue()" class="btn ba bsm">➕ 이어쓰기</button>
+  </div>
+
+  <!-- AI 결과들 -->
+  <div id="translate-result" class="ai-box">
+    <div class="ai-label">🌐 번역 결과</div>
+    <div class="ai-text" id="translate-text"></div>
+    <button onclick="applyTranslate()" class="btn bm bsm" style="margin-top:8px">✅ 내 글에 적용</button>
+  </div>
+  <div id="grammar-result" class="ai-box-v">
+    <div class="ai-label-v">✏️ 문법 첨삭</div>
+    <div class="ai-text" id="grammar-text"></div>
+  </div>
+  <div id="polish-result" class="ai-box">
+    <div class="ai-label">✨ 다듬어진 문장</div>
+    <div class="ai-text" id="polish-text"></div>
+    <button onclick="applyPolish()" class="btn bm bsm" style="margin-top:8px">✅ 적용하기</button>
+  </div>
+  <div id="continue-result" class="ai-box-a">
+    <div class="ai-label-a">➕ AI 이어쓰기</div>
+    <div class="ai-text" id="continue-text"></div>
+    <button onclick="applyContinue()" class="btn ba bsm" style="margin-top:8px">✅ 추가하기</button>
+  </div>
+
+  <!-- TTS -->
+  <div class="cd">
+    <div class="ct">🔊 TTS 낭독</div>
+    <div style="display:flex;gap:7px;align-items:center;margin-bottom:8px">
+      <span style="font-size:.78rem;color:var(--ink3);font-weight:700">속도</span>
+      <input type="range" id="tts-rate" min="0.5" max="1.2" step="0.1" value="0.8" style="flex:1">
+      <span id="tts-rate-val" style="font-size:.78rem;font-weight:700;color:var(--ink2);min-width:28px">0.8x</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+      <button onclick="ttsRead()" class="btn bsky bsm">▶ 내 글 낭독</button>
+      <button onclick="ttsStop()" class="btn bg2 bsm">■ 중지</button>
+    </div>
+  </div>
+
+  <button onclick="sT(5)" class="btn bm bfl" style="font-size:.95rem;padding:13px">🤖 AI 최종 다듬기 →</button>
+</div>
+
+<!-- ══ STEP 5: AI 다듬기 ══ -->
+<div id="tab-5" class="tc" style="margin-top:16px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--mint-l);color:var(--mint-d);padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 5</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">AI 최종 다듬기</h3>
+  </div>
+
+  <!-- 내 글 미리보기 -->
+  <div class="cd" style="border-color:rgba(0,191,138,.25)">
+    <div class="ct">📝 내가 쓴 글</div>
+    <div id="my-text-preview" style="font-family:'Gaegu',cursive;font-size:.95rem;color:var(--ink);line-height:2;white-space:pre-line;padding:4px 0"></div>
+  </div>
+
+  <!-- 다듬기 옵션 -->
+  <div class="cd">
+    <div class="ct">🎨 다듬기 방식 선택</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button onclick="finalPolish('grammar')" class="btn bv bfl">✏️ 문법만 교정</button>
+      <button onclick="finalPolish('natural')" class="btn bm bfl">✨ 자연스럽게</button>
+      <button onclick="finalPolish('formal')" class="btn bsky bfl">🎩 격식체로</button>
+      <button onclick="finalPolish('creative')" class="btn bcoral bfl">🎨 창의적으로</button>
+    </div>
+  </div>
+
+  <div id="final-polish-loading" style="display:none" class="cd">
+    <div class="ld"><span></span><span></span><span></span><span style="margin-left:5px">AI가 다듬는 중...</span></div>
+  </div>
+
+  <div id="final-polish-result" style="display:none">
+    <div class="cd" style="border-color:rgba(0,191,138,.3);background:var(--mint-l)">
+      <div class="ct" style="color:var(--mint-d)">✨ AI가 다듬어준 글</div>
+      <div id="polished-text" style="font-family:'Gaegu',cursive;font-size:.95rem;color:var(--ink);line-height:2.1;white-space:pre-line"></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button onclick="applyFinalPolish()" class="btn bm" style="flex:2;font-size:.92rem;padding:12px">✅ 이걸로 완성!</button>
+      <button onclick="keepOriginal()" class="btn bg2" style="flex:1">원본 유지</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STEP 6: 완성 ══ -->
+<div id="tab-6" class="tc" style="margin-top:16px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--mint-l);color:var(--mint-d);padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 6</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">🎉 완성된 영어 작문!</h3>
+  </div>
+
+  <div id="final-paper-wrap" class="final-paper">
+    <div class="final-title-en" id="final-title-display"></div>
+    <div class="final-meta" id="final-meta-display"></div>
+    <div class="final-body" id="final-body-display"></div>
+  </div>
+
+  <div class="act-row no-print">
+    <button onclick="copyWriting()" class="act-btn ab-copy">📋 복사</button>
+    <button onclick="downloadWriting()" class="act-btn ab-dl">💾 저장</button>
+    <button onclick="window.print()" class="act-btn ab-print">🖨️ 인쇄</button>
+  </div>
+  <button onclick="sT(7)" class="btn ba bfl no-print" style="margin-top:10px;font-size:.92rem;padding:13px">🎸 수노 프롬프트 만들기 →</button>
+</div>
+
+<!-- ══ STEP 7: 수노 ══ -->
+<div id="tab-7" class="tc" style="margin-top:16px">
+  <div style="text-align:center;margin-bottom:18px">
+    <span style="background:var(--amber-l);color:#B07000;padding:5px 16px;border-radius:99px;font-size:.8rem;font-weight:900">Step 7</span>
+    <h3 style="font-size:1.3rem;font-weight:900;font-family:'Nunito',sans-serif;margin-top:8px">🎸 내 글로 노래 만들기!</h3>
+    <p style="font-size:.82rem;color:var(--ink3);margin-top:5px">내가 쓴 영어 글이 노래가 돼요</p>
+  </div>
+
+  <!-- 내 글 미리보기 -->
+  <div class="cd" style="border-color:rgba(245,158,11,.3);background:var(--amber-l)">
+    <div class="ct" style="color:#B07000">✍️ 내가 쓴 글</div>
+    <div id="suno-text-preview" style="font-family:'Gaegu',cursive;font-size:.9rem;color:var(--ink);line-height:2;white-space:pre-line"></div>
+  </div>
+
+  <!-- 장르 선택 -->
+  <div class="cd">
+    <div class="ct">🎵 음악 스타일</div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px">
+      <span class="word-chip" onclick="toggleSunoGenre(this,'soft pop')">Soft Pop</span>
+      <span class="word-chip" onclick="toggleSunoGenre(this,'acoustic')">Acoustic</span>
+      <span class="word-chip" onclick="toggleSunoGenre(this,'indie')">Indie</span>
+      <span class="word-chip" onclick="toggleSunoGenre(this,'ballad')" style="background:var(--amber-l);color:#B07000;border-color:rgba(245,158,11,.35)">Ballad</span>
+      <span class="word-chip" onclick="toggleSunoGenre(this,'k-pop')" style="background:var(--violet-l);color:var(--violet);border-color:rgba(123,108,246,.3)">K-Pop</span>
+      <span class="word-chip" onclick="toggleSunoGenre(this,'jazz')">Jazz</span>
+      <span class="word-chip" onclick="toggleSunoGenre(this,'folk')">Folk</span>
+      <span class="word-chip" onclick="toggleSunoGenre(this,'cinematic')">Cinematic</span>
+    </div>
+  </div>
+
+  <button onclick="genSuno()" id="suno-btn" class="btn ba bfl" style="font-size:.95rem;padding:14px;margin-bottom:14px">
+    🤖 수노 프롬프트 자동 생성!
+  </button>
+
+  <div id="suno-result" style="display:none">
+    <div class="suno-box">
+      <div style="font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;color:#F59E0B;margin-bottom:14px">🎸 수노 프롬프트 완성!</div>
+      <div style="margin-bottom:10px">
+        <div class="suno-label">Style & Mood</div>
+        <div class="suno-content" id="suno-style"></div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div class="suno-label">Lyrics</div>
+        <div class="suno-content" id="suno-lyrics"></div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div class="suno-label">📋 전체 프롬프트</div>
+        <div class="suno-content" id="suno-full"></div>
+      </div>
+      <button onclick="copySuno()" class="suno-copy-btn">📋 전체 프롬프트 복사!</button>
+      <div style="margin-top:10px;background:rgba(255,255,255,.05);border-radius:9px;padding:11px;font-size:.73rem;color:rgba(255,255,255,.6);line-height:1.8">
+        🚀 <strong style="color:rgba(245,158,11,.8)">수노 사용법</strong><br>
+        1. <a href="https://suno.com" target="_blank" style="color:#F59E0B">suno.com</a> → Create → Custom mode<br>
+        2. Lyrics 칸에 붙여넣기 → Generate! 🎵
+      </div>
+    </div>
+    <button onclick="genSuno()" class="btn bg2 bfl" style="margin-top:10px">🔄 다시 생성</button>
+  </div>
+</div>
+
+</main>
+
+<div style="text-align:center;padding:12px;color:var(--ink3);font-size:.68rem" class="no-print">
+  Designed by Park Seong-ae · EAIM 영어 작문 v1
+</div>
+
+<script>
+// ══ 상태 ══
+let stuName='', apiKey=localStorage.getItem('eaim_gemini_key')||'';
+let selLevel='basic', selGenreKey='', selTopic='';
+let finalText='', polishedBuffer='', translateBuffer='', continueBuffer='', polishBuffer='';
+let sunoGenres=[];
+let outlineBuffer='';
+
+// 장르별 설정
+const GENRES = {
+  diary:      {ko:'일기',      en:'Diary',        outline:['Date & Mood','What happened','How I felt','What I learned']},
+  letter:     {ko:'편지',      en:'Letter',       outline:['Greeting','Main message','Details','Closing']},
+  story:      {ko:'이야기',    en:'Story',        outline:['Introduction','Rising action','Climax','Ending']},
+  description:{ko:'설명문',    en:'Description',  outline:['Topic sentence','Feature 1','Feature 2','Conclusion']},
+  opinion:    {ko:'주장문',    en:'Opinion Essay', outline:['My opinion','Reason 1','Reason 2','Conclusion']},
+  intro:      {ko:'자기소개',  en:'Self Introduction', outline:['Name & Grade','Hobbies','Personality','Dreams']},
+  thankyou:   {ko:'감사편지',  en:'Thank You Letter', outline:['Opening','Why I\'m thankful','Memory','Closing']},
+  travel:     {ko:'여행기',    en:'Travel Journal', outline:['Where I went','Day 1 highlights','Best moment','Recommendation']},
+  news:       {ko:'뉴스기사',  en:'News Article',  outline:['Headline','Who/What/When','Details','Conclusion']},
+};
+
+const LV_HINTS = {
+  basic:'🌱 <strong>기초</strong>: 짧고 쉬운 문장으로 시작해요. AI가 단어와 표현을 많이 도와줘요!',
+  middle:'🌿 <strong>중급</strong>: 다양한 문장 구조를 써봐요. 접속사와 형용사를 활용해봐요!',
+  advanced:'🌳 <strong>심화</strong>: 복문과 고급 표현에 도전해봐요. 논리적인 글 구조가 중요해요!'
+};
+
+// ══ 초기화 ══
+window.onload=function(){
+  if(apiKey)document.getElementById('apiKeyInput')&&(document.getElementById('apiKeyInput').value=apiKey);
+  document.getElementById('tts-rate').oninput=function(){
+    document.getElementById('tts-rate-val').textContent=this.value+'x';
+  };
+  loadWordChips();
+  if(window.speechSynthesis.onvoiceschanged!==undefined)
+    window.speechSynthesis.onvoiceschanged=()=>{};
+};
+
+// ══ 로그인 ══
+function sN(){
+  const n=document.getElementById('sni').value.trim();
+  const c=document.getElementById('sclass').value;
+  if(!n){alert('이름을 입력해주세요!');return;}
+  if(!c){alert('반을 선택해주세요!');return;}
+  stuName=n;
+  const nb=document.getElementById('wn');nb.textContent=n+' 님 ✍️';nb.style.display='';
+  document.getElementById('nm').style.display='none';
+  document.getElementById('sNav').style.display='flex';
+}
+function showTL(){document.getElementById('nm').style.display='none';}
+function oTP(){alert('선생님 패널: API 키는 교사 모드에서 설정해주세요.\nGemini API 키를 localStorage에 저장하면 바로 사용 가능해요!');}
+
+// ══ Gemini ══
+async function callGemini(prompt,maxTokens=800){
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key)throw new Error('NO_KEY');
+  const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+key,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:maxTokens,temperature:0.8}})
+  });
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message);
+  return d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+}
+
+// ══ STEP 1 ══
+function selLv(lv,el){
+  selLevel=lv;
+  ['basic','middle','advanced'].forEach(l=>{
+    const b=document.getElementById('lv-'+l);
+    b.className='lv-btn'+(l===lv?(' sel-'+(l==='basic'?'b':l==='middle'?'m':'a')):'');
+  });
+  document.getElementById('lv-hint').innerHTML=LV_HINTS[lv];
+  document.getElementById('lv-badge').textContent=lv==='basic'?'🌱 기초 모드':lv==='middle'?'🌿 중급 모드':'🌳 심화 모드';
+  checkStep1();
+}
+function selGenre(key,el){
+  selGenreKey=key;
+  document.querySelectorAll('.genre-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  buildOutline();
+  checkStep1();
+}
+function checkStep1(){
+  document.getElementById('step1-btn').disabled=!(selLevel&&selGenreKey);
+}
+
+// ══ STEP 2: 글감 추천 ══
+async function goStep2(){
+  if(!selGenreKey){alert('장르를 선택해주세요!');return;}
+  sT(2);
+  const genre=GENRES[selGenreKey];
+  const topic=document.getElementById('topic-input').value.trim();
+  selTopic=topic;
+  document.getElementById('topic-loading').style.display='block';
+  document.getElementById('topic-list').style.display='none';
+  document.getElementById('step2-btn').disabled=true;
+
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){
+    // API 없으면 기본 글감 제공
+    const defaults={
+      diary:['My perfect weekend','A day I will never forget','The day everything went wrong'],
+      letter:['A letter to my future self','Thank you letter to my teacher','Letter to a pen pal'],
+      story:['The magic backpack','A robot who wanted to be human','Lost in the city'],
+      description:['My favorite place in Korea','How smartphones changed our lives','The best Korean food'],
+      opinion:['Why we should have more art classes','Social media: good or bad?','Why reading books is important'],
+      intro:['Who I am and what I love','My journey in middle school','My dreams for the future'],
+      thankyou:['Thank you, Mom','My best teacher ever','A friend who helped me'],
+      travel:['My trip to Jeju Island','A day trip to Seoul','Imaginary trip to Japan'],
+      news:['New park opens in our city','Students win science competition','Local hero saves the day'],
+    };
+    const topics=(defaults[selGenreKey]||['My story','My experience','My thoughts']).map(t=>({title:t,desc:'이 주제로 영어 글을 써봐요!',keywords:[]}));
+    renderTopics(topics);
+    return;
+  }
+
+  try{
+    const lv=selLevel==='basic'?'beginner (simple sentences)':selLevel==='middle'?'intermediate':'advanced';
+    const raw=await callGemini(`You are an English teacher for Korean middle school students.
+Suggest 3 writing topics for a ${genre.en} (${genre.ko}) at ${lv} level.
+${topic?'Theme hint: '+topic:''}
+
+Respond ONLY in this JSON format (no markdown):
+[
+  {
+    "title": "Topic title in English",
+    "desc": "Brief description in Korean (1-2 sentences)",
+    "keywords": ["keyword1","keyword2","keyword3"]
+  }
+]`,600);
+    const clean=raw.replace(/```json|```/g,'').trim();
+    renderTopics(JSON.parse(clean));
+  }catch(e){
+    document.getElementById('topic-loading').innerHTML='<p style="color:var(--coral);font-size:.84rem;text-align:center">⚠️ 오류가 발생했어요. 다시 시도해주세요.</p>';
+  }
+}
+
+function renderTopics(topics){
+  document.getElementById('topic-loading').style.display='none';
+  const list=document.getElementById('topic-list');
+  list.style.display='block';
+  list.innerHTML='';
+  topics.forEach((t,i)=>{
+    const div=document.createElement('div');
+    div.className='topic-card';
+    div.innerHTML=`
+      <div class="topic-title">📌 ${t.title}</div>
+      <div class="topic-desc">${t.desc}</div>
+      ${t.keywords?.length?`<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:5px">${t.keywords.map(k=>`<span style="background:var(--sky-l);color:#1070A0;border-radius:99px;padding:3px 9px;font-size:.7rem;font-weight:700">${k}</span>`).join('')}</div>`:''}`;
+    div.onclick=()=>{
+      document.querySelectorAll('.topic-card').forEach(c=>c.classList.remove('sel'));
+      div.classList.add('sel');
+      selTopic=t.title;
+      document.getElementById('title-en').value=t.title;
+      document.getElementById('step2-btn').disabled=false;
+    };
+    list.appendChild(div);
+  });
+}
+
+// ══ STEP 3: 개요 ══
+function buildOutline(){
+  if(!selGenreKey)return;
+  const genre=GENRES[selGenreKey];
+  const el=document.getElementById('outline-items');
+  el.innerHTML='';
+  genre.outline.forEach((label,i)=>{
+    el.innerHTML+=`
+      <div class="outline-item">
+        <div class="outline-label">${String(i+1).padStart(2,'0')} ${label}</div>
+        <input type="text" class="outline-input" id="outline-${i}" placeholder="내용을 영어로 입력하거나 한국어로 써도 돼요...">
+      </div>`;
+  });
+}
+
+async function aiTitleSuggest(){
+  const genre=GENRES[selGenreKey];
+  const el=document.getElementById('title-ai');
+  const txt=document.getElementById('title-ai-text');
+  el.style.display='block';txt.textContent='생각 중...';
+  try{
+    const result=await callGemini(`Suggest 3 creative English titles for a ${genre.en} about "${selTopic||'daily life'}".
+Return only the titles, numbered 1-3, in English.`,200);
+    txt.textContent=result;
+  }catch(e){txt.textContent='API 키를 설정하면 제목을 추천받을 수 있어요.';}
+}
+
+async function aiOutline(){
+  const genre=GENRES[selGenreKey];
+  const el=document.getElementById('outline-ai');
+  const txt=document.getElementById('outline-ai-text');
+  el.style.display='block';txt.textContent='생각 중...';
+  const lv=selLevel==='basic'?'beginner':selLevel==='middle'?'intermediate':'advanced';
+  try{
+    const result=await callGemini(`Create a brief outline for a ${genre.en} about "${selTopic||'daily life'}" for a Korean ${lv} English learner.
+Format: label: content (one line each, in English)
+Keep it simple and suitable for middle school students.`,300);
+    outlineBuffer=result;txt.textContent=result;
+  }catch(e){txt.textContent='API 키를 설정하면 개요를 자동 작성해줘요.';}
+}
+
+function applyOutline(){
+  const items=document.querySelectorAll('.outline-input');
+  const lines=outlineBuffer.split('\n').filter(l=>l.trim());
+  items.forEach((item,i)=>{
+    if(lines[i]){
+      const content=lines[i].replace(/^\d+\.\s*[^:]+:\s*/,'').trim();
+      item.value=content;
+    }
+  });
+}
+
+// ══ STEP 4: 본문 ══
+function updateCount(){
+  const text=document.getElementById('body-text').value;
+  const words=text.trim().split(/\s+/).filter(w=>w).length;
+  document.getElementById('word-count').textContent=words+' 단어';
+}
+
+function loadWordChips(){
+  const chipData={
+    basic:['happy','sad','fun','good','bad','big','small','beautiful','eat','go','see','play'],
+    middle:['excited','disappointed','wonderful','terrible','suddenly','however','because','although'],
+    advanced:['remarkable','fascinating','consequently','furthermore','nevertheless','simultaneously'],
+  };
+  const chips=chipData[selLevel]||chipData.basic;
+  const el=document.getElementById('word-chips');
+  el.innerHTML='';
+  chips.forEach(w=>{
+    const span=document.createElement('span');
+    span.className='word-chip';span.textContent=w;
+    span.onclick=()=>{
+      const ta=document.getElementById('body-text');
+      ta.value+=(ta.value&&!ta.value.endsWith(' ')?'\n':'')+w+' ';
+      updateCount();ta.focus();
+    };
+    el.appendChild(span);
+  });
+}
+
+async function wordSearch(){
+  const term=document.getElementById('word-input').value.trim();
+  if(!term)return;
+  const res=document.getElementById('word-result');
+  res.style.display='block';res.textContent='🔍 찾는 중...';
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){res.textContent='⚠️ API 키를 설정하면 단어 검색이 가능해요.';return;}
+  const lv=selLevel==='basic'?'beginner':selLevel==='middle'?'intermediate':'advanced';
+  try{
+    const result=await callGemini(`Korean middle school ${lv} English learner needs this word/expression: "${term}"
+Provide:
+🔤 English: [3-4 English words/phrases]
+📢 Pronunciation: [Korean phonetic]
+✍️ Example: [one simple example sentence]
+💡 Tip: [one usage tip in Korean]`,200);
+    res.textContent=result;
+  }catch(e){res.textContent='연결 오류. 다시 시도해주세요.';}
+}
+
+async function aiTranslate(){
+  const text=document.getElementById('body-text').value.trim();
+  if(!text){alert('글을 먼저 써주세요!');return;}
+  const el=document.getElementById('translate-result');
+  const txt=document.getElementById('translate-text');
+  el.style.display='block';txt.textContent='번역 중...';
+  const lv=selLevel==='basic'?'simple beginner level':selLevel==='middle'?'intermediate level':'advanced level';
+  try{
+    const result=await callGemini(`Translate this Korean text to English at ${lv} for a middle school student:
+"${text}"
+Return only the English translation, nothing else.`,400);
+    translateBuffer=result;txt.textContent=result;
+  }catch(e){txt.textContent='API 키를 설정하면 번역이 가능해요.';}
+}
+function applyTranslate(){
+  if(translateBuffer){document.getElementById('body-text').value=translateBuffer;updateCount();}
+  document.getElementById('translate-result').style.display='none';
+}
+
+async function aiGrammar(){
+  const text=document.getElementById('body-text').value.trim();
+  if(!text){alert('글을 먼저 써주세요!');return;}
+  const el=document.getElementById('grammar-result');
+  const txt=document.getElementById('grammar-text');
+  el.style.display='block';txt.textContent='첨삭 중...';
+  try{
+    const result=await callGemini(`Check grammar for this English text by a Korean middle school student:
+"${text}"
+
+Format:
+✅ Good points: [what's correct]
+❌ Corrections: [specific errors and fixes]
+💡 Suggestion: [one improvement tip in Korean]`,400);
+    txt.textContent=result;
+  }catch(e){txt.textContent='API 키를 설정하면 문법 첨삭이 가능해요.';}
+}
+
+async function aiPolish(){
+  const text=document.getElementById('body-text').value.trim();
+  if(!text){alert('글을 먼저 써주세요!');return;}
+  const el=document.getElementById('polish-result');
+  const txt=document.getElementById('polish-text');
+  el.style.display='block';txt.textContent='다듬는 중...';
+  const lv=selLevel==='basic'?'beginner (keep it simple)':selLevel==='middle'?'intermediate':' advanced';
+  try{
+    const result=await callGemini(`Polish this English text for a Korean middle school ${lv} student.
+Keep the original meaning and the student's voice.
+Return ONLY the polished text, nothing else:
+${text}`,400);
+    polishBuffer=result;txt.textContent=result;
+  }catch(e){txt.textContent='API 키를 설정하면 문장 다듬기가 가능해요.';}
+}
+function applyPolish(){
+  if(polishBuffer){document.getElementById('body-text').value=polishBuffer;updateCount();}
+  document.getElementById('polish-result').style.display='none';
+}
+
+async function aiContinue(){
+  const text=document.getElementById('body-text').value.trim();
+  if(!text){alert('글을 먼저 써주세요!');return;}
+  const el=document.getElementById('continue-result');
+  const txt=document.getElementById('continue-text');
+  el.style.display='block';txt.textContent='이어쓰는 중...';
+  const genre=GENRES[selGenreKey]||{en:'writing'};
+  const lv=selLevel==='basic'?'beginner':selLevel==='middle'?'intermediate':'advanced';
+  try{
+    const result=await callGemini(`Continue this ${genre.en} for a Korean middle school ${lv} English student.
+Write 2-3 more sentences that flow naturally.
+Return ONLY the continuation, nothing else:
+${text}`,300);
+    continueBuffer=result;txt.textContent=result;
+  }catch(e){txt.textContent='API 키를 설정하면 이어쓰기가 가능해요.';}
+}
+function applyContinue(){
+  if(continueBuffer){
+    const ta=document.getElementById('body-text');
+    ta.value+=(ta.value.endsWith('\n')?'':'\n')+continueBuffer;
+    updateCount();
+  }
+  document.getElementById('continue-result').style.display='none';
+}
+
+// TTS
+function ttsRead(){
+  const text=document.getElementById('body-text').value;
+  if(!text||!window.speechSynthesis)return;
+  ttsStop();
+  const msg=new SpeechSynthesisUtterance(text);
+  msg.lang='en-US';
+  msg.rate=parseFloat(document.getElementById('tts-rate').value)||0.8;
+  const voices=window.speechSynthesis.getVoices();
+  const engVoice=voices.find(v=>v.lang.includes('en-US'))||voices.find(v=>v.lang.includes('en'))||null;
+  if(engVoice)msg.voice=engVoice;
+  window.speechSynthesis.speak(msg);
+}
+function ttsStop(){window.speechSynthesis.cancel();}
+
+// ══ STEP 5: AI 다듬기 ══
+async function finalPolish(mode){
+  const text=document.getElementById('body-text').value.trim();
+  if(!text){alert('Step 4에서 글을 먼저 써주세요!');sT(4);return;}
+  document.getElementById('my-text-preview').textContent=text;
+  document.getElementById('final-polish-loading').style.display='block';
+  document.getElementById('final-polish-result').style.display='none';
+  const modeMap={
+    grammar:'correct only grammar errors, keep everything else the same',
+    natural:'make it more natural and fluent English',
+    formal:'rewrite in formal, academic English',
+    creative:'make it more creative and expressive with vivid descriptions'
+  };
+  const lv=selLevel==='basic'?'beginner level':selLevel==='middle'?'intermediate level':'advanced level';
+  try{
+    const result=await callGemini(`${modeMap[mode]} for this Korean middle school student's ${lv} English writing.
+Keep the student's original ideas and voice.
+Return ONLY the improved text, nothing else:
+${text}`,500);
+    polishedBuffer=result;
+    document.getElementById('polished-text').textContent=result;
+    document.getElementById('final-polish-loading').style.display='none';
+    document.getElementById('final-polish-result').style.display='block';
+  }catch(e){
+    document.getElementById('final-polish-loading').innerHTML='<p style="color:var(--coral);font-size:.84rem;text-align:center">⚠️ API 키를 설정하면 AI 다듬기가 가능해요.</p>';
+  }
+}
+function applyFinalPolish(){
+  if(polishedBuffer){finalText=polishedBuffer;document.getElementById('body-text').value=polishedBuffer;}
+  buildFinalPaper();sT(6);
+}
+function keepOriginal(){
+  finalText=document.getElementById('body-text').value;
+  buildFinalPaper();sT(6);
+}
+
+// ══ STEP 6: 완성 ══
+function buildFinalPaper(){
+  const title=document.getElementById('title-en').value||'My English Writing';
+  const text=finalText||document.getElementById('body-text').value;
+  const genre=GENRES[selGenreKey]||{ko:'작문',en:'Writing'};
+  document.getElementById('final-title-display').textContent=title;
+  document.getElementById('final-meta-display').textContent=`${stuName} · ${genre.en} · ${new Date().toLocaleDateString('ko-KR')}`;
+  document.getElementById('final-body-display').textContent=text;
+  // 수노 미리보기도 업데이트
+  document.getElementById('suno-text-preview').textContent=text;
+}
+function copyWriting(){
+  const title=document.getElementById('title-en').value||'My English Writing';
+  const text=finalText||document.getElementById('body-text').value;
+  navigator.clipboard.writeText(`${title}\n${stuName} · ${new Date().toLocaleDateString('ko-KR')}\n\n${text}`)
+    .then(()=>alert('📋 복사됐어요!'));
+}
+function downloadWriting(){
+  const title=document.getElementById('title-en').value||'My English Writing';
+  const text=finalText||document.getElementById('body-text').value;
+  const a=document.createElement('a');
+  a.href='data:text/plain;charset=utf-8,\uFEFF'+encodeURIComponent(`${title}\n${stuName} · ${new Date().toLocaleDateString('ko-KR')}\n\n${text}`);
+  a.download=`${stuName}_영어작문.txt`;a.click();
+}
+
+// ══ STEP 7: 수노 ══
+function toggleSunoGenre(el,genre){
+  el.classList.toggle('on');
+  const isOn=el.classList.contains('on');
+  el.style.background=isOn?'var(--amber)':'';
+  el.style.color=isOn?'#1C0A00':'';
+  el.style.borderColor=isOn?'#D07800':'';
+  if(isOn)sunoGenres.push(genre);
+  else sunoGenres=sunoGenres.filter(g=>g!==genre);
+}
+
+async function genSuno(){
+  const text=finalText||document.getElementById('body-text').value.trim();
+  if(!text){alert('먼저 글을 완성해주세요!');sT(4);return;}
+  const btn=document.getElementById('suno-btn');
+  btn.disabled=true;btn.textContent='🤖 생성 중...';
+  const genres=sunoGenres.length?sunoGenres.join(', '):'soft pop, acoustic';
+  const genre=GENRES[selGenreKey]||{en:'writing'};
+  const key=apiKey||localStorage.getItem('eaim_gemini_key')||'';
+  if(!key){
+    const style=`${genres}, English, emotional, ${genre.en}`;
+    document.getElementById('suno-style').textContent='Style: '+style+'\nMood: heartfelt, genuine\nTempo: slow to mid';
+    document.getElementById('suno-lyrics').textContent=text;
+    document.getElementById('suno-full').textContent=`[Style: ${style}]\n[Mood: heartfelt]\n\n[Lyrics]\n${text}`;
+    document.getElementById('suno-result').style.display='block';
+    btn.disabled=false;btn.textContent='🤖 수노 프롬프트 자동 생성!';
+    return;
+  }
+  try{
+    const raw=await callGemini(`Convert this student's English ${genre.en} into a Suno AI music prompt.
+Text: "${text}"
+Preferred genres: ${genres}
+
+Return ONLY JSON (no markdown):
+{
+  "style": "Suno style tags (English, comma separated, max 120 chars)",
+  "mood": "mood descriptors",
+  "tempo": "tempo description",
+  "lyrics": "text formatted as song lyrics with [Verse] [Chorus] if appropriate",
+  "fullPrompt": "complete ready-to-use Suno prompt"
+}`,600);
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const result=JSON.parse(clean);
+    document.getElementById('suno-style').textContent=`Style: ${result.style}\nMood: ${result.mood}\nTempo: ${result.tempo}`;
+    document.getElementById('suno-lyrics').textContent=result.lyrics||text;
+    document.getElementById('suno-full').textContent=result.fullPrompt||`[Style: ${result.style}]\n\n[Lyrics]\n${result.lyrics||text}`;
+    document.getElementById('suno-result').style.display='block';
+  }catch(e){
+    const style=`${genres}, English, ${genre.en}, emotional`;
+    document.getElementById('suno-style').textContent='Style: '+style;
+    document.getElementById('suno-lyrics').textContent=text;
+    document.getElementById('suno-full').textContent=`[Style: ${style}]\n\n[Lyrics]\n${text}`;
+    document.getElementById('suno-result').style.display='block';
+  }
+  btn.disabled=false;btn.textContent='🤖 수노 프롬프트 자동 생성!';
+}
+
+function copySuno(){
+  const text=document.getElementById('suno-full').textContent;
+  navigator.clipboard.writeText(text).then(()=>alert('📋 복사됐어요! 수노에 붙여넣기 해보세요~ 🎵'));
+}
+
+// ══ 탭 전환 ══
+function sT(n){
+  if(n===5){
+    const text=document.getElementById('body-text').value;
+    document.getElementById('my-text-preview').textContent=text;
+  }
+  if(n===6) buildFinalPaper();
+  if(n===7){
+    const text=finalText||document.getElementById('body-text').value;
+    document.getElementById('suno-text-preview').textContent=text;
+  }
+  for(let i=1;i<=7;i++){
+    const btn=document.getElementById('sB'+i);
+    const cont=document.getElementById('tab-'+i);
+    if(i===n){btn.classList.add('on');btn.classList.remove('dn');cont.classList.add('on');}
+    else{btn.classList.remove('on');if(i<n)btn.classList.add('dn');else btn.classList.remove('dn');cont.classList.remove('on');}
+  }
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
